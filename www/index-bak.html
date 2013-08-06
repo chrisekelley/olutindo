@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>olutindo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!--<link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="assets/vendor/prism/prism.css">-->
+    <!--<link rel="stylesheet" href="assets/main.css">-->
+
+      <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.15.custom.css" rel="stylesheet" />
+      <link type="text/css" href="css/Site.css" rel="stylesheet" />
+
+  </head>
+  <!--<body>-->
+    <!--<div class="container">-->
+      <!--<div class="hero-unit">-->
+        <!--<h1>olutindo</h1>-->
+        <!--<p>-->
+          <!--hoodie playground.-->
+        <!--</p>-->
+
+        <!--<div class="hoodie-accountbar">-->
+
+          <!--<div class="hoodie-account-signedout">-->
+            <!--<span class="btn-group">-->
+              <!--<button class="btn btn-small btn-inverse" data-hoodie-action="signup">Sign Up</button>-->
+              <!--<button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">-->
+                <!--<span class="caret"></span>-->
+              <!--</button>-->
+              <!--<ul class="dropdown-menu pull-right">-->
+                <!--<li><a href="#" data-hoodie-action="signin">Sign In</a></li>-->
+                <!--<li><a href="#" data-hoodie-action="resetpassword">Reset Password</a></li>-->
+                <!--<li><a href="#" data-hoodie-action="destroy">Clear local data</a></li>-->
+              <!--</ul>-->
+            <!--</span>-->
+          <!--</div>&lt;!&ndash; /.hoodie-account-signedout &ndash;&gt;-->
+
+          <!--<div class="hoodie-account-signedin">-->
+            <!--Hello,-->
+            <!--<span class="hoodie-username">&lt;!&ndash; usern name will be filled in here &ndash;&gt;</span>-->
+            <!--<span class="btn-group">-->
+              <!--<button class="btn btn-small btn-inverse" data-hoodie-action="signout">Sign Out</button>-->
+              <!--<button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">-->
+                <!--<span class="caret"></span>-->
+              <!--</button>-->
+              <!--<ul class="dropdown-menu pull-right">-->
+                <!--<li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>-->
+                <!--<li><a href="#" data-hoodie-action="changeusername">Change Username</a></li>-->
+                <!--<li><a href="#" data-hoodie-action="destroy">Destroy Account</a></li>-->
+              <!--</ul>-->
+            <!--</span>-->
+          <!--</div>&lt;!&ndash; /.hoodie-account-signedin &ndash;&gt;-->
+
+          <!--<div class="hoodie-account-error">-->
+            <!--Hello,-->
+            <!--<span class="hoodie-username">&lt;!&ndash; usern name will be filled in here &ndash;&gt;</span>.-->
+            <!--<span class="btn-group">-->
+              <!--<button class="btn btn-small btn-danger" data-hoodie-action="signin">Authentication error: Sign in again</button>-->
+              <!--<button class="btn btn-small dropdown-toggle btn-danger" data-toggle="dropdown">-->
+                <!--<span class="caret"></span>-->
+              <!--</button>-->
+              <!--<ul class="dropdown-menu pull-right">-->
+                <!--<li><a href="#" data-hoodie-action="signout">Sign out</a></li>-->
+              <!--</ul>-->
+            <!--</span>-->
+          <!--</div>&lt;!&ndash; /.hoodie-account-error &ndash;&gt;-->
+        <!--</div>&lt;!&ndash;/hoodieAccountBar &ndash;&gt;-->
+      <!--</div>-->
+
+      <!--<div class="content">-->
+        <!--<ul id="todolist"></ul>-->
+
+        <!--<input type="text" id="todoinput"  placeholder="new todo ↵" />-->
+      <!--</div>-->
+
+    <!--This is where the hoodie code went-->
+
+      <!--<footer class="copy">-->
+        <!--<p>&hearts; hood.ie 2013</p>-->
+      <!--</footer>-->
+    <!--</div> &lt;!&ndash; /.container &ndash;&gt;-->
+
+    <!--<script src="assets/vendor/jquery-1.9.1.js"></script>-->
+    <!--<script src="assets/vendor/bootstrap/bootstrap.js"></script>-->
+    <!--<script src="assets/vendor/hoodie.js"></script>-->
+    <!--<script src="assets/vendor/hoodie.accountbar.bootstrap.js"></script>-->
+    <!--<script src="assets/vendor/bootstrap.modalform.js"></script>-->
+    <!--<script src="assets/main.js"></script>-->
+  <!--</body>-->
+
+  <!-- TODO for deployment - combine & minify all of this -->
+  <script type="text/javascript" src="js-libraries/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js-libraries/jquery-ui-1.8.15.custom.min.js"></script>
+  <script type="text/javascript" src="js-libraries/underscore-min.js"></script>
+  <script type="text/javascript" src="js-libraries/backbone-min.js"></script>
+  <script type="text/javascript" src="js-libraries/jquery.couch.js"></script>
+  <script type="text/javascript" src="js-libraries/backbone-couchdb.js"></script>
+
+  <!-- Templating library -->
+  <script type="text/javascript" src="js-libraries/handlebars.js"></script>
+  <!-- These are used to get form contents into a well structured javascript object -->
+  <script type="text/javascript" src="js-libraries/form2object.js"></script>
+  <script type="text/javascript" src="js-libraries/jquery.toObject.js"></script>
+  <!-- String munging library -->
+  <script type="text/javascript" src="js-libraries/inflection.js"></script>
+  <!-- Render Zcore form elements -->
+  <script type="text/javascript" src="js-libraries/formElementRender.js"></script>
+  <script type="text/javascript" src="js-libraries/recordElementRender.js"></script>
+  <script type="text/javascript"
+          src="js-libraries/jquery.dateFormat-1.0.js"></script>
+
+  <!-- The app itself - note that if new models/views are added they need to be added here-->
+  <script type="text/javascript" src="app/coconut-utils.js"></script>
+  <script type="text/javascript" src="app/config.js"></script>
+  <script type="text/javascript" src="app/models/FormElement.js"></script>
+  <script type="text/javascript" src="app/models/FormElements.js"></script>
+  <script type="text/javascript" src="app/models/Form.js"></script>
+  <script type="text/javascript" src="app/models/FormCollection.js"></script>
+  <script type="text/javascript" src="app/models/Page.js"></script>
+  <script type="text/javascript" src="app/views/FormElementView.js"></script>
+  <script type="text/javascript" src="app/views/RecordElementView.js"></script>
+  <script type="text/javascript" src="app/views/FormView.js"></script>
+  <script type="text/javascript" src="app/views/HomeView.js"></script>
+  <script type="text/javascript" src="app/views/ConfigView.js"></script>
+  <script type="text/javascript" src="app/models/Record.js"></script>
+  <script type="text/javascript" src="app/models/PatientRecordList.js"></script>
+  <script type="text/javascript" src="app/models/Incident.js"></script>
+  <script type="text/javascript" src="app/models/IncidentsList.js"></script>
+  <script type="text/javascript" src="app/models/IncidentRecordList.js"></script>
+  <script type="text/javascript" src="app/views/IncidentView.js"></script>
+  <script type="text/javascript" src="app/views/RecordView.js"></script>
+  <script type="text/javascript" src="app/form_defs/incident.js"></script>
+  <script type="text/javascript" src="app/app.js"></script>
+  </head>
+  <body>
+  <div class="container">
+      <div class="row">
+          <div class="twelvecol" id="views">
+              <div id="formRenderingView"></div>
+              <div id="homePageView"></div>
+              <div id="recordView"></div>
+              <div id="designer"></div>
+          </div>
+      </div>
+  </div>
+  </body>
+</html>

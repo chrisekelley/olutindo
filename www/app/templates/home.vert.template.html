@@ -1,0 +1,102 @@
+<div id="pagewidth-vert">
+	<div id="search-results">
+	    <form name="searchForm" id="search-results-form" onsubmit="return false;">
+	        <table class="banner-home-vert" width="100%">
+	            <tbody>
+	             <tr>
+	                 <td style="vertical-align: top;">
+		                 <input type="text" id="search_string" name="search_string" placeholder="Search:Phone" size="13"/>
+						 <select id="department" data-optional="true" name="department">
+						 	<option value="">Filter by Department</option>
+						 	<option value="1">Admin</option>
+						 	<option value="6">Council</option>
+						 	<option value="3">Education</option>
+						 	<option value="2">Finance</option>
+						 	<option value="4">Health</option>
+						 	<option value="5">Works</option>
+						 </select>						
+		                 <button id='form-search' value="Search" class="shiny-red" style="width: 65px;">Search</button>
+                     </td>
+
+	             </tr>
+	        	</tbody>
+	        </table>
+	    </form>
+        <div id="search-results-body-vert">
+	       	<div id="search-results-list">
+	       		<table id="incidents" width="100%" class="stripeMe">
+					<thead>
+						<tr>
+							<th title="Priority"><strong>!</strong></th><th>Phone</th><th>Village</th><th>Dept.</th><th style="border-right:none;">Date</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+						<tr style="background-color: #6EA8E4;" id="noStripeMe">
+							<td colspan="2"><button id='form-client'class="menu-blue" style="width: 55px;">Incident</button>
+                                <img src="images/1321455058_reload.png" alt="Refresh" onClick="window.location.href = '/'"/>
+                                <!--<button id='form-config' class="menu-blue" style="width: 40px;">Conf</button>-->
+                                <!--<button class="menu-blue" data-hoodie-action="signup">Sign Up</button>-->
+                                <!--<button class="menu-blue" data-hoodie-action="signin">Login</button>-->
+							</td>
+							<td colspan="2">
+							<strong>Priority:</strong><img src="images/alert-low.png" title="Low Priority"> Low
+							<img src="images/alert-medium.png" title="Medium Priority"> Med. 
+							<img src="images/alert-high.png" title="High Priority"> High
+							<img src="images/resolved.png" title="Resolved"> Resolved
+							</td>
+							<td>{{#if startkey_docid}}<div id="nextLink" onmouseover="style.color='red';" onmouseout="style.color='#034AF3';">&gt;&gt;</div>{{/if}}</td>
+						</tr>
+                    <tr style="background-color: #6EA8E4;" id="noStripeMe">
+                        <td colspan="2">&nbsp;</td>
+                        <td class="hoodie-accountbar" colspan="3">
+                            <div class="hoodie-account-signedout">
+                                <span class="btn-group">
+                                  <button class="btn btn-small btn-inverse" data-hoodie-action="signup">Sign Up</button>
+                                  <button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">
+                                      <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu pull-right">
+                                      <li><a href="#" data-hoodie-action="signin">Sign In</a></li>
+                                      <li><a href="#" data-hoodie-action="resetpassword">Reset Password</a></li>
+                                      <li><a href="#" data-hoodie-action="destroy">Clear local data</a></li>
+                                  </ul>
+                                </span>
+                            </div><!-- /.hoodie-account-signedout -->
+
+                            <div class="hoodie-account-signedin">
+                                Hello,
+                                <span class="hoodie-username"><!-- usern name will be filled in here --></span>
+                                <span class="btn-group">
+                                  <button class="btn btn-small btn-inverse" data-hoodie-action="signout">Sign Out</button>
+                                  <button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">
+                                      <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu pull-right">
+                                      <li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>
+                                      <li><a href="#" data-hoodie-action="changeusername">Change Username</a></li>
+                                      <li><a href="#" data-hoodie-action="destroy">Destroy Account</a></li>
+                                  </ul>
+                                </span>
+                            </div><!-- /.hoodie-account-signedin -->
+
+                            <div class="hoodie-account-error">
+                                Hello,
+                                <span class="hoodie-username"><!-- usern name will be filled in here --></span>.
+                                <span class="btn-group">
+                                  <button class="btn btn-small btn-danger" data-hoodie-action="signin">Authentication error: Sign in again</button>
+                                  <button class="btn btn-small dropdown-toggle btn-danger" data-toggle="dropdown">
+                                      <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu pull-right">
+                                      <li><a href="#" data-hoodie-action="signout">Sign out</a></li>
+                                  </ul>
+                                </span>
+                            </div><!-- /.hoodie-account-error -->
+                        </td><!--/hoodieAccountBar -->
+                    </tr>
+
+				</table>
+	       	</div>
+      	</div>
+	</div>
+</div>

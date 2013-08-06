@@ -1,0 +1,18 @@
+#!/bin/bash
+SUBJECT="555-1212"
+MESSAGE="test 123 post"
+TODAY=$(date +%s)
+#echo "Today is" $MESSAGE
+USER="1013313"
+RANDOMID=`LC_ALL=C tr -dc '0123456789abcdefghijklmnopqrstuvwxyz' < /dev/urandom | head -c 7 | xargs`
+ID="incident/"$RANDOMID
+echo $ID
+#     cat /dev/random tr -dc '[:alnum:]' | head -c8
+# </dev/urandom tr -dc '0123456789abcdefghijklmnopqrstuvwxyz' | head -c8; echo ""
+# LC_ALL=C tr -dc '0123456789abcdefghijklmnopqrstuvwxyz' < /dev/urandom | head -c 7 | xargs
+JSON="{\"_id\":\"$ID\",\"flowId\":\"300\",\"formId\":\"incident\",\"phone\":\"$SUBJECT\",\"description\":\"$MESSAGE\",\"created\":$TODAY,\"lastModified\":$TODAY,\"createdBy\":\"$USER\",\"type\":\"incident\"}"
+#JSON="{"flowId":"300","formId":"incident","phone":"$SUBJECT","description":"$MESSAGE","created":$TODAY,"lastModified":$TODAY,"createdBy":"$USER","type":"incident"}"
+#JSON="{\"flowId":\"300\",\"formId\":\"incident\",\"phone\":\"555-5555\"}"
+echo $JSON
+curl -X POST http://user%2Fkay:kaypro10@192.168.1.60:6006/user%2F1013313 -d "$JSON" -H"Content-Type: application/json"
+
