@@ -45,26 +45,29 @@ var FormView = Backbone.View.extend({
 		var formId = this.form.get("_id");
 		var assignedId = this.form.get("assignedId");
 		var created = this.form.get("createdWidget");
+    var type = this.form.get("type");
 		this.formElements = new FormElements(this.form.get("form_elements"), { view: this });
 		var parentIdWidget = {"label": "parentIdWidget","value":this.parentId,"identifier": "parentId","inputType": "hidden"};
 		var flowIdWidget = {"label": "flowIdWidget","value": flowId,"identifier": "flowId","inputType": "hidden"};
 		var formIdWidget = {"label": "formIdWidget","value": formId,"identifier": "formId","inputType": "hidden"};
+    var typeWidget = {"label": "typeWidget","value": type,"identifier": "type","inputType": "hidden"};
 		var assignedIdWidget = {"label": "assignedIdWidget","value": assignedId,"identifier": "assignedId","inputType": "hidden"};
 		var createdWidget = {"label": "createdWidget","value": created,"identifier": "created","inputType": "hidden"};
 		this.formElements.add(parentIdWidget,{at: 0});
 		this.formElements.add(flowIdWidget,{at: 1});
 		this.formElements.add(formIdWidget,{at: 2});
-		this.formElements.add(assignedIdWidget,{at: 3});
-		this.formElements.add(createdWidget,{at: 4});
+    this.formElements.add(typeWidget,{at: 3});
+		this.formElements.add(assignedIdWidget,{at: 4});
+		this.formElements.add(createdWidget,{at: 5});
 		var _id = this.model.get("_id");
 		if (_id != null) {
 			var idWidget = {"label": "idWidget","value":_id,"identifier": "_id","inputType": "hidden"};
-			this.formElements.add(idWidget,{at: 4});
+			this.formElements.add(idWidget,{at: 5});
 		}
 		var _rev = this.model.get("_rev");
 		if (_rev != null) {
 			var revWidget = {"label": "revWidget","value":_rev,"identifier": "_rev","inputType": "hidden"};
-			this.formElements.add(revWidget,{at: 5});
+			this.formElements.add(revWidget,{at: 6});
 		}
 		this.formElements.each(this.addOne);
 		return this;
@@ -235,6 +238,8 @@ var FormView = Backbone.View.extend({
 
           var incident = new Incident(formData);
           incident.type="incident";
+          incident._id = "incident/" + hoodie.uuid();
+          console.log("incident._id: " + incident._id);
           incident.save();
           inspectModelAndGo(incident);
 

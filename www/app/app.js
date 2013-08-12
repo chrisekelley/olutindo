@@ -2,7 +2,8 @@
 $(function(){
 
   FORMY.forms = new FormCollection();
-
+  // initialize Hoodie
+  var hoodie  = new Hoodie("http://192.168.1.60:6004/_api")
 
 FORMY.loadForm = function(name, parentId, options) {
 	options || (options = {});
@@ -160,29 +161,30 @@ var AppRouter = Backbone.Router.extend({
     searchResults.db["view"] = [viewQuery];
 
 
-    // initialize Hoodie
-    //var hoodie  = new Hoodie("http://192.168.1.60:6002/_api")
 
-    //initial load of all incident items from the store
-    Backbone.hoodie.store.findAll('incident').then( function(searchResults) {
-      //searchResults.sort( sortByCreatedAt );
-      var listLength = searchResults.length;
-      console.log("item count: " + listLength);
-      if (listLength < limit) {
-        limit = listLength;
-        startkey = null;
-      }
-      FORMY.Incidents = new IncidentsList(searchResults);
-      startkey = 16;
-      var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
-      (new HomeView(
-          {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey})).render();
-      //console.log("starting stripeme.");
-      $(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
-      $(".stripeMe tr:even").addClass("alt");
-      $("#noStripeMe").removeClass("alt");
-      $("#noStripeMe").addClass("noStripeMeHeader");
-    });
+
+//    //initial load of all incident items from the store
+//    Backbone.hoodie.store.findAll('incident').then( function(searchResults) {
+//      //searchResults.sort( sortByCreatedAt );
+//      var listLength = searchResults.length;
+//      console.log("item count: " + listLength);
+//      if (listLength < limit) {
+//        limit = listLength;
+//        startkey = null;
+//      }
+//      FORMY.Incidents = new IncidentsList(searchResults);
+//      startkey = 16;
+//      var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
+//      (new HomeView(
+//          {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey})).render();
+//      //console.log("starting stripeme.");
+//      $(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
+//      $(".stripeMe tr:even").addClass("alt");
+//      $("#noStripeMe").removeClass("alt");
+//      $("#noStripeMe").addClass("noStripeMeHeader");
+//    });
+
+
 
 //    FORMY.Incidents = new IncidentsList(searchResults);
 //    startkey = 16;
@@ -232,6 +234,57 @@ var AppRouter = Backbone.Router.extend({
 //        console.log("Error loading PatientRecordList: " + JSON.stringify(arguments));
 //      }
 //    });
+
+
+    searchResults.fetch({fetch: 'query',
+      options: {
+        query: {
+          fun: {
+            map: function(doc) {
+              //emit(doc.order, null);
+              if (doc.formId === "incident") {
+                emit([doc.lastModified], doc);
+              }
+            }
+          }
+        }
+      },
+      success : function(){
+        console.log("item count: " + searchResults.length);
+        var listLength = searchResults.length;
+        //var querySize = 15
+        if (listLength < limit) {
+          limit = listLength;
+          startkey = null;
+        } else {
+          var next_start_record = searchResults.at(limit-1);
+          if (next_start_record) {
+            startkey_docid = next_start_record.id;
+            console.log("next_start_record: " + JSON.stringify(next_start_record));
+            console.log("startkey_docid: " + startkey_docid);
+            startkey = next_start_record.get("lastModified");
+            FORMY.Incidents = searchResults.remove(next_start_record);
+          }
+        }
+        if (startkey == "" || startkey == null) {	//home (/)
+          FORMY.Incidents = searchResults;
+          startkey = 16;
+          //console.log("searchResults: " + JSON.stringify(searchResults));
+        }
+        console.log("startkey: " + startkey);
+        var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
+        (new HomeView(
+            {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey})).render();
+        //console.log("starting stripeme.");
+        $(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
+        $(".stripeMe tr:even").addClass("alt");
+        $("#noStripeMe").removeClass("alt");
+        $("#noStripeMe").addClass("noStripeMeHeader");
+      },
+      error : function(){
+        console.log("Error loading PatientRecordList: " + JSON.stringify(arguments));
+      }
+    });
   },
 
   config: function () {
@@ -635,7 +688,7 @@ FORMY.Incidents = new IncidentsList();
   // setup Hoodie shares
   var hostname = window.location.host;
   //if (hostname === "192.168.1.60:6004") {
-    console.log("Setting up share on server: " + hostname)
+    // console.log("Setting up share on server: " + hostname)
     var share;
     //share = new Hoodie.Share(this.hoodie);
   // user%2F1013313 is the kay database name.

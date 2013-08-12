@@ -2,6 +2,7 @@ var incidentForm = {
   //"_id": "incident",
   "id": "incident",
   "formId":"incident",
+  "type":"incident",
   "formBuilder": "FormDesignerAlpha",
   "label": "Incident Report",
   "flow": {
