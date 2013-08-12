@@ -2,7 +2,17 @@ var FORMY = {};
 /** Configure the database **/
 
 // "http://192.168.1.60:6004/_api"
+//var couchServer = "http://192.168.1.60:6004/_api";
+var couchServer = "http://0.0.0.0:6004/_api";
+console.log("Current remote is at: " + couchServer)
 Backbone.connect("http://192.168.1.60:6004/_api") // creates a new hoodie at Backbone.hoodie
+//Backbone.sync = BackbonePouch.sync({
+//  db: PouchDB('user%2Ffhefv4d')
+//});
+//Backbone.Model.prototype.idAttribute = '_id';
+//var opts = {continuous: true, complete: syncError};
+//Backbone.db.replicate.to(remoteCouch, opts);
+//Backbone.db.replicate.from(remoteCouch, opts);
 
 //FORMY.SyncpointLocalDb = null;
 // findSyncpointLocalDb();

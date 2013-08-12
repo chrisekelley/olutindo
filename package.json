@@ -4,7 +4,8 @@
   "type": "app",
   "dependencies": {
     "hoodie-app": "git://github.com/hoodiehq/hoodie-server.git",
-    "hoodie-worker-users": "git://github.com/hoodiehq/worker-users.git"
+    "hoodie-worker-users": "git://github.com/hoodiehq/worker-users.git",
+    "hoodie-worker-shares": "git://github.com/hoodiehq/worker-shares.git"
   },
   "subdomain": "hoodie-olutindo",
   "domains": [

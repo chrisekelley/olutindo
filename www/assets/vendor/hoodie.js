@@ -1641,6 +1641,7 @@ Hoodie.Config = (function() {
     }
 
     this.hoodie.store.find(this.type, this.id).done(function(obj) {
+      console.log("Looking for hoodie store with id: " + this.id);
       self.cache = obj;
       return self.cache;
     });
@@ -2150,6 +2151,7 @@ Hoodie.Remote = (function(_super) {
 
     if (options.name !== undefined) {
       this.name = options.name;
+      console.log("Remote name: " + this.name)
     }
 
     if (options.prefix !== undefined) {
@@ -2162,6 +2164,7 @@ Hoodie.Remote = (function(_super) {
 
     if (options.baseUrl !== null) {
       this.baseUrl = options.baseUrl;
+      console.log("Remote baseUrl: " + this.baseUrl);
     }
 
     // in order to differentiate whether an object from remote should trigger a 'new'
@@ -2898,6 +2901,7 @@ Hoodie.AccountRemote = (function(_super) {
 
     // set name to user's DB name
     this.name = this.hoodie.account.db();
+    console.log("user's DB name: " + this.name);
 
     // we're always connected to our own db
     this.connected = true;
@@ -4625,7 +4629,9 @@ Hoodie.ShareInstance = (function(_super) {
     this.id = options.id || this.hoodie.uuid();
 
     // set name from id
+    //console.log("no longer prepending 'share' to share name.")
     this.name = "share/" + this.id;
+    //this.name = this.id;
 
     // set prefix from name
     this.prefix = this.name;

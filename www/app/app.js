@@ -632,4 +632,50 @@ Backbone.history.start();
   console.log("started Backbone history")
 FORMY.Incidents = new IncidentsList();
 
+  // setup Hoodie shares
+  var hostname = window.location.host;
+  //if (hostname === "192.168.1.60:6004") {
+    console.log("Setting up share on server: " + hostname)
+    var share;
+    //share = new Hoodie.Share(this.hoodie);
+  // user%2F1013313 is the kay database name.
+//    share = hoodie.share('user%2F1013313');
+//    share.subscribe();
+  // open a share and load all its objects
+//    hoodie.share('user/qaikby4').findAll("incident").done(function (objects) {
+//      var i=0;
+//      var cnt = objects.length;
+//      while (i < (cnt+1)) {
+//        i++;
+//        console.log("JSON: " + JSON.stringify(this));
+//      }
+//    });
+
+  //hoodie.share('user/qaikby4').grantWriteAccess(["1013313","2122682"]);
+  //hoodie.share('user/qaikby4').subscribe();
+
+  // add a new share and add some of my objects to it in one step
+//
+//  hoodie.store.findAll('incident').share()
+//      .done(function (incidents, share) { console.log('shared at ' + share.id); } );
+
+
+  //hoodie.share.add().done(function (share) {console.log('shared at ' + share.id)});
+  //hoodie.store.findAll('incident').shareAt('t47aqmv');
+
+  console.log("hoodie.account.username: "  + hoodie.account.username) ;
+  if (hoodie.account.username === "andro") {
+    //hoodie.share('tex5a7i').subscribe();
+    // open a share and load all its objects
+//    hoodie.share('tex5a7i').findAll()
+//        .done(function (objects) {console.log("The tex5a7i share contents: " + JSON.stringify(objects))});
+  }
+
+  //hoodie.share('user/tex5a7i').grantReadAccess('z36wk2v');
+
+  //hoodie.share('tex5a7i').grantWriteAccess('z36wk2v');
+
+
+
+
 });
