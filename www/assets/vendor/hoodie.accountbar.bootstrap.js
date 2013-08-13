@@ -33,6 +33,7 @@ Hoodie.extend('hoodstrap', (function() {
 
     // 
     handleUserUnauthenticated: function() {
+      console.log("hoodie.accountbar says you are signed out.")
       $('html').attr('data-hoodie-account-status', 'signedout')
     },
     handleUserAuthenticationError: function() {

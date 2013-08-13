@@ -2,10 +2,12 @@
   "name": "olutindo",
   "version": "1.0.0",
   "type": "app",
+  "unused_dependencies": {
+    "hoodie-worker-shares": "git://github.com/hoodiehq/worker-shares.git"
+  },
   "dependencies": {
     "hoodie-app": "git://github.com/hoodiehq/hoodie-server.git",
-    "hoodie-worker-users": "git://github.com/hoodiehq/worker-users.git",
-    "hoodie-worker-shares": "git://github.com/hoodiehq/worker-shares.git"
+    "hoodie-worker-users": "git://github.com/hoodiehq/worker-users.git"
   },
   "subdomain": "hoodie-olutindo",
   "domains": [

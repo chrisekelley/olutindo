@@ -18,7 +18,7 @@ var HomeView = Backbone.View.extend({
 	addOne : function(patient){
 		this.view = new SearchListItemView({model: patient});
 		this.rendered = this.view.render().el;
-		//console.log("add one in HomeView:" + JSON.stringify(patient));
+		console.log("add one in HomeView:" + JSON.stringify(patient));
 		$("#incidents").append(this.rendered);
 	},
 	events: {
@@ -104,8 +104,9 @@ var HomeView = Backbone.View.extend({
 		//if(FORMY.Incidents.length > 0){
 		FORMY.Incidents.each(this.addOne);
 		console.log("Looped through the Incidents")
-		$(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
-		$(".stripeMe tr:even").addClass("alt");
+//		$(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
+//		$(".stripeMe tr:even").addClass("alt");
+//    console.log("Applied .stripeME to tr's.")
 		return this;
 	}
 });

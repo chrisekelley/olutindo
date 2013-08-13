@@ -234,57 +234,68 @@ var AppRouter = Backbone.Router.extend({
 //        console.log("Error loading PatientRecordList: " + JSON.stringify(arguments));
 //      }
 //    });
-
-
-    searchResults.fetch({fetch: 'query',
-      options: {
-        query: {
-          fun: {
-            map: function(doc) {
-              //emit(doc.order, null);
-              if (doc.formId === "incident") {
-                emit([doc.lastModified], doc);
+    console.log("hoodie.account.username: "  + hoodie.account.username) ;
+    if(typeof hoodie.account.username === 'undefined'){
+      console.log("not logged in.")
+      // alert("Click on the yellow row and sign in.")
+      FORMY.Incidents = searchResults;
+      var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
+      (new HomeView(
+          {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey})).render();
+    } else {
+      searchResults.fetch({fetch: 'query',
+        options: {
+          query: {
+            fun: {
+              map: function(doc) {
+                //emit(doc.order, null);
+                if (doc.formId === "incident") {
+                  emit([doc.lastModified], doc);
+                }
               }
             }
           }
-        }
-      },
-      success : function(){
-        console.log("item count: " + searchResults.length);
-        var listLength = searchResults.length;
-        //var querySize = 15
-        if (listLength < limit) {
-          limit = listLength;
-          startkey = null;
-        } else {
-          var next_start_record = searchResults.at(limit-1);
-          if (next_start_record) {
-            startkey_docid = next_start_record.id;
-            console.log("next_start_record: " + JSON.stringify(next_start_record));
-            console.log("startkey_docid: " + startkey_docid);
-            startkey = next_start_record.get("lastModified");
-            FORMY.Incidents = searchResults.remove(next_start_record);
+        },
+        success : function(){
+          console.log("item count: " + searchResults.length);
+          var listLength = searchResults.length;
+          //var querySize = 15
+          if (listLength < limit) {
+            limit = listLength;
+            startkey = null;
+          } else {
+            var next_start_record = searchResults.at(limit-1);
+            if (next_start_record) {
+              startkey_docid = next_start_record.id;
+              console.log("next_start_record: " + JSON.stringify(next_start_record));
+              console.log("startkey_docid: " + startkey_docid);
+              startkey = next_start_record.get("lastModified");
+              console.log("Removing next_start_record from searchResults.")
+              FORMY.Incidents = searchResults.remove(next_start_record);
+            }
           }
+          if (startkey == "" || startkey == null) {	//home (/)
+            FORMY.Incidents = searchResults;
+            startkey = 16;
+            //console.log("searchResults: " + JSON.stringify(searchResults));
+          }
+          console.log("startkey: " + startkey);
+          var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
+          (new HomeView(
+              {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey}));
+              //.render();
+//          console.log("starting stripeme.");
+//          $(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
+//          $(".stripeMe tr:even").addClass("alt");
+//          $("#noStripeMe").removeClass("alt");
+//          $("#noStripeMe").addClass("noStripeMeHeader");
+          console.log("done with home.")
+        },
+        error : function(){
+          console.log("Error loading PatientRecordList: " + JSON.stringify(arguments));
         }
-        if (startkey == "" || startkey == null) {	//home (/)
-          FORMY.Incidents = searchResults;
-          startkey = 16;
-          //console.log("searchResults: " + JSON.stringify(searchResults));
-        }
-        console.log("startkey: " + startkey);
-        var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
-        (new HomeView(
-            {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey})).render();
-        //console.log("starting stripeme.");
-        $(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
-        $(".stripeMe tr:even").addClass("alt");
-        $("#noStripeMe").removeClass("alt");
-        $("#noStripeMe").addClass("noStripeMeHeader");
-      },
-      error : function(){
-        console.log("Error loading PatientRecordList: " + JSON.stringify(arguments));
-      }
-    });
+      });
+    }
   },
 
   config: function () {
