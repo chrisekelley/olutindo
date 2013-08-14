@@ -1,25 +1,55 @@
 var HomeView = Backbone.View.extend({
 	//el: $("#homePageView"),
 	template: loadTemplate("home.template.html"),
-	initialize: function() {
-		_.bindAll(this, 'addOne', 'reseted', 'render', 'search', 'nextLink');
-		FORMY.Incidents.bind('add',   this.addOne, this);
-		//FORMY.Incidents.bind('search',   this.search, this);
-		FORMY.Incidents.bind('reset', this.reseted, this);
-		FORMY.Incidents.bind('all',   this.render, this);
-		FORMY.Incidents.bind('change', this.search, this);
-		FORMY.Incidents.bind('render', this.render, this);
-		return this;
-	},
+  initialize: function() {
+    console.log("HomeView initializel");
+
+   // _.bindAll(this, 'addOne', 'reseted', 'render', 'search', 'nextLink');
+//    FORMY.Incidents.bind('add',   this.addOne, this);
+    //FORMY.Incidents.bind('search',   this.search, this);
+//    FORMY.Incidents.bind('reset', this.reseted, this);
+//    FORMY.Incidents.bind('all',   this.render, this);
+//    FORMY.Incidents.bind('change', this.search, this);
+//    FORMY.Incidents.bind('render', this.render, this);
+
+    this.listenTo(FORMY.Incidents, 'add', this.addOne);
+    this.listenTo(FORMY.Incidents, 'reset', this.addAll);
+    this.listenTo(FORMY.Incidents, 'all', this.render);
+
+//    var limit = 16;
+//    FORMY.Incidents.db["keys"] = null;
+//    var viewQuery = "byIncidentSorted?descending=true&limit=" + limit + "&startkey=" + "[" + this.startkey + "]" + "&startkey_docid=" + this.startkey_docid;
+//    if (this.startkey == null || this.startkey == "" || this.startkey == "home") {
+//      viewQuery = "byIncidentSorted?descending=true&limit=" + limit;
+//    }
+//    console.log("viewQuery: " + viewQuery);
+//    FORMY.Incidents.db["view"] = [viewQuery];
+//    FORMY.Incidents.fetch({fetch: 'query',
+//      options: {
+//        query: {
+//          fun: {
+//            map: function(doc) {
+//              //emit(doc.order, null);
+//              if (doc.formId === "incident") {
+//                emit([doc.lastModified], doc);
+//              }
+//            }
+//          }
+//        }
+//      }});
+
+
+    //return this;
+  },
 	
 	startkey: null,
 	startkey_docid: null,
 	endkey_docid: null,
-	addOne : function(patient){
-		this.view = new SearchListItemView({model: patient});
-		this.rendered = this.view.render().el;
-		console.log("add one in HomeView:" + JSON.stringify(patient));
-		$("#incidents").append(this.rendered);
+	addOne : function(record){
+		var view = new SearchListItemView({model: record});
+		//this.rendered = this.view.render().el;
+		console.log("add one in HomeView:" + JSON.stringify(record));
+		this.$("#incidents").append(view.render().el);
 	},
 	events: {
 		"click #form-search " : "search",
@@ -81,24 +111,35 @@ var HomeView = Backbone.View.extend({
 //		$("#recordView").remove();
 		//console.log("render in HomeView:" + JSON.stringify(this.model));
 		//this.content = this.model.toJSON();
-		
-//		window.addEventListener(orientationEvent, function() {
-//			alert('HOLY ROTATING SCREENS BATMAN:' + window.orientation + " " + screen.width);
-//			}, false);
-		// -90 480
-	   
-		if (window.orientation == -90) {
-			//alert('HOLY ROTATING SCREENS BATMAN - render vertical:' + window.orientation + " screen.width: " + screen.width);
-			this.orientation = "vert";
-			this.template =  loadTemplate("home.vert.template.html");
-		} else {
-			//alert('HOLY ROTATING SCREENS BATMAN - otherwise:' + window.orientation + " screen.width: " + screen.width);
-			//this.orientation = "horiz";
-			this.template =  loadTemplate("home.vert.template.html");
-			//this.template =  loadTemplate("home.template.html");
-		}
+    console.log("HomeView render.");
+    var limit = 16;
+    this.template =  loadTemplate("home.vert.template.html");
+
+//    console.log("item count: " + FORMY.Incidents.length);
+//    var listLength = FORMY.Incidents.length;
+//    //var querySize = 15
+//    if (listLength < limit) {
+//      limit = listLength;
+//      this.startkey = null;
+//    } else {
+//      var next_start_record = FORMY.Incidents.at(limit-1);
+//      if (next_start_record) {
+//        this.startkey_docid = next_start_record.id;
+//        console.log("next_start_record: " + JSON.stringify(next_start_record));
+//        console.log("this.startkey_docid: " + this.startkey_docid);
+//        this.startkey = next_start_record.get("lastModified");
+//        console.log("Removing next_start_record from FORMY.Incidents.")
+//        FORMY.Incidents = FORMY.Incidents.remove(next_start_record);
+//      }
+//    }
+//    if (this.startkey == "" || this.startkey == null) {	//home (/)
+//      //FORMY.Incidents = searchResults;
+//      this.startkey = 16;
+//      //console.log("FORMY.Incidents: " + JSON.stringify(FORMY.Incidents));
+//    }
+//    console.log("this.startkey: " + this.startkey);
+
 		var homeViewHtml = this.template(this.model.toJSON());
-		console.log("rendering HomeView");
 		//$(this.el).html(homeViewHtml);
 		$("#homePageView").html(homeViewHtml);
 		//if(FORMY.Incidents.length > 0){
@@ -114,11 +155,14 @@ var HomeView = Backbone.View.extend({
 var SearchListItemView = Backbone.View.extend({
 	tagName : "tr",
 	template: Handlebars.compile($("#search-template").html()),
+
 	initialize : function(){
 		//this.model.bind('change', this.render, this);
 		// from backbone-couch.js chat example:
-		 _.bindAll(this, 'render');
-		this.model.bind('change', this.render);
+//		 _.bindAll(this, 'render');
+//		this.model.bind('change', this.render);
+    this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'destroy', this.remove);
 	},
 
 	render : function(){ 

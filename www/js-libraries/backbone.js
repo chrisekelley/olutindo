@@ -139,7 +139,7 @@
     // (unless you're listening on `"all"`, which will cause your callback to
     // receive the true name of the event as the first argument).
     trigger: function(name) {
-      console.log("backbone.js: trigger name: " + name);
+      //console.log("backbone.js: trigger name: " + name);
       if (!this._events) return this;
       var args = slice.call(arguments, 1);
       if (!eventsApi(this, 'trigger', name, args)) return this;

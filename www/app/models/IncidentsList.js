@@ -14,3 +14,5 @@ var IncidentsList = Backbone.Collection.extend({
   type: "incident",
 	model : Incident
 });
+
+FORMY.Incidents = new IncidentsList();

@@ -235,10 +235,11 @@ var FormView = Backbone.View.extend({
 
 //          hoodie.store.add("incident", attributes)
 //              .done(function (newObject) {});
-
+          formData._id = "incident/" + hoodie.uuid();
           var incident = new Incident(formData);
           incident.type="incident";
-          incident._id = "incident/" + hoodie.uuid();
+          //incident._id = "incident/" + hoodie.uuid();
+          //incident.id = "incident/" + hoodie.uuid();
           console.log("incident._id: " + incident._id);
           incident.save();
           inspectModelAndGo(incident);

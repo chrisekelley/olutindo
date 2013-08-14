@@ -1,5 +1,5 @@
 #!/bin/bash
-SUBJECT="555-0004"
+SUBJECT="555-1000"
 MESSAGE="test 123 post"
 TODAY=$(date +%s)
 #echo "Today is" $MESSAGE

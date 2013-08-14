@@ -2,6 +2,5 @@
     initialize : function(){
     	//console.log("init Incident: ");
     	this.records =  new IncidentRecordList;
-    },
-    
+    }
   });
