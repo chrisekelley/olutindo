@@ -230,15 +230,6 @@ $(function(){
 //        }
 
         var searchResults = new IncidentsList();
-//        FORMY.Incidents = searchResults;
-//        var renderHome = function(){
-//          console.log("item count: " + FORMY.Incidents.length);
-//
-//          var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
-//          var Home = new HomeView(
-//              {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey});
-//        };
-//        var loadHome = _.debounce(renderHome(), 5000);
         var limit = 16;
         searchResults.db["keys"] = null;
         var viewQuery = "byIncidentSorted?descending=true&limit=" + limit + "&startkey=" + "[" + this.startkey + "]" + "&startkey_docid=" + this.startkey_docid;
@@ -336,40 +327,49 @@ $(function(){
         }
         console.log("Searching for " + searchTerm + " department: " + department);
         var searchResults = new IncidentsList();
+        var pouchdbViewname = null;
         if ((searchTerm !== "") && (searchTerm !== " ")) {
           //var searchInt = parseInt(searchTerm);
           console.log("bySearchKeywords search");
-          searchResults.db["keys"] = [searchTerm];
-          //searchResults.db["keys"] = {"keys": [8]};
-          //searchResults.db["view"] = ["bySurnameOrId?startkey=\"" + searchTerm + "\"&endkey=\"" + searchTerm + "\u9999\""];
-          //searchResults.db["view"] = ["byId?startkey=\"" + searchTerm + "\"&endkey=\"" + searchTerm + "Z\""];
-          searchResults.db["view"] = ["bySearchKeywords"];
-          //searchResults.db["view"] = ["byId?descending=true&limit=15"];
+          searchResults.fetch(
+              {fetch: 'query',
+                options: {
+                  query: {
+                    fun:bySearchKeywords,
+                    key:searchTerm
+                  }
+                },
+                success: function(collection, response, options) {
+                  console.log("item count: " + collection.length);
+                  FORMY.Incidents = searchResults;
+                  var page = new Page({content: "Default List of Incidents:", startkey_docid:this.startkey_docid, startkey:this.startkey, username:hoodie.account.username});
+                  var Home = new HomeView(
+                      {model: page, el: $("#homePageView"), startkey_docid:this.startkey_docid, startkey:this.startkey});
+                }}
+          );
         } else if (department !== "") {
           console.log("byDepartment search");
-          searchResults.db["keys"] = [department];
-          //searchResults.db["keys"] = ["3"];
-          //searchResults.db["keys"] = null;
-          searchResults.db["view"] = ["byDepartment"];
+          searchResults.fetch(
+              {fetch: 'query',
+                options: {
+                  query: {
+                    fun:byDepartment,
+                    key:department
+                  }
+                },
+                success: function(collection, response, options) {
+                  console.log("item count: " + collection.length);
+                  FORMY.Incidents = searchResults;
+                  var page = new Page({content: "Default List of Incidents:", startkey_docid:this.startkey_docid, startkey:this.startkey, username:hoodie.account.username});
+                  var Home = new HomeView(
+                      {model: page, el: $("#homePageView"), startkey_docid:this.startkey_docid, startkey:this.startkey});
+                }}
+          );
         } else {
           //console.log("This should reset the collection.");
-          searchResults.db["keys"] = null;
-          searchResults.db["view"] = ["byIncidentSorted?descending=true&limit=16"];
+//          searchResults.db["keys"] = null;
+//          searchResults.db["view"] = ["byIncidentSorted?descending=true&limit=16"];
         }
-        searchResults.fetch({
-          success : function(){
-            //console.log("searchResults: " + JSON.stringify(searchResults));
-            var next_start_record = searchResults.get(15);
-            console.log("next_start_record: " + JSON.stringify(next_start_record));
-            FORMY.Incidents = searchResults;
-            //console.log("render; Incidents count: " + FORMY.Incidents.length);
-            var page = new Page({content: "Default List of Incidents:"});
-            (new HomeView({model: page, el: $("#homePageView")})).render();
-          },
-          error : function(){
-            console.log("Error loading PatientRecordList: " + JSON.stringify(arguments));
-          }
-        });
       },
       incident: function () {
         $("#homePageView").remove();
