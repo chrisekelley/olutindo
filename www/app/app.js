@@ -124,7 +124,7 @@ $(function(){
         "incident":           							"incident",    		// #incident
         "arrestDocket/:query":  						"arrestDocket",    	// #arrestDocket
         "problem/:query":       						"problem",    		// #arrestDocket
-        "incidentRecords/:incidentId":					"incidentRecords",  // #incidentRecords
+        "incidentRecords/incident/:incidentId":					"incidentRecords",  // #incidentRecords
         "edit/:recordId":          						"edit",    			// #edit
         "record/:recordId":        						"record",    		// #record
         "renderForm/:formId/:parentId":					"renderForm",    	// #renderForm
@@ -296,21 +296,6 @@ $(function(){
 
 
       },
-
-      config: function () {
-        console.log("config route.");
-        $("#recordView").remove();
-        $("#formRenderingView").remove();
-        $("#designer").remove();
-        $("#homePageView").remove();
-        if (! $("#homePageView").length){
-          var viewDiv = document.createElement("div");
-          viewDiv.setAttribute("id", "homePageView");
-          $("#views").append(viewDiv);
-        }
-        var page = new Page({content: "Configuration"});
-        (new ConfigView({model: page, el: $("#homePageView")})).render();
-      },
       search: function (searchTerm, department) {
         console.log("search route.");
         if (FORMY.SyncpointLocalDb != null) {
@@ -463,41 +448,87 @@ $(function(){
           $("#views").append(viewDiv);
         }
         //Set the _id and then call fetch to use the backbone connector to retrieve it from couch
-        FORMY.sessionRecord = new Incident({_id: incidentId});
+        FORMY.sessionRecord = new Incident();
+        FORMY.sessionRecord.id = "incident/" + incidentId;
+        //FORMY.sessionRecord = new Incident();
+
+//        searchResults.fetch(
+//            {fetch: 'query',
+//              options: {
+//                query: {
+//                  fun:bySearchKeywords,
+//                  key:searchTerm
+//                }
+//              },
+//              success: function(collection, response, options) {
+//                console.log("item count: " + collection.length);
+//                FORMY.Incidents = searchResults;
+//                var page = new Page({content: "Default List of Incidents:", startkey_docid:this.startkey_docid, startkey:this.startkey, username:hoodie.account.username});
+//                var Home = new HomeView(
+//                    {model: page, el: $("#homePageView"), startkey_docid:this.startkey_docid, startkey:this.startkey});
+//              }}
+//        );
+
+
+
         FORMY.sessionRecord.fetch( {
-          success: function(model){
+          //fetch: 'query',
+//
+//          options: {
+////            query: {
+////              fun:{
+////                map: function(doc) {
+////                  if (doc.type === 'incident') {
+////                    console.log("incident: " + JSON.stringify(doc));
+////                    emit(doc.position, doc)
+////                  }
+////                }
+////              },
+////              key:"incident/" + incidentId
+////            },
+////            get: {
+////              docid:"incident/" + incidentId
+////            }
+//            get: "incident/" + incidentId,
+//            key:"incident/" + incidentId
+//          },
+//
+          //success: function(model){
+          success: function(model, response, options) {
             console.log("Just successfully fetched the incident.");
-            FORMY.sessionRecord.records = new IncidentRecordList();
-            FORMY.sessionRecord.records.db["keys"] = [incidentId];
-            FORMY.sessionRecord.records.fetch({
-              success : function(){
-                //console.log("Records:" + JSON.stringify(patient.Records));
-                console.log("Fetching Records for :" + incidentId);
-                //(new IncidentView({model: FORMY.sessionRecord})).render();
-                //(new RecordView({model: record, currentForm:form, el: $("#recordView")})).render();
-                console.log("record: " + JSON.stringify(FORMY.sessionRecord));
-                FORMY.loadForm(FORMY.sessionRecord.get("formId"), incidentId, {
-                  success: function(form){
-                    //console.log("form: " + JSON.stringify(form));
+//            FORMY.sessionRecord.records = new IncidentRecordList();
+//            FORMY.sessionRecord.records.db["keys"] = [incidentId];
+            //FORMY.sessionRecord.records.fetch({
+            //success : function(){
+            //console.log("Records:" + JSON.stringify(patient.Records));
+            //console.log("Fetching Records for :" + incidentId);
+            //(new IncidentView({model: FORMY.sessionRecord})).render();
+            //(new RecordView({model: record, currentForm:form, el: $("#recordView")})).render();
+            console.log("record: " + JSON.stringify(FORMY.sessionRecord));
+            FORMY.loadForm(FORMY.sessionRecord.get("formId"), incidentId, {
+              //success: function(form){
+              success: function(form, response, options) {
+                //console.log("form: " + JSON.stringify(form));
 //                    			form.set({"patientSurname": patient.get('surname')});
 //                    			form.set({"patientForenames": patient.get('forenames')});
 //                    			form.set({"patientMiddle_name": patient.get('Middle_name')});
-                    form.set({"assignedId": FORMY.sessionRecord.get('assignedId')});
-                    form.set({"created": FORMY.sessionRecord.get('created')});
-                    form.set({"lastModified": FORMY.sessionRecord.get('lastModified')});
-                    form.set({"recordId": FORMY.sessionRecord.get('_id')});
-                    form.set({"parentId": FORMY.sessionRecord.get('_id')});
-                    (new RecordView({model: FORMY.sessionRecord, currentForm:form, el: $("#recordView")})).render();
-                  },
-                  error : function(){
-                    console.log("Error loading form: " + arguments);
-                  }
-                });
-              },
-              error : function(){
-                console.log("Error loading PatientRecordList: " + arguments);
+                form.set({"assignedId": FORMY.sessionRecord.get('assignedId')});
+                form.set({"created": FORMY.sessionRecord.get('created')});
+                form.set({"lastModified": FORMY.sessionRecord.get('lastModified')});
+                form.set({"recordId": FORMY.sessionRecord.get('_id')});
+                form.set({"parentId": FORMY.sessionRecord.get('_id')});
+                //(new RecordView({model: FORMY.sessionRecord, currentForm:form, el: $("#recordView")})).render();
+                var recordView = new RecordView({model: FORMY.sessionRecord, el: $("#recordView")})
+                recordView.currentForm = form;
+                recordView.render();
+
               }
             });
+//              },
+//              error : function(){
+//                console.log("Error loading PatientRecordList: " + arguments);
+//              }
+            //});
           }
         });
       },

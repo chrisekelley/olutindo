@@ -1,10 +1,10 @@
-window.RecordView = Backbone.View.extend({
+var RecordView = Backbone.View.extend({
 	//el: $("#recordView"),
 	template: loadTemplate("record.template.html"),
 	initialize: function() {
 		_.bindAll(this, "render", "addOne");
-		return this;
-	},      
+		//return this;
+	},
 	render: function() {
 		if (window.orientation == -90) {
 			this.orientation = "vert";
@@ -15,14 +15,15 @@ window.RecordView = Backbone.View.extend({
 			//this.template =  loadTemplate("home.template.html");
 		}
 		//console.log("this.model in RecordView: "+ JSON.stringify(this.model.toJSON()));
-		this.form = this.options.currentForm;
-		//console.log("form: " + JSON.stringify(this.form));
-		this.patientId = this.options.currentForm.patientId;
-		var flow = this.options.currentForm.get("flow");
-		var flowId = flow.id;
-		var formId = this.options.currentForm.get("_id");
-		var created = this.options.model.created;
-		this.formElements = new FormElements(this.options.currentForm.get("form_elements"), { view: this });
+		//this.form = this.options.currentForm;
+    this.form = this.currentForm;
+    //console.log("form: " + JSON.stringify(this.form));
+		this.patientId = this.currentForm.patientId;
+//		var flow = this.currentForm.get("flow");
+		var flowId = null;
+		var formId = this.currentForm.get("_id");
+		var created = this.model.created;
+		this.formElements = new FormElements(this.currentForm.get("form_elements"), { view: this });
 		var patientIdWidget = {"label": "patientIdWidget","value":this.patientId,"identifier": "patientId","inputType": "hidden"};
 		var flowIdWidget = {"label": "flowIdWidget","value": flowId,"identifier": "flowId","inputType": "hidden"};
 		var formIdWidget = {"label": "formIdWidget","value": formId,"identifier": "formId","inputType": "hidden"};
@@ -46,6 +47,7 @@ window.RecordView = Backbone.View.extend({
   currentTableName: "",
   currentRow:0,
   formElements: null,
+  currentForm: null,
   addOne: function(formElement){
 //		console.log("add one:" + JSON.stringify(formElement));
 		 var inputType = formElement.get("inputType");
@@ -140,6 +142,6 @@ window.RecordView = Backbone.View.extend({
 			//console.log("CloseRow currentParentName: " + currentParentName);
 		}
 		 //console.log("Element: " + identifier + " currentParentName: " + currentParentName);
-	  },
+	  }
 });
 

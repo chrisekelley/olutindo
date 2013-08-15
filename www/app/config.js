@@ -9,7 +9,7 @@ console.log("Current remote is at: " + remoteCouch)
 Backbone.sync = BackbonePouch.sync({
   db: PouchDB('user%2Ffhefv4d')
 });
-//Backbone.Model.prototype.idAttribute = '_id';
+Backbone.Model.prototype.idAttribute = '_id';
 
 var onComplete = function(err, result) {
   if (result.ok) {
