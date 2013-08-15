@@ -16,9 +16,12 @@
 
 /* hide contents until we know if user is signed in or not */
 body .hoodie-account-signedin,
-body .hoodie-account-signedout,
 body .hoodie-account-error {
   display: none;
+}
+/* work-around for error in Android Webview */
+body .hoodie-account-signedout {
+    display: block;
 }
 
 html[data-hoodie-account-status=signedin]  .hoodie-account-signedin,
@@ -29,7 +32,8 @@ html[data-hoodie-account-status=signedout] .hoodie-account-signedout {
 
 .hoodie-accountbar {
   position: relative;
-    height: 130px;
+    text-align: right;
+    /*height: 130px;*/
   /*top: 20px;*/
   /*right: 10px;*/
 }

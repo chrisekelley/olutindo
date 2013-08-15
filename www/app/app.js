@@ -264,11 +264,44 @@ $(function(){
                 console.log("item count: " + collection.length);
                 //var searchResults = new IncidentsList(collection);
                 FORMY.Incidents = searchResults;
-                var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
+                var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey, username:hoodie.account.username});
                 var Home = new HomeView(
                     {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey});
               }}
         );
+
+        hoodie.account.on('signin', function (user) {
+//          console.log("refresh the items.")
+//          searchResults.fetch({fetch: 'query',
+//                options: {
+//                  query: {
+//                    fun: {
+//                      map: function(doc) {
+//                        //emit(doc.order, null);
+//                        if (doc.formId === "incident") {
+//                          emit([doc.lastModified], doc);
+//                        }
+//                      }
+//                    }
+//                  }
+//                }
+////                success: function(collection, response, options) {
+////                  console.log("item count: " + collection.length);
+////                  //var searchResults = new IncidentsList(collection);
+////                  FORMY.Incidents = searchResults;
+////                  var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
+////                  var Home = new HomeView(
+////                      {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey});
+////                }
+//              }
+//          );
+          if (hoodie.account.username !== 'undefined') {
+            console.log("setting displayUsername")
+            $("#displayUsername").html("Logged in as " + hoodie.account.username);
+          } else {
+            console.log("hoodie.account.username - is it empty?: "  + hoodie.account.username) ;
+          }
+        });
 
 
       },
@@ -714,6 +747,19 @@ $(function(){
 
     //hoodie.share('tex5a7i').grantWriteAccess('z36wk2v');
 
+    hoodie.account.on('signin', function (user) {
+      console.log("start replication.")
+      Backbone.sync.defaults.db.replicate.to(remoteCouch, opts);
+      Backbone.sync.defaults.db.replicate.from(remoteCouch, opts);
+      $("#displayUsername").html("Logged in as " + hoodie.account.username);
+    });
+
+    if (hoodie.account.username !== 'undefined') {
+      console.log("setting displayUsername")
+      $("#displayUsername").html("Logged in as " + hoodie.account.username);
+    } else {
+      console.log("hoodie.account.username - is it empty?: "  + hoodie.account.username) ;
+    }
 
   }
 

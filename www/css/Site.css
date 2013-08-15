@@ -1231,3 +1231,12 @@ font-weight: bold;
 .container{width:100%}
 
 #search_string{width:100px}
+
+#login-bar {
+    background-color: #6EA8E4;
+    height: 150px;
+}
+
+#displayUsername {
+    padding-left: 5px;
+}

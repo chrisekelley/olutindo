@@ -2,7 +2,7 @@ var HomeView = Backbone.View.extend({
 	//el: $("#homePageView"),
 	template: loadTemplate("home.template.html"),
   initialize: function() {
-    console.log("HomeView initializel");
+    console.log("HomeView initialize");
 
    // _.bindAll(this, 'addOne', 'reseted', 'render', 'search', 'nextLink');
 //    FORMY.Incidents.bind('add',   this.addOne, this);
@@ -16,40 +16,21 @@ var HomeView = Backbone.View.extend({
     this.listenTo(FORMY.Incidents, 'reset', this.addAll);
     this.listenTo(FORMY.Incidents, 'all', this.render);
 
-//    var limit = 16;
-//    FORMY.Incidents.db["keys"] = null;
-//    var viewQuery = "byIncidentSorted?descending=true&limit=" + limit + "&startkey=" + "[" + this.startkey + "]" + "&startkey_docid=" + this.startkey_docid;
-//    if (this.startkey == null || this.startkey == "" || this.startkey == "home") {
-//      viewQuery = "byIncidentSorted?descending=true&limit=" + limit;
-//    }
-//    console.log("viewQuery: " + viewQuery);
-//    FORMY.Incidents.db["view"] = [viewQuery];
-//    FORMY.Incidents.fetch({fetch: 'query',
-//      options: {
-//        query: {
-//          fun: {
-//            map: function(doc) {
-//              //emit(doc.order, null);
-//              if (doc.formId === "incident") {
-//                emit([doc.lastModified], doc);
-//              }
-//            }
-//          }
-//        }
-//      }});
-
-
-    //return this;
   },
-	
+	username: null,
 	startkey: null,
 	startkey_docid: null,
 	endkey_docid: null,
 	addOne : function(record){
-		var view = new SearchListItemView({model: record});
-		//this.rendered = this.view.render().el;
-		console.log("add one in HomeView:" + JSON.stringify(record));
-		this.$("#incidents").append(view.render().el);
+    if ((record.attributes.type != null) && (record.attributes.type === "incident")) {
+      var view = new SearchListItemView({model: record});
+      //this.rendered = this.view.render().el;
+      console.log("add one in HomeView:" + JSON.stringify(record));
+      this.$("#incidents").append(view.render().el);
+    } else {
+      console.log("Skipping this record - not an incident.")
+    }
+
 	},
 	events: {
 		"click #form-search " : "search",

@@ -22,8 +22,6 @@ var onComplete = function(err, result) {
 //var opts = {continuous: true, complete: onComplete};
 var opts = {continuous: true};
 
-Backbone.sync.defaults.db.replicate.to(remoteCouch, opts);
-Backbone.sync.defaults.db.replicate.from(remoteCouch, opts);
 
 //var url = model.get('url'),
 //    pushResps = this.pushResps,
