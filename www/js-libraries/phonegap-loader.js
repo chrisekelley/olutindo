@@ -4,8 +4,9 @@
   var useragent = navigator.userAgent;
   console.log("useragent:" + useragent)
   if (useragent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
-      loadScript('cordova.js');
-    }
+    loadScript('cordova.js');
+    loadScript('version.js');
+  }
 
   function loadScript(url){
     // synchronous load by @Sean Kinsey

@@ -1,4 +1,4 @@
-// pouchdb.nightly - 2013-08-09T12:38:30
+// pouchdb.nightly - 2013-08-25T17:29:48
 
 (function() {
  // BEGIN Math.uuid.js
@@ -43,7 +43,7 @@ var uuid;
   var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
     'abcdefghijklmnopqrstuvwxyz'.split('');
 
-  uuid = function uuid(len, radix) {
+  uuid = function uuid_inner(len, radix) {
     var chars = CHARS;
     var uuidInner = [];
     var i;
@@ -79,6 +79,7 @@ var uuid;
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = uuid;
 }
+
 /**
 *
 *  MD5 (Message-Digest Algorithm)
@@ -2403,7 +2404,11 @@ PouchAdapter = function(opts, callback) {
 
   // compact the whole database using single document
   // compaction
-  api.compact = function(callback) {
+  api.compact = function(opts, callback) {
+    if (typeof opts === 'function') {
+      callback = opts;
+      opts = {};
+    }
     api.changes({complete: function(err, res) {
       if (err) {
         call(callback); // TODO: silently fail
@@ -2626,6 +2631,13 @@ PouchAdapter = function(opts, callback) {
 
     if (!opts.since) {
       opts.since = 0;
+    }
+    if (opts.since === 'latest') {
+      api.info(function (err, info) {
+        opts.since = info.update_seq  - 1;
+        api.changes(opts);
+      });
+      return;
     }
 
     if (!('descending' in opts)) {
@@ -2902,8 +2914,8 @@ var HttpPouch = function(opts, callback) {
   var host = getHost(opts.name);
 
   host.headers = opts.headers || {};
-  if (opts.auth) {
-    var token = PouchUtils.btoa(opts.auth.username + ':' + opts.auth.password);
+  if (host.auth) {
+    var token = PouchUtils.btoa(host.auth.username + ':' + host.auth.password);
     host.headers.Authorization = 'Basic ' + token;
   }
 
@@ -3454,6 +3466,14 @@ var HttpPouch = function(opts, callback) {
 
     if (!api.taskqueue.ready()) {
       api.taskqueue.addTask('changes', arguments);
+      return;
+    }
+    
+    if (opts.since === 'latest') {
+      api.info(function (err, info) {
+        opts.since = info.update_seq - 1;
+        api.changes(opts);
+      });
       return;
     }
 
@@ -4627,7 +4647,10 @@ var webSqlPouch = function(opts, callback) {
   }
   if (PouchUtils.isCordova()) {
     //to wait until custom api is made in pouch.adapters before doing setup
-    window.addEventListener(name + "_pouch", setup, false);
+    window.addEventListener(name + '_pouch', function cordova_init() {
+      window.removeEventListener(name + '_pouch', cordova_init, false);
+      setup();
+    }, false);
   } else {
     setup();
   }
@@ -5396,7 +5419,8 @@ var MapReduce = function(db) {
           groups.push({key: [[e.key, e.id]], value: [e.value]});
         });
         groups.forEach(function(e) {
-          e.value = fun.reduce(e.key, e.value) || null;
+          e.value = fun.reduce(e.key, e.value);
+          e.value = (typeof e.value === 'undefined') ? null : e.value;
           e.key = e.key[0][0];
         });
 

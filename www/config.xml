@@ -11,4 +11,5 @@
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
     <preference name="load-url-timeout" value="60000" />
+    <content src="index.html" />
 </widget>
