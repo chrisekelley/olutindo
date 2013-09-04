@@ -7,6 +7,7 @@ $(function(){
     onDeviceReady(); //this is the browser
   }
   function onDeviceReady(){
+    checkVersion();
     FORMY.forms = new FormCollection();
     // initialize Hoodie
     //var hoodie  = new Hoodie("http://0.0.0.0:6004/_api")
