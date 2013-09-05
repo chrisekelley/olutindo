@@ -174,19 +174,19 @@ window.Hoodie = window.Hoodie || (function(_super) {
     this.resolveWith = this.resolveWith.bind(this);
     this.reject = this.reject.bind(this);
     this.resolve = this.resolve.bind(this);
-    this.checkConnection = this.checkConnection.bind(this);
+    // this.checkConnection = this.checkConnection.bind(this);
 
     // remove trailing slash(es)
     this.baseUrl = this.baseUrl ? this.baseUrl.replace(/\/+$/, '') : "/_api";
 
     // init core modules
-    this.store = new this.constructor.LocalStore(this);
-    this.config = new this.constructor.Config(this);
+    //this.store = new this.constructor.LocalStore(this);
+    //this.config = new this.constructor.Config(this);
     this.account = new this.constructor.Account(this);
-    this.remote = new this.constructor.AccountRemote(this);
+    //this.remote = new this.constructor.AccountRemote(this);
 
     this._loadExtensions();
-    this.checkConnection();
+    //this.checkConnection();
   }
 
   Object.deepExtend(Hoodie, _super);
@@ -519,35 +519,35 @@ Hoodie.Account = (function () {
 
   function Account(hoodie) {
     this.hoodie = hoodie;
-
-    this._handleChangeUsernameAndPasswordRequest = this._handleChangeUsernameAndPasswordRequest;
-    this._sendChangeUsernameAndPasswordRequest = this._sendChangeUsernameAndPasswordRequest;
-    this._cleanupAndTriggerSignOut = this._cleanupAndTriggerSignOut.bind(this);
-    this._cleanup = this._cleanup.bind(this);
-    this._handleFetchBeforeDestroyError = this._handleFetchBeforeDestroyError.bind(this);
-    this._handleFetchBeforeDestroySucces = this._handleFetchBeforeDestroySucces.bind(this);
-    this._handlePasswordResetStatusRequestError = this._handlePasswordResetStatusRequestError.bind(this);
-    this._handlePasswordResetStatusRequestSuccess = this._handlePasswordResetStatusRequestSuccess.bind(this);
-    this._checkPasswordResetStatus = this._checkPasswordResetStatus.bind(this);
-    this._handleSignInSuccess = this._handleSignInSuccess.bind(this);
-    this._delayedSignIn = this._delayedSignIn.bind(this);
-    this._handleSignUpSucces = this._handleSignUpSucces.bind(this);
-    this._handleRequestError = this._handleRequestError.bind(this);
-    this._handleAuthenticateRequestSuccess = this._handleAuthenticateRequestSuccess.bind(this);
-
-    this.fetch = this.fetch.bind(this);
-    this.signOut = this.signOut.bind(this);
-    this.authenticate = this.authenticate.bind(this);
-
-    // cache for CouchDB _users doc
-    this._doc = {};
-
-    // map of requestPromises. We maintain this list to avoid sending
-    // the same requests several times.
-    this._requests = {};
-
-    // init account
-    this.init();
+//
+//    this._handleChangeUsernameAndPasswordRequest = this._handleChangeUsernameAndPasswordRequest;
+//    this._sendChangeUsernameAndPasswordRequest = this._sendChangeUsernameAndPasswordRequest;
+//    this._cleanupAndTriggerSignOut = this._cleanupAndTriggerSignOut.bind(this);
+//    this._cleanup = this._cleanup.bind(this);
+//    this._handleFetchBeforeDestroyError = this._handleFetchBeforeDestroyError.bind(this);
+//    this._handleFetchBeforeDestroySucces = this._handleFetchBeforeDestroySucces.bind(this);
+//    this._handlePasswordResetStatusRequestError = this._handlePasswordResetStatusRequestError.bind(this);
+//    this._handlePasswordResetStatusRequestSuccess = this._handlePasswordResetStatusRequestSuccess.bind(this);
+//    this._checkPasswordResetStatus = this._checkPasswordResetStatus.bind(this);
+//    this._handleSignInSuccess = this._handleSignInSuccess.bind(this);
+//    this._delayedSignIn = this._delayedSignIn.bind(this);
+//    this._handleSignUpSucces = this._handleSignUpSucces.bind(this);
+//    this._handleRequestError = this._handleRequestError.bind(this);
+//    this._handleAuthenticateRequestSuccess = this._handleAuthenticateRequestSuccess.bind(this);
+//
+//    this.fetch = this.fetch.bind(this);
+//    this.signOut = this.signOut.bind(this);
+//    this.authenticate = this.authenticate.bind(this);
+//
+//    // cache for CouchDB _users doc
+//    this._doc = {};
+//
+//    // map of requestPromises. We maintain this list to avoid sending
+//    // the same requests several times.
+//    this._requests = {};
+//
+//    // init account
+//    this.init();
   }
 
   // Properties
@@ -762,6 +762,7 @@ Hoodie.Account = (function () {
   //       current username.
   //
   Account.prototype.signIn = function(username, password) {
+    console.log("Account.prototype.signIn");
     var self = this;
 
     if (username === null) {
@@ -773,19 +774,22 @@ Hoodie.Account = (function () {
     }
 
     // downcase
-    username = username.toLowerCase();
+    //username = username.toLowerCase();
 
-    if (this.username !== username) {
-      return this.signOut({
-        silent: true
-      }).pipe(function() {
-        //return self._sendSignInRequest(username, password);
-            return saveLoginPreferences(username, password);
-      });
-    } else {
-//      return this._sendSignInRequest(username, password, {
-//        reauthenticated: true
+//    if (this.username !== username) {
+//      return this.signOut({
+//        silent: true
+//      }).pipe(function() {
+//        //return self._sendSignInRequest(username, password);
+//            return saveLoginPreferences(username, password);
 //      });
+//    } else {
+////      return this._sendSignInRequest(username, password, {
+////        reauthenticated: true
+////      });
+//      return saveLoginPreferences(username, password);
+//    }
+    if (username !== null) {
       return saveLoginPreferences(username, password);
     }
   };
@@ -4454,7 +4458,7 @@ Hoodie.Share = (function () {
 })();
 
 // extend Hoodie
-Hoodie.extend('share', Hoodie.Share);
+//Hoodie.extend('share', Hoodie.Share);
 
 // User
 // ======
@@ -4557,7 +4561,7 @@ Hoodie.User = (function() {
 })();
 
 // extend Hoodie
-Hoodie.extend('user', Hoodie.User);
+//Hoodie.extend('user', Hoodie.User);
 
 // Global
 // ========
@@ -4589,7 +4593,7 @@ Hoodie.Global = (function () {
 })();
 
 // extend Hoodie
-Hoodie.extend('global', Hoodie.Global);
+//Hoodie.extend('global', Hoodie.Global);
 
 // Share Instance
 // ========================

@@ -7,7 +7,9 @@ $(function(){
     onDeviceReady(); //this is the browser
   }
   function onDeviceReady(){
-    checkVersion();
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+      checkVersion();
+    }
     FORMY.forms = new FormCollection();
     // initialize Hoodie
     //var hoodie  = new Hoodie("http://0.0.0.0:6004/_api")
@@ -128,7 +130,7 @@ $(function(){
         "arrestDocket/:query":  						"arrestDocket",    	// #arrestDocket
         "problem/:query":       						"problem",    		// #arrestDocket
         "incidentRecords/incident/:incidentId":					"incidentRecords",  // #incidentRecords
-        "edit/:recordId":          						"edit",    			// #edit
+        "edit/incident/:recordId":          						"edit",    			// #edit
         "record/:recordId":        						"record",    		// #record
         "renderForm/:formId/:parentId":					"renderForm",    	// #renderForm
         "destroy/:recordId": 							"destroy",    		// #destroy
@@ -264,40 +266,14 @@ $(function(){
               }}
         );
 
-        hoodie.account.on('signin', function (user) {
-//          console.log("refresh the items.")
-//          searchResults.fetch({fetch: 'query',
-//                options: {
-//                  query: {
-//                    fun: {
-//                      map: function(doc) {
-//                        //emit(doc.order, null);
-//                        if (doc.formId === "incident") {
-//                          emit([doc.lastModified], doc);
-//                        }
-//                      }
-//                    }
-//                  }
-//                }
-////                success: function(collection, response, options) {
-////                  console.log("item count: " + collection.length);
-////                  //var searchResults = new IncidentsList(collection);
-////                  FORMY.Incidents = searchResults;
-////                  var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
-////                  var Home = new HomeView(
-////                      {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey});
-////                }
-//              }
-//          );
-          if (hoodie.account.username !== 'undefined') {
-            console.log("setting displayUsername")
-            $("#displayUsername").html("Logged in as " + hoodie.account.username);
-          } else {
-            console.log("hoodie.account.username - is it empty?: "  + hoodie.account.username) ;
-          }
-        });
-
-
+//        hoodie.account.on('signin', function (user) {
+//          if (hoodie.account.username !== 'undefined') {
+//            console.log("setting displayUsername")
+//            $("#displayUsername").html("Logged in as " + hoodie.account.username);
+//          } else {
+//            console.log("hoodie.account.username - is it empty?: "  + hoodie.account.username) ;
+//          }
+//        });
       },
       search: function (searchTerm, department) {
         console.log("search route.");
@@ -360,6 +336,7 @@ $(function(){
         }
       },
       incident: function () {
+        console.log("incident route.");
         $("#homePageView").remove();
         $("#recordView").remove();
         $("#formRenderingView").remove();
@@ -367,10 +344,6 @@ $(function(){
           var viewDiv = document.createElement("div");
           viewDiv.setAttribute("id", "formRenderingView");
           $("#views").append(viewDiv);
-        }
-        if (FORMY.SyncpointLocalDb != null) {
-          console.log("FORMY.SyncpointLocalDb: " + FORMY.SyncpointLocalDb);
-          Backbone.couch_connector.config.db_name = FORMY.SyncpointLocalDb;
         }
         FORMY.loadForm("incident", null, {
           success: function(form, resp){
@@ -381,31 +354,6 @@ $(function(){
               //$("#" + identifier).datepicker({
               //$("#dateReported").datepicker({
               loadCascadedSelects();
-              $('.datep').each(function () {
-                //console.log("init dateppicker");
-//        				        var currentYear = (new Date).getFullYear();
-//        				        var minDate = getDateYymmdd($(this).data("val-rangedate-min"));
-//        				        var maxDate = getDateYymmdd($(this).data("val-rangedate-max"));
-                $(this).datepicker({
-                  dateFormat: "mm/dd/yy",  // hard-coding uk date format, but could embed this as an attribute server-side (based on the current culture)
-                  //minDate: minDate,
-                  //maxDate: maxDate,
-                  changeYear: true,
-                  //yearRange: '1900:' + currentYear,
-                  autoSize: true,
-                  // appendText: ' (mm/dd/yyyy)',
-                  buttonImage: 'images/calendar.gif',
-                  buttonImageOnly: true,
-                  constrainInput: true,
-                  showOn: 'both',
-                  //showButtonPanel: true,
-                  buttonText: 'Choose',
-                  //navigationAsDateFormat: true,
-                  //currentText: '\'Today\'',
-                  gotoCurrent: true
-                  //onClose: function (dateText, inst) { alert(dateText); }
-                });
-              });
             });
           },
           error: function() {
@@ -453,68 +401,13 @@ $(function(){
         //Set the _id and then call fetch to use the backbone connector to retrieve it from couch
         FORMY.sessionRecord = new Incident();
         FORMY.sessionRecord.id = "incident/" + incidentId;
-        //FORMY.sessionRecord = new Incident();
-
-//        searchResults.fetch(
-//            {fetch: 'query',
-//              options: {
-//                query: {
-//                  fun:bySearchKeywords,
-//                  key:searchTerm
-//                }
-//              },
-//              success: function(collection, response, options) {
-//                console.log("item count: " + collection.length);
-//                FORMY.Incidents = searchResults;
-//                var page = new Page({content: "Default List of Incidents:", startkey_docid:this.startkey_docid, startkey:this.startkey, username:hoodie.account.username});
-//                var Home = new HomeView(
-//                    {model: page, el: $("#homePageView"), startkey_docid:this.startkey_docid, startkey:this.startkey});
-//              }}
-//        );
-
-
-
         FORMY.sessionRecord.fetch( {
-          //fetch: 'query',
-//
-//          options: {
-////            query: {
-////              fun:{
-////                map: function(doc) {
-////                  if (doc.type === 'incident') {
-////                    console.log("incident: " + JSON.stringify(doc));
-////                    emit(doc.position, doc)
-////                  }
-////                }
-////              },
-////              key:"incident/" + incidentId
-////            },
-////            get: {
-////              docid:"incident/" + incidentId
-////            }
-//            get: "incident/" + incidentId,
-//            key:"incident/" + incidentId
-//          },
-//
-          //success: function(model){
           success: function(model, response, options) {
             console.log("Just successfully fetched the incident.");
-//            FORMY.sessionRecord.records = new IncidentRecordList();
-//            FORMY.sessionRecord.records.db["keys"] = [incidentId];
-            //FORMY.sessionRecord.records.fetch({
-            //success : function(){
-            //console.log("Records:" + JSON.stringify(patient.Records));
-            //console.log("Fetching Records for :" + incidentId);
-            //(new IncidentView({model: FORMY.sessionRecord})).render();
-            //(new RecordView({model: record, currentForm:form, el: $("#recordView")})).render();
             console.log("record: " + JSON.stringify(FORMY.sessionRecord));
             FORMY.loadForm(FORMY.sessionRecord.get("formId"), incidentId, {
-              //success: function(form){
               success: function(form, response, options) {
                 //console.log("form: " + JSON.stringify(form));
-//                    			form.set({"patientSurname": patient.get('surname')});
-//                    			form.set({"patientForenames": patient.get('forenames')});
-//                    			form.set({"patientMiddle_name": patient.get('Middle_name')});
                 form.set({"assignedId": FORMY.sessionRecord.get('assignedId')});
                 form.set({"created": FORMY.sessionRecord.get('created')});
                 form.set({"lastModified": FORMY.sessionRecord.get('lastModified')});
@@ -545,48 +438,27 @@ $(function(){
           viewDiv.setAttribute("id", "formRenderingView");
           $("#views").append(viewDiv);
         }
-        var record = new Record({_id: recordId});
+        var record = new Record({_id: "incident/"+ recordId, id: "incident/"+ recordId});
         record.fetch( {
           success: function(model){
-            var parentId = record.get("parentId");
-            if (parentId != null) {
-              var parent = new Incident({_id: record.get("parentId")});
-              console.log("just made a new instance of a patient.");
-              parent.fetch( {
-                success: function(model){
-                  console.log("Just successfully fetched the parent.");
-                  FORMY.sessionRecord = parent;
-                  console.log("record: " + JSON.stringify(record));
-                  FORMY.loadForm(record.get("formId"), null,{
-                    success: function(form){
-                      form.set({"patientSurname": patient.get('surname')});
-                      form.set({"patientForenames": patient.get('forenames')});
-                      form.set({"patientMiddle_name": patient.get('Middle_name')});
-                      form.set({"parentId": parent.get('_id')});
-                      (new FormView({model: record, currentForm:form, el: $("#formRenderingView")})).render();
-                    },
-                    error : function(){
-                      console.log("Error loading form: " + arguments);
-                    }
-                  });
-                }
-              });
-            } else {
-              FORMY.loadForm(record.get("formId"), null,{
-                success: function(form){
-                  (new FormView({model: record, currentForm:form, el: $("#formRenderingView")})).render();
-                  $(document).ready(function() {
-                    loadCascadedSelects();
-                  });
-                },
-                error : function(){
-                  console.log("Error loading form: " + arguments);
-                }
-              });
-            }
+            console.log("Fetched record: " + JSON.stringify(model));
+            FORMY.loadForm("incident", null, {
+              success: function(form, resp){
+                var newModel = new Form();
+                var newPatientFormView = new FormView({model: form, el: $("#formRenderingView")});
+                newPatientFormView.currentRecord = record;
+                newPatientFormView.render();
+                $(document).ready(function() {
+                  loadCascadedSelects();
+                });
+              },
+              error: function(err) {
+                console.log("Error loading incident: " + err);
+              }
+            });
           },
           error : function(){
-            console.log("Error loading FormView: " + arguments);
+            console.log("Error loading Record: " + arguments);
           }
         });
       },
@@ -738,94 +610,8 @@ $(function(){
     console.log("started Backbone history")
     //FORMY.Incidents = new IncidentsList();
 
-    // setup Hoodie shares
-    var hostname = window.location.host;
-    //if (hostname === "192.168.1.60:6004") {
-    // console.log("Setting up share on server: " + hostname)
-    var share;
-    //share = new Hoodie.Share(this.hoodie);
-    // user%2F1013313 is the kay database name.
-//    share = hoodie.share('user%2F1013313');
-//    share.subscribe();
-    // open a share and load all its objects
-//    hoodie.share('user/qaikby4').findAll("incident").done(function (objects) {
-//      var i=0;
-//      var cnt = objects.length;
-//      while (i < (cnt+1)) {
-//        i++;
-//        console.log("JSON: " + JSON.stringify(this));
-//      }
-//    });
-
-    //hoodie.share('user/qaikby4').grantWriteAccess(["1013313","2122682"]);
-    //hoodie.share('user/qaikby4').subscribe();
-
-    // add a new share and add some of my objects to it in one step
-//
-//  hoodie.store.findAll('incident').share()
-//      .done(function (incidents, share) { console.log('shared at ' + share.id); } );
-
-
-    //hoodie.share.add().done(function (share) {console.log('shared at ' + share.id)});
-    //hoodie.store.findAll('incident').shareAt('t47aqmv');
-
-    console.log("hoodie.account.username: "  + hoodie.account.username) ;
-    if (hoodie.account.username === "andro") {
-      //hoodie.share('tex5a7i').subscribe();
-      // open a share and load all its objects
-//    hoodie.share('tex5a7i').findAll()
-//        .done(function (objects) {console.log("The tex5a7i share contents: " + JSON.stringify(objects))});
-    }
-    var useragent = navigator.userAgent;
-    if (useragent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
-      console.log("testing for window.Version.")
-      window.plugins.version.getVersionCode(
-          function(version_code) {
-            //do something with version_code
-            console.log("version_code: " + version_code);
-          },
-          function(errorMessage) {
-            //do something with errorMessage
-            console.log(errorMessage);
-          }
-      );
-    }
-
-    //hoodie.share('user/tex5a7i').grantReadAccess('z36wk2v');
-
-    //hoodie.share('tex5a7i').grantWriteAccess('z36wk2v');
-
     FORMY.ReplicationStarted = null;
-
-    var ErrorLog = function(err, res) {
-      console.log("err: " + JSON.stringify(err));
-    }
-
-    var StartReplication = function () {
-      console.log("start replication with " + remoteCouch)
-      FORMY.ReplicationStarted = true;
-      var opts = {continuous: true, withCredentials:true, cookieAuth: {username:'testuser', password:'testuserPassword'}, auth: {username:'testuser', password:'testuserPassword'}};
-    //var opts = {continuous: true, withCredentials:true};
-      //var opts = {continuous: true};
-      Backbone.sync.defaults.db.replicate.to(remoteCouch, opts, ErrorLog);
-      //localDB.replicate.from('http://relax.com/on-the-couch', {withCredentials:true, cookieAuth: {username:'admin', password:'pass'}}, function(){});
-      Backbone.sync.defaults.db.replicate.from(remoteCouch, opts, ErrorLog);
-    }
-
-    hoodie.account.on('signin', function (user) {
-      StartReplication();
-      $("#displayUsername").html("Logged in as " + hoodie.account.username);
-    });
-
-    if (hoodie.account.username !== 'undefined') {
-      console.log("setting displayUsername")
-      $("#displayUsername").html("Logged in as " + hoodie.account.username);
-      if (FORMY.ReplicationStarted == null) {
-        StartReplication();
-      }
-    } else {
-      console.log("hoodie.account.username - is it empty?: "  + hoodie.account.username) ;
-    }
+    StartReplication();
 
   }
 

@@ -1,5 +1,3 @@
-//var currentParent;
-
 var FormView = Backbone.View.extend({
 
   template: loadTemplate("form.template.html"),
@@ -36,8 +34,7 @@ var FormView = Backbone.View.extend({
 		} else {
 			this.template =  loadTemplate("form.vert.template.html");
 		}
-		
-		this.form = this.model;
+    this.form = this.model;
 		this.parentId = this.form.parentId;
 		$(this.el).html(this.template(this.form.toJSON()));
 		var flow = this.form.get("flow");
@@ -59,12 +56,12 @@ var FormView = Backbone.View.extend({
     this.formElements.add(typeWidget,{at: 3});
 		this.formElements.add(assignedIdWidget,{at: 4});
 		this.formElements.add(createdWidget,{at: 5});
-		var _id = this.model.get("_id");
+		var _id = this.currentRecord.get("_id");
 		if (_id != null) {
 			var idWidget = {"label": "idWidget","value":_id,"identifier": "_id","inputType": "hidden"};
 			this.formElements.add(idWidget,{at: 5});
 		}
-		var _rev = this.model.get("_rev");
+		var _rev = this.currentRecord.get("_rev");
 		if (_rev != null) {
 			var revWidget = {"label": "revWidget","value":_rev,"identifier": "_rev","inputType": "hidden"};
 			this.formElements.add(revWidget,{at: 6});
@@ -76,6 +73,7 @@ var FormView = Backbone.View.extend({
   currentForm:"",
   currentParentName: "formElements",
   currentParent: $(this.currentParentName),
+  currentRecord:"",
   currentTableName: "",
   currentRow:0,	// reset whenever closeRow = true;
   formElements: null,
@@ -87,7 +85,7 @@ var FormView = Backbone.View.extend({
 	  var identifier = formElement.get("identifier");
 	  var tblCols = formElement.get("cols");
 	  var size = formElement.get("size");
-	  this.value = this.model.get(identifier);
+	  this.value = this.currentRecord.get(identifier);
 	  // don't count the hidden widgets at the beginning of the form.
 	  if ((inputType !== "hidden") && (datatype !== "display")) {
 		  this.currentRow ++;  

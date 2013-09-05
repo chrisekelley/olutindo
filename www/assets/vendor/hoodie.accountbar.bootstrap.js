@@ -15,14 +15,14 @@ Hoodie.extend('hoodstrap', (function() {
 
     // 
     hoodifyAccountBar: function() {
-      this.hoodie.account.authenticate().then(this.handleUserAuthenticated.bind(this), this.handleUserUnauthenticated.bind(this));
-      this.subscribeToHoodieEvents()
+      //this.hoodie.account.authenticate().then(this.handleUserAuthenticated.bind(this), this.handleUserUnauthenticated.bind(this));
+      //this.subscribeToHoodieEvents()
     },
 
     subscribeToHoodieEvents : function() {
       this.hoodie.account.on('signin', this.handleUserAuthenticated.bind(this))
       this.hoodie.account.on('signout', this.handleUserUnauthenticated.bind(this))
-      this.hoodie.on('account:error:unauthenticated remote:error:unauthenticated', this.handleUserAuthenticationError.bind(this))
+      //this.hoodie.on('account:error:unauthenticated remote:error:unauthenticated', this.handleUserAuthenticationError.bind(this))
     },
 
     // 
@@ -135,14 +135,16 @@ Hoodie.extend('hoodstrap', (function() {
             break
         }
 
-        magic.done(function() { 
-          $modal.find('.alert').remove()
-          $modal.modal('hide')
-        })
-        magic.fail(function(error) { 
-          $modal.find('.alert').remove()
-          $modal.trigger('error', error)
-        })
+//        magic.done(function() {
+//          $modal.find('.alert').remove()
+//          $modal.modal('hide')
+//        })
+//        magic.fail(function(error) {
+//          $modal.find('.alert').remove()
+//          $modal.trigger('error', error)
+//        })
+        $modal.find('.alert').remove()
+        $modal.modal('hide')
       }
     }
   })

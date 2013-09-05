@@ -131,6 +131,7 @@ function downloadFile(){
               console.log("download complete: " + theFile.toURL());
               window.plugins.webintent.startActivity({
                     action: window.plugins.webintent.ACTION_VIEW,
+                    //url: 'file://' + theFile.fullPath,
                     url: 'file://' + theFile.fullPath,
                     type: 'application/vnd.android.package-archive'
                   },
@@ -149,7 +150,71 @@ function downloadFile(){
         alert('failed to get fs: ' + JSON.stringify(e));
         console.log("failed to get fs: " + JSON.stringify(e));
       });
-
 }
+
+function saveLoginPreferences(username, password) {
+  if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+    window.applicationPreferences.set("username", username, function() {
+    }, function(error) {
+      console.log("Error! " + JSON.stringify(error));
+    });
+    window.applicationPreferences.set("password", password, function() {
+    }, function(error) {
+      console.log("Error! " + JSON.stringify(error));
+    });
+    console.log("Successfully saved login preferences.");
+    StartReplication();
+  } else {
+    console.log("Login prefs *not* saved. They currently saved only on smartphone version.")
+  }
+}
+
+function getLoginPreferences() {
+  var account = new Object();
+  if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+    window.applicationPreferences.get("username", function(value) {
+      account.username = value;
+    }, function(error) {
+      alert("Welcome to Olutindo! Please sign in so that the app can receive records from the server.");
+      console.log("Error! " + JSON.stringify(error));
+    });
+    window.applicationPreferences.get("password", function(value) {
+      account.password = value;
+    }, function(error) {
+      //alert("Error! " + JSON.stringify(error));
+      //console.log("Error! " + JSON.stringify(error));
+    });
+  } else {
+    account.username = "testuser";
+    account.password = "testuserPassword";
+  }
+  return account;
+}
+
+var StartReplication = function () {
+  var account = getLoginPreferences();
+  if (account.username != null) {
+    var credentials = account.username + ":" + account.password;
+    //var remoteCouch = "https://testuser:testuserPassword@olutindo.iriscouch.com/troubletickets/";
+    var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/troubletickets/";
+    console.log("start replication with " + remoteCouch)
+    FORMY.ReplicationStarted = true;
+    var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};
+    //var opts = {continuous: true, withCredentials:true};
+    //var opts = {continuous: true};
+    Backbone.sync.defaults.db.replicate.to(remoteCouch, opts, ErrorLog);
+    //localDB.replicate.from('http://relax.com/on-the-couch', {withCredentials:true, cookieAuth: {username:'admin', password:'pass'}}, function(){});
+    Backbone.sync.defaults.db.replicate.from(remoteCouch, opts, ErrorLog);
+  }
+}
+
+var ErrorLog = function(err, res) {
+  console.log("err: " + JSON.stringify(err));
+  if ((typeof err != 'undefined') && (err.status === 401)) {
+    alert("Error: Name or password is incorrect. Unable to connect to the server.");
+  }
+}
+
+
 
 
