@@ -5,7 +5,13 @@ Olutindo is a webapp for managing citizen complaints in Uganda. It is a companio
 [Coconut](http://chrisekelley.github.io/coconut/) for most of its front-end form rendering, [backbone.js](http://backbonejs.org) for MVC,
 [pouchdb](http://pouchdb.com/) for browser-based data store and replication, and [CouchDB](http://couchdb.apache.org/) for the master data store.
 
-## Get started
+It is the html5 part of [Olutindo-app](https://github.com/chrisekelley/olutindo-app)
+
+## Config
+
+Set your master couch server in the StartReplication function in coconut-utils.js.
+
+## Get running
 
     npm install
     npm start

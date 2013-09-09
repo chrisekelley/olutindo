@@ -761,7 +761,7 @@ Hoodie.Account = (function () {
   //       account that signs in. That applies only if username isn't the same as
   //       current username.
   //
-  Account.prototype.signIn = function(username, password) {
+  Account.prototype.signIn = function(username, password, site) {
     console.log("Account.prototype.signIn");
     var self = this;
 
@@ -790,7 +790,7 @@ Hoodie.Account = (function () {
 //      return saveLoginPreferences(username, password);
 //    }
     if (username !== null) {
-      return saveLoginPreferences(username, password);
+      return saveLoginPreferences(username, password, site);
     }
   };
 

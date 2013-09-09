@@ -152,13 +152,17 @@ function downloadFile(){
       });
 }
 
-function saveLoginPreferences(username, password) {
+function saveLoginPreferences(username, password, site) {
   if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
     window.applicationPreferences.set("username", username, function() {
     }, function(error) {
       console.log("Error! " + JSON.stringify(error));
     });
     window.applicationPreferences.set("password", password, function() {
+    }, function(error) {
+      console.log("Error! " + JSON.stringify(error));
+    });
+    window.applicationPreferences.set("site", site, function() {
     }, function(error) {
       console.log("Error! " + JSON.stringify(error));
     });
@@ -184,9 +188,16 @@ function getLoginPreferences() {
       //alert("Error! " + JSON.stringify(error));
       //console.log("Error! " + JSON.stringify(error));
     });
+    window.applicationPreferences.get("site", function(value) {
+      account.site = value;
+    }, function(error) {
+      //alert("Error! " + JSON.stringify(error));
+      //console.log("Error! " + JSON.stringify(error));
+    });
   } else {
     account.username = "testuser";
     account.password = "testuserPassword";
+    account.site = "gul";
   }
   return account;
 }
@@ -197,7 +208,9 @@ var StartReplication = function () {
     var credentials = account.username + ":" + account.password;
     //var remoteCouch = "https://testuser:testuserPassword@olutindo.iriscouch.com/troubletickets/";
     //var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/troubletickets/";
-    var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/troubletickets_kay/";
+    var couchdb =  "troubletickets_" +  account.site;
+    //var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/" + couchdb + "/";
+    var remoteCouch = "http://" + credentials + "@192.168.2.1:5984/" + couchdb + "/";
     console.log("start replication with " + remoteCouch)
     FORMY.ReplicationStarted = true;
     var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};

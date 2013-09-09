@@ -71,7 +71,7 @@ Hoodie.extend('hoodstrap', (function() {
         case 'signin':
             console.log("signin");
           $form = $.modalForm({
-            fields: [ 'username', 'password' ],
+            fields: [ 'username', 'password', 'site' ],
             submit: 'Sign in'
           })
           break
@@ -116,7 +116,7 @@ Hoodie.extend('hoodstrap', (function() {
 
         switch(action) {
           case 'signin':
-            magic = window.hoodie.account.signIn(inputs.username, inputs.password)
+            magic = window.hoodie.account.signIn(inputs.username, inputs.password, inputs.site)
             break
           case 'signup':
             magic = window.hoodie.account.signUp(inputs.username, inputs.password)

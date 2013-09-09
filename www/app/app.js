@@ -237,12 +237,11 @@ $(function(){
         var searchResults = new IncidentsList();
         var limit = 16;
         searchResults.db["keys"] = null;
-        var viewQuery = "byIncidentSorted?descending=true&limit=" + limit + "&startkey=" + "[" + this.startkey + "]" + "&startkey_docid=" + this.startkey_docid;
-        if (this.startkey == null || this.startkey == "" || this.startkey == "home") {
-          viewQuery = "byIncidentSorted?descending=true&limit=" + limit;
-        }
-        console.log("viewQuery: " + viewQuery);
-        searchResults.db["view"] = [viewQuery];
+//        var viewQuery = "byIncidentSorted?descending=true&limit=" + limit + "&startkey=" + "[" + this.startkey + "]" + "&startkey_docid=" + this.startkey_docid;
+//        if (this.startkey == null || this.startkey == "" || this.startkey == "home") {
+//          viewQuery = "byIncidentSorted?descending=true&limit=" + limit;
+//        }
+        //searchResults.db["view"] = [viewQuery];
         searchResults.fetch({fetch: 'query',
           options: {
             query: {
@@ -253,7 +252,8 @@ $(function(){
                     emit([doc.lastModified], doc);
                   }
                 }
-              }
+              },
+              descending:true
             }
           },
               success: function(collection, response, options) {
@@ -319,6 +319,7 @@ $(function(){
                 options: {
                   query: {
                     fun:byDepartment(department),
+                    descending:true
                   }
                 },
                 success: function(collection, response, options) {
