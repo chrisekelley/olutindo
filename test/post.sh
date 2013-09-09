@@ -1,5 +1,5 @@
 #!/bin/bash
-SUBJECT="555-0822"
+SUBJECT="555-0833"
 MESSAGE="test 123 post"
 TODAY=$(date +%s)
 #echo "Today is" $MESSAGE
@@ -14,4 +14,5 @@ JSON="{\"_id\":\"$ID\",\"flowId\":\"300\",\"formId\":\"incident\",\"phone\":\"$S
 #JSON="{"flowId":"300","formId":"incident","phone":"$SUBJECT","description":"$MESSAGE","created":$TODAY,"lastModified":$TODAY,"createdBy":"$USER","type":"incident"}"
 #JSON="{\"flowId":\"300\",\"formId\":\"incident\",\"phone\":\"555-5555\"}"
 echo $JSON
-curl -X POST http://user%2Fdis:dis@192.168.1.60:6006/user%2Ffhefv4d -d "$JSON" -H"Content-Type: application/json"
+# curl -X POST http://user%2Fdis:dis@192.168.1.60:6006/user%2Ffhefv4d -d "$JSON" -H"Content-Type: application/json"
+curl -X POST http://testuser:testuserPassword@olutindo.iriscouch.com/troubletickets -d "$JSON" -H"Content-Type: application/json"

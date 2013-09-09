@@ -1,0 +1,22 @@
+{
+  "_id" : "_design/troubletickets",
+  "views" : {
+    "foo" : {
+      "map" : "function(doc){ emit(doc._id, doc._rev)}"
+    }
+  },
+  "updates": {
+    "hello" : "function(doc, req) {
+if (!doc) {
+if (req.id) {
+return [{
+_id : req.id
+}, 'New World']
+}
+return [null, 'Empty World'];
+}
+doc.world = 'hello';
+doc.edited_by = req.userCtx;
+return [doc, 'hello doc'];
+}"
+}

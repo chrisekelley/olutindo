@@ -196,7 +196,8 @@ var StartReplication = function () {
   if (account.username != null) {
     var credentials = account.username + ":" + account.password;
     //var remoteCouch = "https://testuser:testuserPassword@olutindo.iriscouch.com/troubletickets/";
-    var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/troubletickets/";
+    //var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/troubletickets/";
+    var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/troubletickets_kay/";
     console.log("start replication with " + remoteCouch)
     FORMY.ReplicationStarted = true;
     var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};

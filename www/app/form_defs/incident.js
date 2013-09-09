@@ -3431,6 +3431,91 @@ var incidentForm = {
 
       ]
     },
+//    {
+//      "label": "Department",
+//      "value": "",
+//      "options": [
+//        {
+//          "name": "optional",
+//          "value": "true"
+//        }
+//      ],
+//      "datatype": "int",
+//      "visible": "true",
+//      "closeRow": "true",
+//      "colspan": "2",
+//      "size": "0",
+//      "rows": "0",
+//      "cols": "0",
+//      "identifier": "department",
+//      "inputType": "selectFDA",
+//      "enumerations": [
+//        {
+//          "name": "Item",
+//          "tagName": "item",
+//          "label": "Administration",
+//          "labelItextID": "Administration",
+//          "defaultValue": "1"
+//        },
+//        {
+//          "name": "Item",
+//          "tagName": "item",
+//          "label": "Finance and Planning",
+//          "labelItextID": "Finance and Planning",
+//          "defaultValue": "2"
+//        },
+//        {
+//          "name": "Item",
+//          "tagName": "item",
+//          "label": "Education",
+//          "labelItextID": "Education",
+//          "defaultValue": "3"
+//        },
+//        {
+//          "name": "Item",
+//          "tagName": "item",
+//          "label": "Health",
+//          "labelItextID": "Health",
+//          "defaultValue": "4"
+//        },
+//        {
+//          "name": "Item",
+//          "tagName": "item",
+//          "label": "Works",
+//          "labelItextID": "Works",
+//          "defaultValue": "5"
+//        },
+//        {
+//          "name": "Item",
+//          "tagName": "item",
+//          "label": "Council",
+//          "labelItextID": "Council",
+//          "defaultValue": "6"
+//        },
+//        {
+//          "name": "Item",
+//          "tagName": "item",
+//          "label": "Production",
+//          "labelItextID": "Production",
+//          "defaultValue": "7"
+//        },
+//        {
+//          "name": "Item",
+//          "tagName": "item",
+//          "label": "Community development",
+//          "labelItextID": "Community development",
+//          "defaultValue": "8"
+//        },
+//        {
+//          "name": "Item",
+//          "tagName": "item",
+//          "label": "Natural resources",
+//          "labelItextID": "Natural resources",
+//          "defaultValue": "9"
+//        }
+//      ]
+//    },
+
     {
       "label": "Department",
       "value": "",
@@ -3440,80 +3525,186 @@ var incidentForm = {
           "value": "true"
         }
       ],
-      "datatype": "int",
+      "datatype": "display",
+      "visible": "true",
+      "closeRow": "true",
+      "colspan": "1",
+      "size": "0",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "display_departments",
+      "inputType": "display-header"
+    },
+    {
+      "label": "Administration",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "boolean",
+      "visible": "true",
+      "closeRow": "false",
+      "colspan": "1",
+      "size": "0",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "dep_administration",
+      "inputType": "alertCheckbox"
+    },
+    {
+      "label": "Community development",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "boolean",
+      "visible": "true",
+      "closeRow": "true",
+      "colspan": "1",
+      "size": "0",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "dep_community_development",
+      "inputType": "alertCheckbox"
+    },
+    {
+      "label": "Council",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "boolean",
+      "visible": "true",
+      "closeRow": "false",
+      "colspan": "1",
+      "size": "0",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "dev_council",
+      "inputType": "alertCheckbox"
+    },
+    {
+      "label": "Education",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "boolean",
+      "visible": "true",
+      "closeRow": "true",
+      "colspan": "1",
+      "size": "0",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "dev_education",
+      "inputType": "alertCheckbox"
+    },
+    {
+      "label": "Finance and Planning",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "boolean",
+      "visible": "true",
+      "closeRow": "false",
+      "colspan": "1",
+      "size": "0",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "dev_finance",
+      "inputType": "alertCheckbox"
+    },
+    {
+      "label": "Health",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "boolean",
+      "visible": "true",
+      "closeRow": "true",
+      "colspan": "1",
+      "size": "0",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "dev_health",
+      "inputType": "alertCheckbox"
+    },
+    {
+      "label": "Natural Resources",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "boolean",
+      "visible": "true",
+      "closeRow": "false",
+      "colspan": "1",
+      "size": "0",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "dev_nat_resources",
+      "inputType": "alertCheckbox"
+    },
+    {
+      "label": "Production",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "boolean",
+      "visible": "true",
+      "closeRow": "true",
+      "colspan": "1",
+      "size": "0",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "dev_production",
+      "inputType": "alertCheckbox"
+    },
+    {
+      "label": "Works",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "boolean",
       "visible": "true",
       "closeRow": "true",
       "colspan": "2",
       "size": "0",
       "rows": "0",
       "cols": "0",
-      "identifier": "department",
-      "inputType": "selectFDA",
-      "enumerations": [
-        {
-          "name": "Item",
-          "tagName": "item",
-          "label": "Administration",
-          "labelItextID": "Administration",
-          "defaultValue": "1"
-        },
-        {
-          "name": "Item",
-          "tagName": "item",
-          "label": "Finance and Planning",
-          "labelItextID": "Finance and Planning",
-          "defaultValue": "2"
-        },
-        {
-          "name": "Item",
-          "tagName": "item",
-          "label": "Education",
-          "labelItextID": "Education",
-          "defaultValue": "3"
-        },
-        {
-          "name": "Item",
-          "tagName": "item",
-          "label": "Health",
-          "labelItextID": "Health",
-          "defaultValue": "4"
-        },
-        {
-          "name": "Item",
-          "tagName": "item",
-          "label": "Works",
-          "labelItextID": "Works",
-          "defaultValue": "5"
-        },
-        {
-          "name": "Item",
-          "tagName": "item",
-          "label": "Council",
-          "labelItextID": "Council",
-          "defaultValue": "6"
-        },
-        {
-          "name": "Item",
-          "tagName": "item",
-          "label": "Production",
-          "labelItextID": "Production",
-          "defaultValue": "7"
-        },
-        {
-          "name": "Item",
-          "tagName": "item",
-          "label": "Community development",
-          "labelItextID": "Community development",
-          "defaultValue": "8"
-        },
-        {
-          "name": "Item",
-          "tagName": "item",
-          "label": "Natural resources",
-          "labelItextID": "Natural resources",
-          "defaultValue": "9"
-        }
-      ]
+      "identifier": "dev_works",
+      "inputType": "alertCheckbox"
     },
     {
       "label": "Resolved?",
@@ -3552,101 +3743,6 @@ var incidentForm = {
       "cols": "45",
       "identifier": "comment",
       "inputType": "textarea"
-    },
-    {
-      "label": "Send an Alert",
-      "value": "",
-      "options": [
-        {
-          "name": "optional",
-          "value": "true"
-        }
-      ],
-      "datatype": "display",
-      "visible": "true",
-      "closeRow": "true",
-      "colspan": "1",
-      "size": "0",
-      "rows": "0",
-      "cols": "0",
-      "identifier": "display_alert",
-      "inputType": "display-header"
-    },
-    {
-      "label": "Sub-County",
-      "value": "",
-      "options": [
-        {
-          "name": "optional",
-          "value": "true"
-        }
-      ],
-      "datatype": "boolean",
-      "visible": "true",
-      "closeRow": "false",
-      "colspan": "1",
-      "size": "0",
-      "rows": "0",
-      "cols": "0",
-      "identifier": "alert_subcounty",
-      "inputType": "alertCheckbox"
-    },
-    {
-      "label": "Education",
-      "value": "",
-      "options": [
-        {
-          "name": "optional",
-          "value": "true"
-        }
-      ],
-      "datatype": "boolean",
-      "visible": "true",
-      "closeRow": "true",
-      "colspan": "1",
-      "size": "0",
-      "rows": "0",
-      "cols": "0",
-      "identifier": "alert_education",
-      "inputType": "alertCheckbox"
-    },
-    {
-      "label": "Health",
-      "value": "",
-      "options": [
-        {
-          "name": "optional",
-          "value": "true"
-        }
-      ],
-      "datatype": "boolean",
-      "visible": "true",
-      "closeRow": "false",
-      "colspan": "1",
-      "size": "0",
-      "rows": "0",
-      "cols": "0",
-      "identifier": "alert_health",
-      "inputType": "alertCheckbox"
-    },
-    {
-      "label": "Works",
-      "value": "",
-      "options": [
-        {
-          "name": "optional",
-          "value": "true"
-        }
-      ],
-      "datatype": "boolean",
-      "visible": "true",
-      "closeRow": "true",
-      "colspan": "1",
-      "size": "0",
-      "rows": "0",
-      "cols": "0",
-      "identifier": "alert_works",
-      "inputType": "alertCheckbox"
     },
     {
       "label": "Save",

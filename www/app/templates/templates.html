@@ -12,9 +12,21 @@
 </script>
 <script id="search-template" type="text/x-handlebars-template">
 {{#if phone}}
-    <td>{{#renderPriority priority resolved}}{{/renderPriority}}</td><td><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}">{{phone}}&nbsp;&nbsp;</a></td><td>{{#renderVillage village}}{{/renderVillage}}</td><td>{{#renderDepartment department}}{{/renderDepartment}}</td><td>{{#dateFormatDate lastModified}}{{/dateFormatDate}}</td>
+    <td>{{#renderPriority priority resolved}}{{/renderPriority}}</td><td><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}">{{phone}}&nbsp;&nbsp;</a></td><td>{{#renderVillage village}}{{/renderVillage}}</td>
+    <td>{{#if dep_administration}}Admin<br/>{{/if}}
+        {{#if dep_community_development}}Comm. Dev.<br/>{{/if}}
+        {{#if dev_council}}Council<br/>{{/if}}
+        {{#if dev_education}}Edu.<br/>{{/if}}
+        {{#if dev_finance}}Fin.<br/>{{/if}}
+        {{#if dev_health}}Health<br/>{{/if}}
+        {{#if dev_nat_resources}}Nat. Res.<br/>{{/if}}
+        {{#if dev_production}}Prod.<br/>{{/if}}
+        {{#if dev_works}}Works<br/>{{/if}}</td>
+    <td>{{#dateFormatDate lastModified}}{{/dateFormatDate}}</td>
 	{{else}}
-    <td>{{#renderPriority priority resolved}}{{/renderPriority}}</td><td><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}"> --- </a></td><td>{{#renderVillage village}}{{/renderVillage}}</td><td>{{#renderDepartment department}}{{/renderDepartment}}</td><td>{{#dateFormatDate lastModified}}{{/dateFormatDate}}</td>
+    <td>{{#renderPriority priority resolved}}{{/renderPriority}}</td><td><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}"> --- </a></td><td>{{#renderVillage village}}{{/renderVillage}}</td>
+    <td>{{#renderDepartment department}}{{/renderDepartment}}</td>
+    <td>{{#dateFormatDate lastModified}}{{/dateFormatDate}}</td>
 {{/if}}
 </script>
 <script id="recordValue" type="text/x-handlebars-template">
@@ -24,7 +36,7 @@
 	{{#dropdownValue enumerations value}}
 	{{/dropdownValue}}
 </script>
-<script id="recordDropdownCSVValue" type="text/x-handlebars-template">
+<script id="recordDropdownCSVValue" type="text/x-handlebars-template">X
 	{{#dropdownCSVValue enumerations value}}
 	{{/dropdownCSVValue}}
 </script>
@@ -32,7 +44,7 @@
 	{{#checkboxValue value}}
 	{{/checkboxValue}}
 </script>
-<script id="recordCheckboxAlert" type="text/x-handlebars-template">
+<script id="recordCheckboxAlert" type="text/x-handlebars-template">{{#if value}}&nbsp;<strong>X</strong>{{/if}}
 </script>
 <script id="recordYesnoValue" type="text/x-handlebars-template">
 	{{#yesNoValue value}}
@@ -57,7 +69,11 @@
 		{{/if}}
 </script>
 <script id="checkboxAlertWidget" type="text/x-handlebars-template">
-	<input id='{{identifier}}' {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1'></input>
+    {{#if value}}
+	<input id='{{identifier}}' {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1' checked='checked'></input>
+    {{else}}
+    <input id='{{identifier}}' {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1'></input>
+    {{/if}}
 </script>
 <script id="textareaWidget" type="text/x-handlebars-template">
   	<br/><textarea id='{{identifier}}' {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' rows='{{rows}}' cols='{{cols}}'>{{value}}</textarea>

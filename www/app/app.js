@@ -312,13 +312,13 @@ $(function(){
                 }}
           );
         } else if (department !== "") {
-          console.log("byDepartment search");
+          console.log("Department search");
+
           searchResults.fetch(
               {fetch: 'query',
                 options: {
                   query: {
-                    fun:byDepartment,
-                    key:department
+                    fun:byDepartment(department),
                   }
                 },
                 success: function(collection, response, options) {
@@ -329,6 +329,7 @@ $(function(){
                       {model: page, el: $("#homePageView"), startkey_docid:this.startkey_docid, startkey:this.startkey});
                 }}
           );
+
         } else {
           //console.log("This should reset the collection.");
 //          searchResults.db["keys"] = null;

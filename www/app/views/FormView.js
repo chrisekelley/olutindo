@@ -56,16 +56,18 @@ var FormView = Backbone.View.extend({
     this.formElements.add(typeWidget,{at: 3});
 		this.formElements.add(assignedIdWidget,{at: 4});
 		this.formElements.add(createdWidget,{at: 5});
-		var _id = this.currentRecord.get("_id");
-		if (_id != null) {
-			var idWidget = {"label": "idWidget","value":_id,"identifier": "_id","inputType": "hidden"};
-			this.formElements.add(idWidget,{at: 5});
-		}
-		var _rev = this.currentRecord.get("_rev");
-		if (_rev != null) {
-			var revWidget = {"label": "revWidget","value":_rev,"identifier": "_rev","inputType": "hidden"};
-			this.formElements.add(revWidget,{at: 6});
-		}
+    if ((this.currentRecord !== "")) {
+      var _id = this.currentRecord.get("_id");
+      if (_id != null) {
+        var idWidget = {"label": "idWidget","value":_id,"identifier": "_id","inputType": "hidden"};
+        this.formElements.add(idWidget,{at: 5});
+      }
+      var _rev = this.currentRecord.get("_rev");
+      if (_rev != null) {
+        var revWidget = {"label": "revWidget","value":_rev,"identifier": "_rev","inputType": "hidden"};
+        this.formElements.add(revWidget,{at: 6});
+      }
+    }
 		this.formElements.each(this.addOne);
 		return this;
 	},
@@ -85,7 +87,9 @@ var FormView = Backbone.View.extend({
 	  var identifier = formElement.get("identifier");
 	  var tblCols = formElement.get("cols");
 	  var size = formElement.get("size");
-	  this.value = this.currentRecord.get(identifier);
+    if ((this.currentRecord !== "")) {
+      this.value = this.currentRecord.get(identifier);
+    }
 	  // don't count the hidden widgets at the beginning of the form.
 	  if ((inputType !== "hidden") && (datatype !== "display")) {
 		  this.currentRow ++;  

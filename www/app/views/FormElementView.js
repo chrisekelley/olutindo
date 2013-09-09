@@ -34,6 +34,8 @@ window.FormElementView = Backbone.View.extend({
     	this.currentValue = this.$("select").val();
     } else if (this.inputType == "checkbox") {
     	this.currentValue = this.$("checkbox").val();
+    } else if (this.inputType == "alertCheckbox") {
+      this.currentValue = this.$("checkbox").val();
     }
     console.log("FormElementView validate currentValue: " + this.currentValue);
     this.validationResult = this.model.validate({value:this.currentValue });

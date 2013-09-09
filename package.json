@@ -2,19 +2,10 @@
   "name": "olutindo",
   "version": "1.0.0",
   "type": "app",
-  "unused_dependencies": {
-    "hoodie-worker-shares": "git://github.com/hoodiehq/worker-shares.git"
-  },
   "dependencies": {
-    "hoodie-app": "git://github.com/hoodiehq/hoodie-server.git",
-    "hoodie-worker-users": "git://github.com/hoodiehq/worker-users.git"
+     "simple-http-server":"0.1.8"
   },
-  "subdomain": "hoodie-olutindo",
-  "domains": [
-    "admin.hoodie-olutindo.jit.su",
-    "couch.hoodie-olutindo.jit.su"
-  ],
   "scripts": {
-    "start": "node node_modules/hoodie-app/bin/start"
+    "start": "nserver -d www"
   }
 }
