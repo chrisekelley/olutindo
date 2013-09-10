@@ -25,7 +25,15 @@
     <td>{{#dateFormatDate lastModified}}{{/dateFormatDate}}</td>
 	{{else}}
     <td>{{#renderPriority priority resolved}}{{/renderPriority}}</td><td><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}"> --- </a></td><td>{{#renderVillage village}}{{/renderVillage}}</td>
-    <td>{{#renderDepartment department}}{{/renderDepartment}}</td>
+    <td>{{#if dep_administration}}Admin<br/>{{/if}}
+        {{#if dep_community_development}}Comm. Dev.<br/>{{/if}}
+        {{#if dev_council}}Council<br/>{{/if}}
+        {{#if dev_education}}Edu.<br/>{{/if}}
+        {{#if dev_finance}}Fin.<br/>{{/if}}
+        {{#if dev_health}}Health<br/>{{/if}}
+        {{#if dev_nat_resources}}Nat. Res.<br/>{{/if}}
+        {{#if dev_production}}Prod.<br/>{{/if}}
+        {{#if dev_works}}Works<br/>{{/if}}</td>
     <td>{{#dateFormatDate lastModified}}{{/dateFormatDate}}</td>
 {{/if}}
 </script>
