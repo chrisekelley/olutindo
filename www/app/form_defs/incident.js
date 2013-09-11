@@ -43,7 +43,7 @@ var incidentForm = {
       "visible": "true",
       "closeRow": "true",
       "colspan": "2",
-      "size": "25",
+      "size": "10",
       "rows": "0",
       "cols": "0",
       "identifier": "phone",
@@ -3528,7 +3528,7 @@ var incidentForm = {
       "datatype": "display",
       "visible": "true",
       "closeRow": "true",
-      "colspan": "1",
+      "colspan": "2",
       "size": "0",
       "rows": "0",
       "cols": "0",
@@ -3536,7 +3536,7 @@ var incidentForm = {
       "inputType": "display-header"
     },
     {
-      "label": "Administration",
+      "label": "Admin",
       "value": "",
       "options": [
         {
@@ -3707,6 +3707,25 @@ var incidentForm = {
       "inputType": "alertCheckbox"
     },
     {
+      "label": "Progress",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "display",
+      "visible": "true",
+      "closeRow": "true",
+      "colspan": "2",
+      "size": "0",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "display_progress",
+      "inputType": "display-header"
+    },
+    {
       "label": "Resolved?",
       "value": "",
       "options": [
@@ -3737,7 +3756,7 @@ var incidentForm = {
       "datatype": "string",
       "visible": "true",
       "closeRow": "false",
-      "colspan": "1",
+      "colspan": "2",
       "size": "0",
       "rows": "6",
       "cols": "45",

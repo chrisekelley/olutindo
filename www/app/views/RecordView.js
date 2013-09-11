@@ -50,12 +50,13 @@ var RecordView = Backbone.View.extend({
   currentForm: null,
   addOne: function(formElement){
 //		console.log("add one:" + JSON.stringify(formElement));
-		 var inputType = formElement.get("inputType");
-		 var datatype = formElement.get("datatype");
-		var closeRow = formElement.get("closeRow");
-		var identifier = formElement.get("identifier");
-		var tblCols = formElement.get("cols");
-		var size = formElement.get("size");
+    var inputType = formElement.get("inputType");
+    var datatype = formElement.get("datatype");
+    var closeRow = formElement.get("closeRow");
+    var identifier = formElement.get("identifier");
+    var tblCols = formElement.get("cols");
+    var size = formElement.get("size");
+    var colspan = formElement.get("colspan");
 		this.value = this.model.get(identifier);
 		 // don't count the hidden widgets at the beginning of the form.
 		  if ((inputType !== "hidden") && (datatype !== "display")) {
@@ -95,7 +96,7 @@ var RecordView = Backbone.View.extend({
 					formElement.set({"rows":"4"});
 					formElement.set({"cols":"60"});
 			} else {
-				formElement.set({"colspan":"1"});
+				formElement.set({"colspan":colspan});
 			}
 		}
 		if (tblCols == null) {

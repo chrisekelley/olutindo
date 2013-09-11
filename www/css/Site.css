@@ -255,10 +255,16 @@ select
     margin-top: 6px;
 }
 
-select, textarea {
+select {
     background-color: #EBF1FA;
     color: #222222;
-    font-size: 8pt;
+    font-size: 10pt;
+}
+
+textarea {
+    background-color: #EBF1FA;
+    color: #222222;
+    font-size: 12pt;
 }
 
 input[type="submit"], input[type="reset"], input[type="button"], button {
@@ -839,6 +845,7 @@ if they are causing problems. If you need enhancedtable, use this one  */
 .formTable {
 	margin: 0px;
 	background-color: transparent;
+    width: 480px;
 }
 
 .formTable td {
@@ -1162,9 +1169,11 @@ tr.over td, tr: hover td
 .patientName A:active {text-decoration: none; color: white}
 
 label{
-float: left;
-width: 120px;
-font-weight: bold;
+    float: left;
+    width: 115px;
+    font-weight: bold;
+    /*margin-right: 4px;*/
+    padding-left: 4px;
 }
 
 .dateHeader {
@@ -1225,12 +1234,15 @@ font-weight: bold;
 
 #department {
 	/*font-size:10px;*/
-    width:130px
+    width:140px
 }
 
 .container{width:100%}
 
-#search_string{width:100px}
+#search_string{
+    width:100px;
+    font-size: 14px;
+}
 
 #login-bar {
     background-color: #6EA8E4;
@@ -1239,4 +1251,12 @@ font-weight: bold;
 
 #displayUsername {
     padding-left: 5px;
+}
+
+#rowpriority {
+    background-color: lightgrey;
+}
+
+#rowdev_works {
+    background-color: lightgrey;
 }

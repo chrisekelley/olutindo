@@ -81,11 +81,13 @@ function checkVersion() {
               console.log("Installed version: " + version_code);
               if(version_code != vcode){
                 console.log("Upgrade app!");
+                navigator.notification.beep(3);
+                navigator.notification.vibrate(2000);
                 navigator.notification.confirm(
                     'A new version is out! Get it now!',  // message
                     onVersion,            // callback to invoke with index of button pressed
                     'Update available',                 // title
-                    'Update now!, Maybe later'     // buttonLabels
+                    ['Update now!', 'Maybe later']     // buttonLabels
                 );
               }
             },
@@ -111,7 +113,7 @@ function downloadFile(){
   var fileSystem;
   console.log("downloading file.")
 
-  window.requestFileSystem(LocalFileSystem.TEMPORARY, 0,
+  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
       function(fs) {
         fileSystem = fs;
         var ft = new FileTransfer();
@@ -131,7 +133,6 @@ function downloadFile(){
               console.log("download complete: " + theFile.toURL());
               window.plugins.webintent.startActivity({
                     action: window.plugins.webintent.ACTION_VIEW,
-                    //url: 'file://' + theFile.fullPath,
                     url: 'file://' + theFile.fullPath,
                     type: 'application/vnd.android.package-archive'
                   },

@@ -80,13 +80,14 @@ var FormView = Backbone.View.extend({
   currentRow:0,	// reset whenever closeRow = true;
   formElements: null,
   addOne: function(formElement){
-//	console.log("add one:" + JSON.stringify(formElement));
+	  //console.log("add one:" + JSON.stringify(formElement));
 	  var inputType = formElement.get("inputType");
 	  var datatype = formElement.get("datatype");
 	  var closeRow = formElement.get("closeRow");
 	  var identifier = formElement.get("identifier");
 	  var tblCols = formElement.get("cols");
 	  var size = formElement.get("size");
+    var colspan = formElement.get("colspan");
     if ((this.currentRecord !== "")) {
       this.value = this.currentRecord.get(identifier);
     }
@@ -130,7 +131,9 @@ var FormView = Backbone.View.extend({
 //				formElement.set({"rows":"4"});
 //				formElement.set({"cols":"60"});
 		} else {
-			formElement.set({"colspan":"1"});
+			//formElement.set({"colspan":"1"});
+      formElement.set({"colspan":colspan});
+      //console.log("currentRow: " + this.currentRow + " identifier: " + identifier + " this.colspan:" + colspan);
 		}
 	}
 	if (tblCols == null) {
@@ -201,9 +204,10 @@ var FormView = Backbone.View.extend({
 		  console.log("formData: " + JSON.stringify(formData));
 		  var _id = formData._id;
 		  if (_id == null) {
-			  var unixTimestamp = Math.round(+new Date()/1000);
-			  formData.created =  unixTimestamp;
-			  console.log("formData.created: " + formData.created);
+//			  var unixTimestamp = Math.round(+new Date()/1000);
+//			  formData.created =  unixTimestamp;
+        formData.created =  new Date();
+			  //console.log("formData.created: " + formData.created);
 			  formData.lastModified =  formData.created;
 			  if (formId === "incident") {
 //				  var info = $.couch.db(Backbone.couch_connector.config.db_name).info(
