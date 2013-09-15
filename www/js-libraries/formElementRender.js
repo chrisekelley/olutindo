@@ -221,7 +221,7 @@ Handlebars.registerHelper('renderVillage', function(value) {
 
 Handlebars.registerHelper('dateFormat', function(item) {
 	var out = "";
-	var d1 = new Date(item * 1000);
+	var d1 = new Date(item);
 	//out = d1.toString('yyyy-MM-dd hh:mm');
 	//out = $.format.date(d1, "yyyy-MM-dd hh:mm:ss");
 	out = $.format.date(d1, "dd-MM hh:mm");
@@ -229,14 +229,14 @@ Handlebars.registerHelper('dateFormat', function(item) {
 });
 Handlebars.registerHelper('dateFormatDate', function(item) {
 	var out = "";
-	var d1 = new Date(item * 1000);
+	var d1 = new Date(item);
 	out = $.format.date(d1, "dd/MM");
 	//console.log("item: " + item + " d1: " + d1 + " out: " + out);
 	return out;
 });
 Handlebars.registerHelper('dateFormatdMY', function(item) {
 	var out = "";
-	var d1 = new Date(item * 1000);
+	var d1 = new Date(item);
 	//out = d1.toString('yyyy-MM-dd hh:mm');
 	//out = $.format.date(d1, "yyyy-MM-dd hh:mm:ss");
 	out = $.format.date(d1, "dd/MM/yyyy");

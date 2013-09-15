@@ -6,5 +6,5 @@ window.Form = Backbone.Model.extend({
 	  //this.bind("reset", this.updateView);
 	//this.model.bind('destroy', this.remove, this);
   },
-  url: "/form",
+  url: "/form"
 });

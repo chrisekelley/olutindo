@@ -738,6 +738,8 @@ var Pouch = function Pouch(name, opts, callback) {
   opts.name = opts.name || backend.name;
   opts.adapter = opts.adapter || backend.adapter;
 
+  console.log("opts.adapter: " + opts.adapter)
+
   if (!Pouch.adapters[opts.adapter]) {
     throw 'Adapter is missing';
   }
@@ -787,7 +789,7 @@ var Pouch = function Pouch(name, opts, callback) {
   }
 };
 
-Pouch.DEBUG = false;
+Pouch.DEBUG = true;
 Pouch.openReqList = {};
 Pouch.adapters = {};
 Pouch.plugins = {};
@@ -807,9 +809,13 @@ Pouch.parseAdapter = function(name) {
     return {name: name, adapter: match[1]};
   }
 
+
+
   var preferredAdapters = ['idb', 'leveldb', 'websql'];
+  //var preferredAdapters = ['websql'];
   for (var i = 0; i < preferredAdapters.length; ++i) {
     if (preferredAdapters[i] in Pouch.adapters) {
+      console.log("preferredAdapter available: " + preferredAdapters[i]);
       adapter = Pouch.adapters[preferredAdapters[i]];
       var use_prefix = 'use_prefix' in adapter ? adapter.use_prefix : true;
 
@@ -2005,6 +2011,7 @@ PouchUtils.Changes = function() {
   var listeners = {};
 
   if (isChromeApp()){
+    console.log("This is a ChromeApp");
     chrome.storage.onChanged.addListener(function(e){
       api.notify(e.db_name.newValue);//object only has oldValue, newValue members
     });
@@ -2769,6 +2776,7 @@ PouchAdapter = function(opts, callback) {
 
   if (PouchUtils.isCordova()) {
     //to inform websql adapter that we can use api
+    console.log("This is Cordova.")
     cordova.fireWindowEvent(opts.name + "_pouch", {});
   }
   return customApi;
@@ -3792,6 +3800,7 @@ var IdbPouch = function(opts, callback) {
     // polyfill the new onupgradeneeded api for chrome. can get rid of when
     // saucelabs moves to chrome 23
     if (idb.setVersion && Number(idb.version) !== POUCH_VERSION) {
+      console.log("Number(idb.version): " + Number(idb.version) + " POUCH_VERSION: " + POUCH_VERSION);
       var versionReq = idb.setVersion(POUCH_VERSION);
       versionReq.onsuccess = function(evt) {
         function setVersionComplete() {
@@ -4532,6 +4541,7 @@ var IdbPouch = function(opts, callback) {
 };
 
 IdbPouch.valid = function idb_valid() {
+  console.log("Supports window.indexedDB? " + !!window.indexedDB);
   return !!window.indexedDB;
 };
 
@@ -4571,7 +4581,7 @@ function quote(str) {
 }
 
 var POUCH_VERSION = 1;
-var POUCH_SIZE = 5 * 1024 * 1024;
+var POUCH_SIZE = 3 * 1024 * 1024;
 
 // The object stores created for each database
 // DOC_STORE stores the document meta data, its revision history and state
@@ -4646,12 +4656,14 @@ var webSqlPouch = function(opts, callback) {
     }, unknownError(callback), dbCreated);
   }
   if (PouchUtils.isCordova()) {
+    console.log("This is a Cordova app. Waiting for until custom api is made in pouch.adapters before doing setup.")
     //to wait until custom api is made in pouch.adapters before doing setup
     window.addEventListener(name + '_pouch', function cordova_init() {
       window.removeEventListener(name + '_pouch', cordova_init, false);
       setup();
     }, false);
   } else {
+    console.log("This is NOT a Cordova app.")
     setup();
   }
 
@@ -5112,6 +5124,7 @@ var webSqlPouch = function(opts, callback) {
     }
 
     if (opts.continuous) {
+      console.log('The replication is continuous.');
       var id = name + ':' + Pouch.uuid();
       opts.cancelled = false;
       webSqlPouch.Changes.addListener(name, id, api, opts);
@@ -5256,6 +5269,7 @@ var webSqlPouch = function(opts, callback) {
 };
 
 webSqlPouch.valid = function() {
+  console.log("Supports webSqlPouch (window.openDatabase)? " + !!window.openDatabase);
   return !!window.openDatabase;
 };
 

@@ -1,24 +1,48 @@
 <div id="pagewidth-vert">
-	 <table class="patient-home-vert" width="100%">
+    <table class="patient-home-vert" width="100%">
         <tbody><tr>
             <td style="vertical-align: top;">
-            	<button id='form-home' class="menu-blue" onClick="window.location.href = '#home'")>Home</button>
-				{{#if patientSurname}}
-				<span class="patientName"><a href="#patientRecords/{{patientId}}">{{patientSurname}}, {{patientForenames}} {{patientMiddle_name}}</a></span>
-				{{/if}}
+                <button id='form-home' class="menu-blue" onClick="window.location.href = '#home'">Home</button>
+                {{#if phone}}
+                <span class="patientName"><a href="#patientRecords/{{patientId}}">Request from {{phone}} on {{#dateFormatdMY created}}{{/dateFormatdMY}}</a></span>
+                {{/if}}
             </td>
         </tr>
-    	</tbody>
-	</table>
+        </tbody>
+    </table>
 </div>
 <div id="form-container-vert">
-	 <h1><a href="#edit/{{recordId}}">{{label}}</a>&nbsp;&nbsp;&nbsp;&nbsp; ID: {{assignedId}}</h1>
-<form id="theForm">
-<div id="formElements">
-<p class="dateHeader">
-Created: {{#dateFormatdMY created}}{{/dateFormatdMY}}<br/>
-Modified: {{#dateFormatdMY lastModified}}{{/dateFormatdMY}}
-</p>
+    <h1><a href="#edit/{{recordId}}">{{label}}</a>&nbsp;&nbsp;&nbsp;&nbsp; ID: {{recordId}}</h1>
+    <form id="theForm">
+        <div id="formElements">
+            <p class="dateHeader">
+                Created: {{#dateFormatdMY created}}{{/dateFormatdMY}}<br/>
+                Modified: {{#dateFormatdMY lastModified}}{{/dateFormatdMY}}
+            </p>
+        </div>
+    </form>
 </div>
-</form>
+<div id="actionTaken-container-vert">
+    <table class="patient-home-vert" width="100%">
+        <tbody><tr>
+            <td style="vertical-align: top;">
+                <button id="actionTakenLink" class="menu-blue" onclick="window.location.href = '#actionTaken/{{recordId}}'">Add Action Taken</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h1>&nbsp;&nbsp;Actions Taken</h1>
+    {{#if actionTakens}}
+    <table id="actionTakenList" width="100%" class="stripeMe">
+        <thead>
+        <tr>
+            <th>Date</th><th>Type of Action</th><th>Comments</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+     <p>&nbsp;</p>
+    {{else}}
+    <p>&nbsp;&nbsp; No Actions Taken</p>
+    {{/if}}
 </div>

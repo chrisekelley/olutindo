@@ -68,7 +68,6 @@ var byDepartment = function(department) {
   } else if (department === '6') {
     return byDepartmentCouncil
   } else if (department === '7') {
-    console.log("sending to byDepartmentCommDev: " + department);
     return byDepartmentCommDev
   } else if (department === '3') {
     return byDepartmentEducation
@@ -82,5 +81,11 @@ var byDepartment = function(department) {
     return byDepartmentProduction
   } else if (department === '5') {
     return byDepartmentWorks
+  }
+}
+
+var byParentId = function(doc) {
+  if(doc.parentId) {
+    emit(doc.parentId, doc);
   }
 }

@@ -1,4 +1,4 @@
-var IncidentRecordList = Backbone.Collection.extend({
+var ActionTakenRecordList = Backbone.Collection.extend({
     model : Record,
 	initialize: function() {
 		return this;
@@ -8,5 +8,5 @@ var IncidentRecordList = Backbone.Collection.extend({
 		//changes : true,
 		//keys : ["6857e31aa71f998c907d57b25e199cf2"]
 	},
-	url : "/incident-records"
+	url : "/actionTaken-records"
     });

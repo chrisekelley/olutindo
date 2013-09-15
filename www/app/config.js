@@ -5,9 +5,32 @@ var FORMY = {};
 //var couchServer = "http://192.168.1.60:6004/_api";
 //var remoteCouch = "https//0.0.0.0:6006/user%2Ffhefv4d/";
 //Backbone.connect("http://192.168.1.60:6004/_api") // creates a new hoodie at Backbone.hoodie
-Backbone.sync = BackbonePouch.sync({
-  db: PouchDB('user%2Ffhefv4d')
-});
+
+var ua = navigator.userAgent;
+if( ua.indexOf("Android") >= 0 )
+{
+  var is412 = ua.indexOf("4.1.2");
+  var isGTP6200 = ua.indexOf("GT-P6200");
+  console.log("is412: " + is412 + " isGTP6200:" + isGTP6200);
+  if ((is412) && (isGTP6200))
+  {
+    console.log("forcing websql.")
+    Backbone.sync = BackbonePouch.sync({
+      db: PouchDB('websql://troubletickets')
+    });
+  } else {
+    console.log("Letting Pouch decide the preferred adapter.")
+    Backbone.sync = BackbonePouch.sync({
+      db: PouchDB('troubletickets')
+    });
+  }
+} else {
+  console.log("Letting Pouch decide the preferred adapter.")
+  Backbone.sync = BackbonePouch.sync({
+    db: PouchDB('troubletickets')
+  });
+}
+
 Backbone.Model.prototype.idAttribute = '_id';
 
 var onComplete = function(err, result) {

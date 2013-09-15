@@ -6,7 +6,7 @@ var ConfigView = Backbone.View.extend({
 		return this;
 	}, 
 	events: {
-		"click #form-client " : "incidentLink",
+		"click #submitSignin " : "signinSubmit",
 		"click #form-config " : "configLink",
 		"click #form-design " : "designLink",
 		//"orientationEvent " : "orientation",
@@ -18,8 +18,10 @@ var ConfigView = Backbone.View.extend({
 		console.log("remove the view in homeView");
 		$(this.el).remove();
 	},
-	incidentLink: function() {
-		FORMY.router.navigate('incident', true);
+  signinSubmit: function() {
+    handleSignInSubmit();
+		FORMY.router.navigate('home', true);
+    return false;
 	},
 	configLink: function() {
 		window.location.href = '/mobilefuton/_design/mobilefuton/index.html';
@@ -32,7 +34,7 @@ var ConfigView = Backbone.View.extend({
 
 		var viewHtml = this.template(this.model.toJSON());
 		console.log("rendering ConfigView");
-		$("#homePageView").html(viewHtml);
+		$("#configView").html(viewHtml);
 		return this;
 	},
 });

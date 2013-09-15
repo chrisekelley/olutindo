@@ -35,7 +35,7 @@ var FormView = Backbone.View.extend({
 			this.template =  loadTemplate("form.vert.template.html");
 		}
     this.form = this.model;
-		this.parentId = this.form.parentId;
+		this.parentId = this.parentId;
 		$(this.el).html(this.template(this.form.toJSON()));
 		var flow = this.form.get("flow");
 		var flowId = flow.id;
@@ -80,109 +80,116 @@ var FormView = Backbone.View.extend({
   currentRow:0,	// reset whenever closeRow = true;
   formElements: null,
   addOne: function(formElement){
-	  //console.log("add one:" + JSON.stringify(formElement));
-	  var inputType = formElement.get("inputType");
-	  var datatype = formElement.get("datatype");
-	  var closeRow = formElement.get("closeRow");
-	  var identifier = formElement.get("identifier");
-	  var tblCols = formElement.get("cols");
-	  var size = formElement.get("size");
+    //console.log("add one:" + JSON.stringify(formElement));
+    var inputType = formElement.get("inputType");
+    var datatype = formElement.get("datatype");
+    var closeRow = formElement.get("closeRow");
+    var identifier = formElement.get("identifier");
+    var tblCols = formElement.get("cols");
+    var size = formElement.get("size");
     var colspan = formElement.get("colspan");
     if ((this.currentRecord !== "")) {
       this.value = this.currentRecord.get(identifier);
     }
-	  // don't count the hidden widgets at the beginning of the form.
-	  if ((inputType !== "hidden") && (datatype !== "display")) {
-		  this.currentRow ++;  
-	  }
-	  //console.log("currentRow: " + this.currentRow + " identifier: " + identifier);
-	if (this.value != null) {
-		//console.log("value for " + identifier + ": " + this.value);
-		formElement.set({"value": this.value});
-		formElement.set({"recordValue": this.value});
-	}
-	if (this.orientation === "vert") {
-		tblCols = 2;
-		//console.log("closeRow: " + closeRow + " ; currentRow: " + this.currentRow);
-		if (closeRow === "false") {
-			if (this.currentRow % 2) {
-				closeRow = "false";
-			} else {
-				closeRow = "true";
-				//console.log("Setting closeRow to true for " + identifier + " ; currentRow: " + this.currentRow);
-			}
-		}
-		if (inputType == 'button') {
-			closeRow = "true";
+    // don't count the hidden widgets at the beginning of the form.
+    if ((inputType !== "hidden") && (datatype !== "display")) {
+      this.currentRow ++;
+    }
+    //console.log("currentRow: " + this.currentRow + " identifier: " + identifier);
+    if (this.value != null) {
+      //console.log("value for " + identifier + ": " + this.value);
+      formElement.set({"value": this.value});
+      formElement.set({"recordValue": this.value});
+    }
+    if (this.orientation === "vert") {
+      tblCols = 2;
+      //console.log("closeRow: " + closeRow + " ; currentRow: " + this.currentRow);
+      if (closeRow === "false") {
+        if (this.currentRow % 2) {
+          closeRow = "false";
+        } else {
+          closeRow = "true";
+          //console.log("Setting closeRow to true for " + identifier + " ; currentRow: " + this.currentRow);
+        }
+      }
+      if (inputType == 'button') {
+        closeRow = "true";
 //			formElement.set({"width":"450"});
 //			formElement.set({"colspan":"2"});
-		} else if (inputType == 'text') {
-			if (size > 25) {
-				//console.log("Size: " + size);
-				closeRow = "true";
-				formElement.set({"colspan":"2"});
-				if (size >= 50) {
-					formElement.set({"size":"50"});
-				}
-			}
-		} else if (inputType == 'textarea') {
-				closeRow = "true";
+      } else if (inputType == 'text') {
+        if (size > 25) {
+          //console.log("Size: " + size);
+          closeRow = "true";
+          formElement.set({"colspan":"2"});
+          if (size >= 50) {
+            formElement.set({"size":"50"});
+          }
+        }
+      } else if (inputType == 'textarea') {
+        closeRow = "true";
 //				formElement.set({"colspan":"2"});
 //				formElement.set({"rows":"4"});
 //				formElement.set({"cols":"60"});
-		} else {
-			//formElement.set({"colspan":"1"});
-      formElement.set({"colspan":colspan});
-      //console.log("currentRow: " + this.currentRow + " identifier: " + identifier + " this.colspan:" + colspan);
-		}
-	}
-	if (tblCols == null) {
-		if (this.orientation === "vert") {
-			tblCols = 2;
-		} else {
-			tblCols = 3;
-		}
-	}
-	//console.log("add one:" + JSON.stringify(formElement));
-	if (inputType == 'display-tbl-begin') {
-		template = displayTableWidgetCompiledHtml;
-		html = template(formElement.toJSON());	
-		 //$(this.$("#formElements")).append(html);
-		 $("#formElements").append(html);
-		 currentParentName = "#beginTableRow" + identifier;
-		 currentParent = $(currentParentName);
-		 currentTableName = "#beginTableRow" + identifier;;
-	} else if (inputType == 'display-tbl-end') {
-	} else if (inputType == 'hidden-empty') {
-	    html = "<input id='" + identifier + "'name='" + identifier + "' type='hidden'></input>";
-	    $(this.$("#formElements")).append(html);
-	} else if (inputType == 'hidden-preset') {
-		html = "<input id='" + identifier + "'name='" + identifier + "' type='hidden'></input>";
-		$(this.$("#formElements")).append(html);
-	} else if (inputType == 'display-header') {
-		formElement.set({"tblCols" : tblCols});
-		currentParent.append((new FormElementView({model: formElement})).render().el);
-	} else if (inputType == 'hidden') {
-		currentParentName = "#theForm";
-		currentParent = $(currentParentName);
-		closeRow = "false";
-		$(this.$("#formElements")).append((new FormElementView({model: formElement})).render().el);
-		//console.log("Hidden Element: " + identifier + " currentParentName: " + currentParentName);
-	} else {
-	    currentParent.append((new FormElementView({model: formElement})).render().el);
-	}
-	if (closeRow == "true") {
-		//$("table").append("<tr id=\"row" + identifier + "\"></tr>");
-		$(currentTableName).append("<tr id=\"row" + identifier + "\"></tr>");
-		currentParentName = "#row" + identifier;
-		currentParent = $(currentParentName);
-		this.currentRow = 0;	//reset currentRow.
-		//console.log("CloseRow currentParentName: " + currentParentName);
-	}
-	 //console.log("Element: " + identifier + " currentParentName: " + currentParentName);
+      } else {
+        //formElement.set({"colspan":"1"});
+        formElement.set({"colspan":colspan});
+        //console.log("currentRow: " + this.currentRow + " identifier: " + identifier + " this.colspan:" + colspan);
+      }
+    }
+    if (tblCols == null) {
+      if (this.orientation === "vert") {
+        tblCols = 2;
+      } else {
+        tblCols = 3;
+      }
+    }
+    var currentTableName = "#tblbeginTableIdentifier";
+    console.log("add one:" + JSON.stringify(formElement));
+    if (inputType == 'display-tbl-begin') {
+      template = displayTableWidgetCompiledHtml;
+      html = template(formElement.toJSON());
+      //$(this.$("#formElements")).append(html);
+      $("#formElements").append(html);
+      currentParentName = "#beginTableRow" + identifier;
+      currentParent = $(currentParentName);
+      //currentTableName = "#beginTableRow" + identifier;;
+    } else if (inputType == 'display-tbl-end') {
+    } else if (inputType == 'hidden-empty') {
+      html = "<input id='" + identifier + "'name='" + identifier + "' type='hidden'></input>";
+      $(this.$("#formElements")).append(html);
+    } else if (inputType == 'hidden-preset') {
+      html = "<input id='" + identifier + "'name='" + identifier + "' type='hidden'></input>";
+      $(this.$("#formElements")).append(html);
+    } else if (inputType == 'display-header') {
+      formElement.set({"tblCols" : tblCols});
+      currentParent.append((new FormElementView({model: formElement})).render().el);
+    } else if (inputType == 'display-actionTakenLink') {
+      // don't render - only in RecordView.
+    } else if (inputType == 'hidden') {
+      currentParentName = "#theForm";
+      currentParent = $(currentParentName);
+      closeRow = "false";
+      $(this.$("#formElements")).append((new FormElementView({model: formElement})).render().el);
+      //console.log("Hidden Element: " + identifier + " currentParentName: " + currentParentName);
+    } else {
+      currentParent.append((new FormElementView({model: formElement})).render().el);
+    }
+    if (closeRow == "true") {
+      //$("table").append("<tr id=\"row" + identifier + "\"></tr>");
+      $(currentTableName).append("<tr id=\"row" + identifier + "\"></tr>");
+      currentParentName = "#row" + identifier;
+      currentParent = $(currentParentName);
+      this.currentRow = 0;	//reset currentRow.
+      //console.log("CloseRow currentParentName: " + currentParentName);
+    }
+    if (currentTableName != null && $(currentTableName)) {
+      var currentTableNameHtml = $(currentTableName).html();
+      console.log("currentTableNameHtml:" + currentTableNameHtml)
+    }
+    //console.log("Element: " + identifier + " currentParentName: " + currentParentName);
   },
   events: {
-    "click #form-save" : "saveRecord",
+    "click #form-save" : "saveRecord"
   },
   saveRecord: function(e){ 
 	  e.preventDefault();
@@ -206,7 +213,7 @@ var FormView = Backbone.View.extend({
 		  if (_id == null) {
 //			  var unixTimestamp = Math.round(+new Date()/1000);
 //			  formData.created =  unixTimestamp;
-        formData.created =  new Date();
+        formData.created = new Date();
 			  //console.log("formData.created: " + formData.created);
 			  formData.lastModified =  formData.created;
 			  if (formId === "incident") {
@@ -239,9 +246,8 @@ var FormView = Backbone.View.extend({
 //						  }
 //				  );
 
-//          hoodie.store.add("incident", attributes)
-//              .done(function (newObject) {});
-          formData._id = "incident/" + hoodie.uuid();
+          //formData._id = "incident/" + hoodie.uuid();
+          formData._id = "incident/" +uuidGenerator();
           var incident = new Incident(formData);
           incident.type="incident";
           //incident._id = "incident/" + hoodie.uuid();
@@ -249,7 +255,11 @@ var FormView = Backbone.View.extend({
           console.log("incident._id: " + incident._id);
           incident.save();
           inspectModelAndGo(incident);
-
+        } else if (formId === "actionTaken") {
+          var actionTaken = new ActionTaken(formData);
+          actionTaken.type="actionTaken";
+          actionTaken.save();
+          inspectModelAndGo(actionTaken);
         } else {
 				  console.log("Saving the record using FORMY.sessionRecord.records.create");
 				  FORMY.sessionRecord.records.create(formData,{
@@ -264,8 +274,8 @@ var FormView = Backbone.View.extend({
 				  //model.clear;
 			  }
 		  } else {
-			  var unixTimestamp = Math.round(+new Date()/1000);
-			  formData.lastModified =  unixTimestamp;
+			  //var unixTimestamp = Math.round(+new Date()/1000);
+			  formData.lastModified = new Date();
 			  console.log("Updating the record using record.save");
 			  var record = new Record(formData);
 			  record.collection = "patient-records";

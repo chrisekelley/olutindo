@@ -1,17 +1,31 @@
-<h2>Configuration</h2>
-<span class="btn-group">
-<table style="padding: 2px;">
-	<tr>
-		<td><button class="btn btn-small btn-inverse" data-hoodie-action="signup">Sign Up</button></td>
-		<td>Sign up a new user</td>
-	</tr>
-    <tr>
-        <td><a href="#" data-hoodie-action="signin">Sign In</a></td>
-        <td>Login to the application - this enables sync with the master server.</td>
-    </tr>
-<!-- 	<tr> -->
-<!-- 		<td><a href="#populate"><img src="images/system-users.png" alt="Populate" /></a></td> -->
-<!-- 		<td>Populate Application with Test Data. Do not use this on a live system!.</td> -->
-<!-- 	</tr> -->
-</table>
-    </span>
+<div class="modal-content">
+    <form style="margin:0">
+        <div class="modal-signin-header">
+            <h1>      Sign in
+                <button type="button" class="closeWider" data-dismiss="modal" aria-hidden="true">X</button>
+            </h1>
+        </div>
+        <div class="modal-signin-body">
+            <input class="loginForm" id="username" name="username" placeholder="username" type="text">
+            <input class="loginForm" id="password" name="password" placeholder="password" type="password">
+            <br>
+            <select id="site-dropwdown" data-optional="true" name="site" class="loginFormDropdown">
+                <option value="">site</option>
+                <option value="aru">Arua</option>
+                <option value="kay">Kayunga</option><option value="gul">Gulu</option>
+            </select>
+
+            <select id="department-dropwdown" data-optional="true" name="department" class="loginFormDropdown">
+                <option value="">department</option><option value="1">Admin</option>
+                <option value="7">Community Development</option><option value="6">Council</option>
+                <option value="3">Education</option><option value="2">Finance and Planning</option>
+                <option value="4">Health</option><option value="8">Natural Resources</option>
+                <option value="9">Production</option><option value="5">Works</option>
+                <option value="10">All</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+            <button id="submitSignin" class="menu-blue">Sign in</button>
+        </div>
+    </form>
+</div>

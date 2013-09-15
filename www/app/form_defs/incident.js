@@ -3706,63 +3706,25 @@ var incidentForm = {
       "identifier": "dev_works",
       "inputType": "alertCheckbox"
     },
-    {
-      "label": "Progress",
-      "value": "",
-      "options": [
-        {
-          "name": "optional",
-          "value": "true"
-        }
-      ],
-      "datatype": "display",
-      "visible": "true",
-      "closeRow": "true",
-      "colspan": "2",
-      "size": "0",
-      "rows": "0",
-      "cols": "0",
-      "identifier": "display_progress",
-      "inputType": "display-header"
-    },
-    {
-      "label": "Resolved?",
-      "value": "",
-      "options": [
-        {
-          "name": "optional",
-          "value": "true"
-        }
-      ],
-      "datatype": "boolean",
-      "visible": "true",
-      "closeRow": "true",
-      "colspan": "2",
-      "size": "0",
-      "rows": "0",
-      "cols": "0",
-      "identifier": "resolved",
-      "inputType": "checkbox"
-    },
-    {
-      "label": "Comments",
-      "value": "",
-      "options": [
-        {
-          "name": "optional",
-          "value": "true"
-        }
-      ],
-      "datatype": "string",
-      "visible": "true",
-      "closeRow": "false",
-      "colspan": "2",
-      "size": "0",
-      "rows": "6",
-      "cols": "45",
-      "identifier": "comment",
-      "inputType": "textarea"
-    },
+//    {
+//      "label": "Action Taken Link",
+//      "value": "",
+//      "options": [
+//        {
+//          "name": "optional",
+//          "value": "true"
+//        }
+//      ],
+//      "datatype": "display",
+//      "visible": "true",
+//      "closeRow": "true",
+//      "colspan": "2",
+//      "size": "0",
+//      "rows": "0",
+//      "cols": "0",
+//      "identifier": "display_actionTaken",
+//      "inputType": "display-actionTakenLink"
+//    },
     {
       "label": "Save",
       "value": "",

@@ -81,8 +81,10 @@ h5, h6
 */
 
 h1 {
-    font-size: 12pt;
+    font-size: 16pt;
     font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 h2 {
     font-size: 10pt;
@@ -234,14 +236,14 @@ textarea
 
 input 
 {
-    margin-top: 6px;
+    /*margin-top: 6px;*/
 }
 
 input[type="text"] 
 {
     /* width: 200px; */
-    //border: 1px solid #CCC;
-    margin-top: 6px;
+    border: 1px solid #CCC;
+    /*margin-top: 6px;*/
 }
 
 input[type="password"] 
@@ -252,13 +254,14 @@ input[type="password"]
 
 select 
 {
-    margin-top: 6px;
+    /*margin-top: 6px;*/
 }
 
 select {
     background-color: #EBF1FA;
     color: #222222;
-    font-size: 10pt;
+    font-size: 14pt;
+    height: 40px !important;
 }
 
 textarea {
@@ -450,9 +453,7 @@ div#title
 	/*background-image: url("/Content/images/banner_bkgd.gif"); */
 }
 .banner-home-vert {
-	font-family: Tahoma, Verdana, Arial, sans-serif;
 	vertical-align: top;
-	font-size: 10pt;
 	color: white;
 	/*background-image: url("../images/banner_bkgd.gif"); */
 	background-color:#6EA8E4
@@ -558,7 +559,7 @@ div#search-results h1 {
 }
 div#search-results input[type=text] {
 	/*font-size: 1.6em;*/
-	height: 26px;
+	height: 40px;
 }
 #search-results-form {
 	/*height:42px;*/
@@ -623,6 +624,9 @@ div#search-results input[type=text] {
 	width: 874px;
 	vertical-align: bottom;
 	overflow: auto;
+}
+#actionTakenList {
+    position: relative;
 }
 #sidebar-a-print {
 	float: left;
@@ -960,7 +964,7 @@ button.shiny-red {
   padding: 4px 0;
   /*text-shadow: 0 -1px 1px #1a5ad9;*/
   width: 75px;
-  font-size: 12pt;
+  font-size: 14pt;
    }
 
 	
@@ -1010,8 +1014,8 @@ button.menu-blue {
   /*font: bold 12px "helvetica neue", helvetica, arial, sans-serif;*/
   padding: 4px 0;
   /*text-shadow: 0 -1px 1px #1a5ad9;*/
-  width: 60px;
-  font-size: 10pt;
+  width: 80px;
+  font-size: 14pt;
    }
    
 button.menu-skinny-blue {
@@ -1102,6 +1106,53 @@ tr.alt td
 tr.over td, tr: hover td
 {
 	/*background: #bcd4ec;*/ 
+}
+
+#actionTakenList
+{
+    /*font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;*/
+    font-size: 12px;
+    /*margin: 10px;*/
+    /*width: 480px;*/
+    text-align: left;
+    border-collapse: collapse;
+}
+
+/*#actionTakenList th
+{
+	font-size: 16px;
+	font-weight: normal;
+	padding: 6px 4px;
+	color: #039;
+}*/
+#actionTakenList th {
+    font-size: 16px;
+    /*background: #3E83C9;*/
+    /*background: #FF8040;*/
+    /*background: #6989AB;*/
+    background: #BFA040;
+    color: white;
+    font-weight: bold;
+    padding: 2px 6px;
+    text-align: center;
+    border-right: 1px solid white;
+    line-height: 1.2;
+}
+
+#actionTakenList td
+{
+    /*padding: 6px;*/
+    color: #669;
+    font-size: 16px;
+
+    padding: 6px 2px;
+    /*border-bottom: 1px solid #2175BC;*/
+    border-bottom: 1px solid #BBB195;
+    vertical-align: top;
+}
+#actionTakenList .odd
+{
+    background: #e8edff;
 }
 
 #records
@@ -1234,7 +1285,9 @@ label{
 
 #department {
 	/*font-size:10px;*/
-    width:140px
+    width:240px;
+    font-size: 20px;
+    /*height: 24px !important;*/
 }
 
 .container{width:100%}
@@ -1257,6 +1310,53 @@ label{
     background-color: lightgrey;
 }
 
-#rowdev_works {
-    background-color: lightgrey;
+#actionTakenLink {
+    width: 200px;
+}
+
+.loginForm {
+    width:180px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    height:36px;
+}
+
+.loginFormDropdown {
+    width:180px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    height:36px;
+}
+
+#searchBarTable td {
+    padding-bottom: 10px;
+    padding-right: 5px;
+}
+
+.modal-signin-header {
+    min-height: 16.428571429px;
+    padding: 2px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-signin-body {
+    position: relative;
+    padding: 5px;
+}
+
+.modal-signin-footer {
+    margin-top: 5px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+button.closeWider {
+    /*padding: 0;*/
+    font-size: 18px;
+    width: 50px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    float: right;
 }

@@ -29,6 +29,7 @@ displayTableWidgetCompiledHtml = Handlebars.compile($("#displayTableWidget").htm
 displayHeaderWidgetCompiledHtml = Handlebars.compile($("#displayHeaderWidget").html());
 displaySubHeaderWidgetCompiledHtml = Handlebars.compile($("#displaySubHeaderWidget").html());
 displayInfotextWidgetCompiledHtml = Handlebars.compile($("#displayInfotextWidget").html());
+displayActionTakenLinkCompiledHtml = Handlebars.compile($("#displayActionTakenLink").html());
 
 Handlebars.registerHelper("renderValue", function(context) {
 	//console.log("renderValue:" + JSON.stringify(context));
@@ -94,6 +95,8 @@ Handlebars.registerHelper("renderValue", function(context) {
 		template = displaySubHeaderWidgetCompiledHtml;
 	} else if (inputType == 'infotext') {
 		template = displayInfotextWidgetCompiledHtml;
+  } else if (inputType == 'display-actionTakenLink') {
+		template = displayActionTakenLinkCompiledHtml;
 	} else if (inputType == 'hidden') {
 		template = doNotRenderCompiledHtml;
 	} else if (inputType == 'button') {

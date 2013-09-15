@@ -1,27 +1,32 @@
 <div id="pagewidth-vert">
 	<div id="search-results">
 	    <form name="searchForm" id="search-results-form" onsubmit="return false;">
-	        <table class="banner-home-vert" width="100%">
+	        <table class="banner-home-vert" id="searchBarTable" width="100%">
 	            <tbody>
 	             <tr>
 	                 <td style="vertical-align: top;">
 		                 <input type="text" id="search_string" name="search_string" placeholder="Search:Phone" size="13"/>
-						 <select id="department" data-optional="true" name="department">
-                             <option value="">Filter by Department</option>
-                             <option value="1">Admin</option>
-                             <option value="7">Community Development</option>
-                             <option value="6">Council</option>
-                             <option value="3">Education</option>
-                             <option value="2">Finance and Planning</option>
-                             <option value="4">Health</option>
-                             <option value="8">Natural Resources</option>
-                             <option value="9">Production</option>
-                             <option value="5">Works</option>
-						 </select>						
-		                 <button id='form-search' value="Search" class="shiny-red" style="width: 65px;">Search</button>
+                         <button id='form-search' value="Search" class="shiny-red">Search</button>
+                         <button id='form-client'class="menu-blue" style="width: 60px;">New</button>
+                         <button id='refreshButton'class="menu-blue" style="width: 70px;" onClick="document.location = 'index.html'">Refresh</button>
                      </td>
-
 	             </tr>
+                <tr id="advancedSearch">
+                    <td style="vertical-align: top;">
+                    <select id="department" data-optional="true" name="department">
+                        <option value="">Filter by Department</option>
+                        <option value="1">Admin</option>
+                        <option value="7">Community Development</option>
+                        <option value="6">Council</option>
+                        <option value="3">Education</option>
+                        <option value="2">Finance and Planning</option>
+                        <option value="4">Health</option>
+                        <option value="8">Natural Resources</option>
+                        <option value="9">Production</option>
+                        <option value="5">Works</option>
+                    </select>
+                    </td>
+                </tr>
 	        	</tbody>
 	        </table>
 	    </form>
@@ -35,8 +40,9 @@
 					</thead>
 					<tbody></tbody>
 						<tr style="background-color: #6EA8E4;" id="noStripeMe">
-							<td colspan="2"><button id='form-client'class="menu-blue" style="width: 55px;">Incident</button>
-                                <img src="images/1321455058_reload.png" alt="Refresh" onClick="document.location = 'index.html'"/>
+							<td colspan="2">
+                                <!--<button class="menu-blue" data-hoodie-action="signin" onclick="signIn();">Sign In</button>-->
+                                <button class="menu-blue" onclick="window.location.href = '#config'">Sign In</button>
                                 <!--<button id='form-config' class="menu-blue" style="width: 40px;">Conf</button>-->
                                 <!--<button class="menu-blue" data-hoodie-action="signup">Sign Up</button>-->
                                 <!--<button class="menu-blue" data-hoodie-action="signin">Login</button>-->
@@ -51,59 +57,59 @@
 						</tr>
 				</table>
 	       	</div>
-            <div id="login-bar">
-                <table width="100%">
-                    <td id="displayUsername">{{#if username}}Logged in as {{username}}{{/if}}</td>
-                    <td class="hoodie-accountbar">
-                        <div class="hoodie-account-signedout">
-                                <span class="btn-group">
-                                  <button class="btn btn-small btn-inverse" data-hoodie-action="signin">Sign In</button>
-                                  <!--<button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">-->
+            <!--<div id="login-bar">-->
+                <!--<table width="100%">-->
+                    <!--<td id="displayUsername">{{#if username}}Logged in as {{username}}{{/if}}</td>-->
+                    <!--<td class="hoodie-accountbar">-->
+                        <!--<div class="hoodie-account-signedout">-->
+                                <!--<span class="btn-group">-->
+                                  <!--<button class="btn btn-small btn-inverse" data-hoodie-action="signin">Sign In</button>-->
+                                  <!--&lt;!&ndash;<button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">&ndash;&gt;-->
+                                      <!--&lt;!&ndash;<span class="caret"></span>&ndash;&gt;-->
+                                  <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                                  <!--&lt;!&ndash;<ul class="dropdown-menu pull-right">&ndash;&gt;-->
+                                      <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="signup">Register new account</a></li>&ndash;&gt;-->
+                                      <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="resetpassword">Reset Password</a></li>&ndash;&gt;-->
+                                      <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>&ndash;&gt;-->
+                                      <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="destroy">Clear local data</a></li>&ndash;&gt;-->
+                                      <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="signout">Sign Out</a></li>&ndash;&gt;-->
+                                  <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+                                <!--</span>-->
+                        <!--</div>&lt;!&ndash; /.hoodie-account-signedout &ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<div class="hoodie-account-signedin">&ndash;&gt;-->
+                        <!--&lt;!&ndash;Hello,&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="hoodie-username">&lt;!&ndash; usern name will be filled in here &ndash;&gt;</span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="btn-group">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="btn btn-small btn-inverse" data-hoodie-action="signout">Sign Out</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;<button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;<span class="caret"></span>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;</button>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;<ul class="dropdown-menu pull-right">&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;<li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;<li><a href="#" data-hoodie-action="changeusername">Change Username</a></li>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;<li><a href="#" data-hoodie-action="destroy">Destroy Account</a></li>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;</ul>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&lt;!&ndash; /.hoodie-account-signedin &ndash;&gt;&ndash;&gt;-->
+
+                        <!--<div class="hoodie-account-error">-->
+                            <!--Hello,-->
+                            <!--<span class="hoodie-username">&lt;!&ndash; usern name will be filled in here &ndash;&gt;</span>.-->
+                                <!--<span class="btn-group">-->
+                                  <!--<button class="btn btn-small btn-danger" data-hoodie-action="signin">Authentication error: Sign in again</button>-->
+                                  <!--<button class="btn btn-small dropdown-toggle btn-danger" data-toggle="dropdown">-->
                                       <!--<span class="caret"></span>-->
                                   <!--</button>-->
                                   <!--<ul class="dropdown-menu pull-right">-->
-                                      <!--<li><a href="#" data-hoodie-action="signup">Register new account</a></li>-->
-                                      <!--<li><a href="#" data-hoodie-action="resetpassword">Reset Password</a></li>-->
-                                      <!--<li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>-->
-                                      <!--<li><a href="#" data-hoodie-action="destroy">Clear local data</a></li>-->
-                                      <!--<li><a href="#" data-hoodie-action="signout">Sign Out</a></li>-->
+                                      <!--<li><a href="#" data-hoodie-action="signout">Sign out</a></li>-->
                                   <!--</ul>-->
-                                </span>
-                        </div><!-- /.hoodie-account-signedout -->
+                                <!--</span>-->
+                        <!--</div>&lt;!&ndash; /.hoodie-account-error &ndash;&gt;-->
+                    <!--</td>&lt;!&ndash;/hoodieAccountBar &ndash;&gt;-->
+                <!--</table>-->
 
-                        <!--<div class="hoodie-account-signedin">-->
-                        <!--Hello,-->
-                        <!--<span class="hoodie-username">&lt;!&ndash; usern name will be filled in here &ndash;&gt;</span>-->
-                        <!--<span class="btn-group">-->
-                        <!--<button class="btn btn-small btn-inverse" data-hoodie-action="signout">Sign Out</button>-->
-                        <!--&lt;!&ndash;<button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<span class="caret"></span>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<ul class="dropdown-menu pull-right">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="changeusername">Change Username</a></li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="destroy">Destroy Account</a></li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-                        <!--</span>-->
-                        <!--</div>&lt;!&ndash; /.hoodie-account-signedin &ndash;&gt;-->
-
-                        <div class="hoodie-account-error">
-                            Hello,
-                            <span class="hoodie-username"><!-- usern name will be filled in here --></span>.
-                                <span class="btn-group">
-                                  <button class="btn btn-small btn-danger" data-hoodie-action="signin">Authentication error: Sign in again</button>
-                                  <button class="btn btn-small dropdown-toggle btn-danger" data-toggle="dropdown">
-                                      <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu pull-right">
-                                      <li><a href="#" data-hoodie-action="signout">Sign out</a></li>
-                                  </ul>
-                                </span>
-                        </div><!-- /.hoodie-account-error -->
-                    </td><!--/hoodieAccountBar -->
-                </table>
-
-            </div>
+            <!--</div>-->
       	</div>
 	</div>
 </div>

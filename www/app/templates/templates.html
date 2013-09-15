@@ -12,7 +12,7 @@
 </script>
 <script id="search-template" type="text/x-handlebars-template">
 {{#if phone}}
-    <td>{{#renderPriority priority resolved}}{{/renderPriority}}</td><td><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}">{{phone}}&nbsp;&nbsp;</a></td><td>{{#renderVillage village}}{{/renderVillage}}</td>
+    <td>{{#renderPriority priority resolved}}{{/renderPriority}}</td><td onclick="window.location='#incidentRecords/{{_id}}'"><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}">{{phone}}&nbsp;&nbsp;</a></td><td>{{#renderVillage village}}{{/renderVillage}}</td>
     <td>{{#if dep_administration}}Admin<br/>{{/if}}
         {{#if dep_community_development}}Comm. Dev.<br/>{{/if}}
         {{#if dev_council}}Council<br/>{{/if}}
@@ -36,6 +36,15 @@
         {{#if dev_works}}Works<br/>{{/if}}</td>
     <td>{{#dateFormatDate lastModified}}{{/dateFormatDate}}</td>
 {{/if}}
+</script>
+<script id="actionTakenList-template" type="text/x-handlebars-template">
+    <td><a href="#editActionTaken/{{_id}}" title="Edit this Action Taken">{{#dateFormatDate lastModified}}{{/dateFormatDate}}</a></td>
+    <td>{{#if initial_assignment}}Initial Assignment<br/>{{/if}}
+        {{#if followup}}Followup<br/>{{/if}}
+        {{#if phonecall}}Phone call<br/>{{/if}}
+        {{#if dev_education}}Edu.<br/>{{/if}}
+        {{#if resolved}}Resolved<br/>{{/if}}</td>
+    <td>{{comment}}</td>
 </script>
 <script id="recordValue" type="text/x-handlebars-template">
     {{value}}
@@ -105,8 +114,7 @@
 	</select>
 </script>
 <script id="displayTableWidget" type="text/x-handlebars-template">
-	<table id="tbl{{{identifier}}}" border="0" cellpadding="4" cellspacing="2" class="formTable">
-	<tr id="beginTableRow{{{identifier}}}"></tr>
+	<table id="tbl{{{identifier}}}" border="0" cellpadding="4" cellspacing="2" class="formTable"></table>
 </script>
 <script id="displayHeaderWidget" type="text/x-handlebars-template">
 	<span id='sectionHeader{{identifier}}' class='sectionHeader'> {{label}}</span>
@@ -116,6 +124,9 @@
 </script>
 <script id="displayInfotextWidget" type="text/x-handlebars-template">
 	<strong>{{label}}</strong>
+</script>
+<script id="displayActionTakenLink" type="text/x-handlebars-template">
+    <button id="actionTakenLink" class="menu-blue" onclick="window.location.href = '#actionTaken/{{value}}'">Add Action Taken</button>
 </script>
 <script id="yesnoWidget" type="text/x-handlebars-template">
 	<br/>

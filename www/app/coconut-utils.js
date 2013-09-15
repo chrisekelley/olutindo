@@ -153,7 +153,8 @@ function downloadFile(){
       });
 }
 
-function saveLoginPreferences(username, password, site) {
+function saveLoginPreferences(username, password, site, department) {
+  console.log("Saving login prefs. username: " + username + " password: " + password + " site: "  + site + " department:" + department);
   if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
     window.applicationPreferences.set("username", username, function() {
     }, function(error) {
@@ -164,6 +165,10 @@ function saveLoginPreferences(username, password, site) {
       console.log("Error! " + JSON.stringify(error));
     });
     window.applicationPreferences.set("site", site, function() {
+    }, function(error) {
+      console.log("Error! " + JSON.stringify(error));
+    });
+    window.applicationPreferences.set("department", department, function() {
     }, function(error) {
       console.log("Error! " + JSON.stringify(error));
     });
@@ -181,7 +186,9 @@ function getLoginPreferences() {
       account.username = value;
     }, function(error) {
       alert("Welcome to Olutindo! Please sign in so that the app can receive records from the server.");
-      console.log("Error! " + JSON.stringify(error));
+      console.log("The username is not stored in preferences; displayed sign in notice. Error Message: " + JSON.stringify(error));
+      //$form = $.modalForm({fields: [ 'username', 'password', 'site', 'department' ], submit: 'Sign in'})
+      FORMY.router.navigate('config', true);
     });
     window.applicationPreferences.get("password", function(value) {
       account.password = value;
@@ -199,6 +206,8 @@ function getLoginPreferences() {
     account.username = "testuser";
     account.password = "testuserPassword";
     account.site = "gul";
+    alert("Welcome to Olutindo! Please sign in so that the app can receive records from the server.");
+    FORMY.router.navigate('config', true);
   }
   return account;
 }
@@ -207,28 +216,101 @@ var StartReplication = function () {
   var account = getLoginPreferences();
   if (account.username != null) {
     var credentials = account.username + ":" + account.password;
-    //var remoteCouch = "https://testuser:testuserPassword@olutindo.iriscouch.com/troubletickets/";
-    //var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/troubletickets/";
     var couchdb =  "troubletickets_" +  account.site;
+    var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/" + couchdb + "/";
     //var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/" + couchdb + "/";
-    var remoteCouch = "http://" + credentials + "@192.168.2.1:5984/" + couchdb + "/";
+    //var remoteCouch = "http://" + credentials + "@192.168.2.1:5984/" + couchdb + "/";
     console.log("start replication with " + remoteCouch)
     FORMY.ReplicationStarted = true;
-    var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};
+    //var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};
+    var opts = {continuous: true,
+      withCredentials:true,
+      cookieAuth: {username:account.username, password:account.password},
+      auth: {username:account.username, password:account.password},
+      complete: onComplete,
+      timeout: 60000};
     //var opts = {continuous: true, withCredentials:true};
     //var opts = {continuous: true};
-    Backbone.sync.defaults.db.replicate.to(remoteCouch, opts, ErrorLog);
+    Backbone.sync.defaults.db.replicate.to(remoteCouch, opts, ReplicationErrorLog);
     //localDB.replicate.from('http://relax.com/on-the-couch', {withCredentials:true, cookieAuth: {username:'admin', password:'pass'}}, function(){});
-    Backbone.sync.defaults.db.replicate.from(remoteCouch, opts, ErrorLog);
+    Backbone.sync.defaults.db.replicate.from(remoteCouch, opts, ReplicationErrorLog);
   }
 }
 
-var ErrorLog = function(err, res) {
-  console.log("err: " + JSON.stringify(err));
-  if ((typeof err != 'undefined') && (err.status === 401)) {
-    alert("Error: Name or password is incorrect. Unable to connect to the server.");
+var ReplicationErrorLog = function(err, result) {
+  if (result !=null && result.ok) {
+    console.log("Replication is fine. ")
+  } else {
+    console.log("Replication error: " + JSON.stringify(err));
+    if ((typeof err != 'undefined') && (err.status === 401)) {
+      alert("Error: Name or password is incorrect. Unable to connect to the server.");
+    }
   }
 }
+
+
+var onComplete = function(err, result) {
+  if (result.ok) {
+    console.log("onComplete: Replication is fine. ")
+  } else {
+    console.log("onComplete: Replication error: " + JSON.stringify(err));
+  }
+}
+
+var signIn = function() {
+  //$form = $.modalForm({fields: [ 'username', 'password', 'site', 'department' ], submit: 'Sign in'})
+  $.modalForm({fields: [ 'username', 'password', 'site', 'department' ], submit: 'Sign in'})
+  //$form.on('submit', handleSignInSubmit( 'signin' ))
+  //$form.on('submit', handleSignInSubmit());
+}
+
+var handleSignInSubmit = function() {
+  console.log("Is this thing working?")
+
+  saveLoginPreferences($("#username").val(), $("#password").val(), $("#site-dropwdown").val(), $("#department-dropwdown").val());
+  $("#SigninForm").hide();
+//  return function(event, inputs) {
+//    console.log("Submitting signin form.")
+//    var $modal = $(event.target)
+//    saveLoginPreferences(inputs.username, inputs.password, inputs.site, inputs.department);
+//    $modal.modal('hide')
+//  }
+}
+
+// uuid
+// ------
+
+// This is borrowed from Hood.ie
+
+// helper to generate unique ids.
+var uuidGenerator = function(len) {
+  var chars, i, radix;
+
+  // default uuid length to 7
+  if (len === undefined) {
+    len = 7;
+  }
+
+  // uuids consist of numbers and lowercase letters only.
+  // We stick to lowercase letters to prevent confusion
+  // and to prevent issues with CouchDB, e.g. database
+  // names do wonly allow for lowercase letters.
+  chars = '0123456789abcdefghijklmnopqrstuvwxyz'.split('');
+  radix = chars.length;
+
+  // eehmm, yeah.
+  return ((function() {
+    var _i, _results = [];
+
+    for (i = _i = 0; 0 <= len ? _i < len : _i > len; i = 0 <= len ? ++_i : --_i) {
+      var rand = Math.random() * radix;
+      var char = chars[Math.floor(rand)];
+      _results.push(chars[0] = String(char).charAt(0));
+    }
+
+    return _results;
+  })()).join('');
+};
 
 
 

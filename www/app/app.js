@@ -7,82 +7,32 @@ $(function(){
     onDeviceReady(); //this is the browser
   }
   function onDeviceReady(){
+    $(function() {
+      FastClick.attach(document.body);
+    });
     if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
       checkVersion();
     }
     FORMY.forms = new FormCollection();
-    // initialize Hoodie
-    //var hoodie  = new Hoodie("http://0.0.0.0:6004/_api")
-    var hoodie  = new Hoodie("http://192.168.1.60:6004/_api")
-    //var hoodie  = new Hoodie("http://192.168.43.195:6004/_api")
+    // initialize Hoodie - this is for the account form only.
+//    var hoodie  = new Hoodie();
 
     FORMY.loadForm = function(name, parentId, options) {
       options || (options = {});
       var form = new Form({_id: name});
-      if (typeof FORMY.forms.get(name) === "undefined") {
-        //console.log("fetching from db: " + name);
-        form.fetch({
-          success: function(form){
-            var success = options.success;
-            if (success) {
-              form.parentId = parentId;
-              //console.log("form.parentId: " + parentId);
-              FORMY.forms.add(form);
-              //console.log("added " + name);
-              success(form);
-            }
-            options.error = wrapError(options.error, name, options);
-          },
-          error : function(){
-            console.log("Error loading Form: " + JSON.stringify(arguments));
-          }
-        });
-      } else {
-        form = FORMY.forms.get(name);
-        form.parentId = parentId;
-        console.log("fetched from FORMY: " + name + "; parentId: " + parentId);
-        var success = options.success;
-        if (success) {
-          success(form);
-        }
+      form = FORMY.forms.get(name);
+      form.parentId = parentId;
+      console.log("fetched from FORMY: " + name + "; parentId: " + parentId);
+      var success = options.success;
+      if (success) {
+        success(form);
       }
     };
-// Preload the incident form definition to enable easier access to form elements.
-//FORMY.loadForm("incident", null, {
-//	success: function(form, resp){
-//		//var incident = FORMY.forms.get("incident");
-//    var incident = incidentForm;
-//    FORMY.forms.add(form);
-//		var formElements = incident.get("form_elements");
-//		//console.log("form_elements: " + JSON.stringify(form_elements));
-//		//formElements.each(processFormElement);
-//		FORMY.village = new Array();
-//		for (var i = 0; i < formElements.length; i++) {
-//		    var formElement = formElements[i];
-//		    if (formElement.identifier == "village") {
-//		    	var enumerations = formElement.enumerations;
-//		    	for (var j = 0; j < enumerations.length; j++) {
-//		    		var enumeration = enumerations[j];
-//		    		var value = enumeration.defaultValue;
-//		    		var label = enumeration.label;
-//		    		FORMY.village[value] = label;
-//		    		//console.log("FORMY.village[value]:" + FORMY.village[value]);
-//		    	}
-//		    	//console.log("formElement: " + JSON.stringify(formElements[i]));
-//		    }
-//		}
-//	},
-//	error: function() {
-//		console.log("Error loading incident: " + arguments);
-//	}
-//});
 
     var incidentJson = incidentForm;
     var incident = new Form(incidentJson);
     FORMY.forms.add(incident);
     var formElements = incident.get("form_elements");
-//console.log("form_elements: " + JSON.stringify(form_elements));
-//formElements.each(processFormElement);
     FORMY.village = new Array();
     for (var i = 0; i < formElements.length; i++) {
       var formElement = formElements[i];
@@ -99,7 +49,8 @@ $(function(){
       }
     }
 
-
+    var actionTaken = new Form(actionTakenForm);
+    FORMY.forms.add(actionTaken);
 
 // Wrap an optional error callback with a fallback error event.
 // kudos: http://stackoverflow.com/questions/7090202/error-callback-always-fired-even-when-it-is-successful/7101589#7101589
@@ -127,10 +78,12 @@ $(function(){
         "search/:query":        						"search",    		// #search
         "search/:query/:department":        			"search",    		// #search
         "incident":           							"incident",    		// #incident
+        "actionTaken/incident/:incidentId":           							"actionTaken",    		// #actionTaken
         "arrestDocket/:query":  						"arrestDocket",    	// #arrestDocket
         "problem/:query":       						"problem",    		// #arrestDocket
         "incidentRecords/incident/:incidentId":					"incidentRecords",  // #incidentRecords
         "edit/incident/:recordId":          						"edit",    			// #edit
+        "editActionTaken/:recordId":          						"editActionTaken",    			// #edit
         "record/:recordId":        						"record",    		// #record
         "renderForm/:formId/:parentId":					"renderForm",    	// #renderForm
         "destroy/:recordId": 							"destroy",    		// #destroy
@@ -152,7 +105,7 @@ $(function(){
         console.log("home route. startkey: " + startkey);
         $("#recordView").remove();
         $("#formRenderingView").remove();
-        $("#designer").remove();
+        $("#configView").remove();
         $("#homePageView").remove();
         if (! $("#homePageView").length){
           var viewDiv = document.createElement("div");
@@ -170,16 +123,6 @@ $(function(){
 //        searchResults.db["view"] = [viewQuery];
 
 
-
-//        console.log("hoodie.account.username: "  + hoodie.account.username) ;
-//        if(typeof hoodie.account.username === 'undefined'){
-//          console.log("not logged in.")
-//          // alert("Click on the yellow row and sign in.")
-//          FORMY.Incidents = searchResults;
-//          var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
-//          (new HomeView(
-//              {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey})).render();
-//        } else {
 //          searchResults.fetch({fetch: 'query',
 //            options: {
 //              query: {
@@ -232,7 +175,6 @@ $(function(){
 //              console.log("Error loading PatientRecordList: " + JSON.stringify(arguments));
 //            }
 //          });
-//        }
 
         var searchResults = new IncidentsList();
         var limit = 16;
@@ -260,27 +202,14 @@ $(function(){
                 console.log("item count: " + collection.length);
                 //var searchResults = new IncidentsList(collection);
                 FORMY.Incidents = searchResults;
-                var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey, username:hoodie.account.username});
+                var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
                 var Home = new HomeView(
                     {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey});
               }}
         );
-
-//        hoodie.account.on('signin', function (user) {
-//          if (hoodie.account.username !== 'undefined') {
-//            console.log("setting displayUsername")
-//            $("#displayUsername").html("Logged in as " + hoodie.account.username);
-//          } else {
-//            console.log("hoodie.account.username - is it empty?: "  + hoodie.account.username) ;
-//          }
-//        });
       },
       search: function (searchTerm, department) {
         console.log("search route.");
-        if (FORMY.SyncpointLocalDb != null) {
-          console.log("FORMY.SyncpointLocalDb: " + FORMY.SyncpointLocalDb);
-          Backbone.couch_connector.config.db_name = FORMY.SyncpointLocalDb;
-        }
         $("#homePageView").remove();
         $("#recordView").remove();
         $("#formRenderingView").remove();
@@ -291,7 +220,6 @@ $(function(){
         }
         console.log("Searching for " + searchTerm + " department: " + department);
         var searchResults = new IncidentsList();
-        var pouchdbViewname = null;
         if ((searchTerm !== "") && (searchTerm !== " ")) {
           //var searchInt = parseInt(searchTerm);
           console.log("bySearchKeywords search");
@@ -306,7 +234,7 @@ $(function(){
                 success: function(collection, response, options) {
                   console.log("item count: " + collection.length);
                   FORMY.Incidents = searchResults;
-                  var page = new Page({content: "Default List of Incidents:", startkey_docid:this.startkey_docid, startkey:this.startkey, username:hoodie.account.username});
+                  var page = new Page({content: "Default List of Incidents:", startkey_docid:this.startkey_docid, startkey:this.startkey});
                   var Home = new HomeView(
                       {model: page, el: $("#homePageView"), startkey_docid:this.startkey_docid, startkey:this.startkey});
                 }}
@@ -325,7 +253,7 @@ $(function(){
                 success: function(collection, response, options) {
                   console.log("item count: " + collection.length);
                   FORMY.Incidents = searchResults;
-                  var page = new Page({content: "Default List of Incidents:", startkey_docid:this.startkey_docid, startkey:this.startkey, username:hoodie.account.username});
+                  var page = new Page({content: "Default List of Incidents:", startkey_docid:this.startkey_docid, startkey:this.startkey});
                   var Home = new HomeView(
                       {model: page, el: $("#homePageView"), startkey_docid:this.startkey_docid, startkey:this.startkey});
                 }}
@@ -363,6 +291,28 @@ $(function(){
           }
         });
       },
+      actionTaken: function (incidentId) {
+        console.log("incident route.");
+        $("#homePageView").remove();
+        $("#recordView").remove();
+        $("#formRenderingView").remove();
+        if (! $("#formRenderingView").length){
+          var viewDiv = document.createElement("div");
+          viewDiv.setAttribute("id", "formRenderingView");
+          $("#views").append(viewDiv);
+        }
+        FORMY.loadForm("actionTaken", null, {
+          success: function(form, resp){
+            var newModel = new Form();
+            var newPatientFormView = new FormView({model: form, el: $("#formRenderingView")});
+            newPatientFormView.parentId = "incident/" + incidentId;
+            newPatientFormView.render();
+          },
+          error: function() {
+            console.log("Error loading incident: " + arguments);
+          }
+        });
+      },
       renderForm: function (formId, parentId) {
         $("#homePageView").remove();
         $("#recordView").remove();
@@ -392,7 +342,7 @@ $(function(){
         });
       },
       incidentRecords: function (incidentId) {
-        console.log("incidentRecords route.");
+        console.log("incidentRecords route. incidentId: " + incidentId);
         $("#homePageView").remove();
         $("#formRenderingView").remove();
         if (! $("#recordView").length){
@@ -415,13 +365,29 @@ $(function(){
                 form.set({"lastModified": FORMY.sessionRecord.get('lastModified')});
                 form.set({"recordId": FORMY.sessionRecord.get('_id')});
                 form.set({"parentId": FORMY.sessionRecord.get('_id')});
-                //(new RecordView({model: FORMY.sessionRecord, currentForm:form, el: $("#recordView")})).render();
-                var recordView = new RecordView({model: FORMY.sessionRecord, el: $("#recordView")})
-                recordView.currentForm = form;
-                recordView.render();
 
+                var actionTakens = new IncidentsList();
+                console.log("byParentId search");
+                actionTakens.fetch(
+                    {fetch: 'query',
+                      options: {
+                        query: {
+                          fun:byParentId,
+                          key:FORMY.sessionRecord.id
+                        }
+                      },
+                      success: function(collection, response, options) {
+                        console.log("item count: " + collection.length);
+                        FORMY.sessionRecord.actionTakens = actionTakens;
+                        form.set({"actionTakens": actionTakens});
+                        var recordView = new RecordView({model: FORMY.sessionRecord, el: $("#recordView")})
+                        recordView.currentForm = form;
+                        recordView.render();
+                      }}
+                );
               }
             });
+
 //              },
 //              error : function(){
 //                console.log("Error loading PatientRecordList: " + arguments);
@@ -431,6 +397,7 @@ $(function(){
         });
       },
       edit: function (recordId) {
+        console.log("incidentRecords route. incidentId: " + recordId);
         $("#homePageView").remove();
         $("#formRenderingView").remove();
         $("#recordView").remove();
@@ -453,6 +420,38 @@ $(function(){
                 $(document).ready(function() {
                   loadCascadedSelects();
                 });
+              },
+              error: function(err) {
+                console.log("Error loading incident: " + err);
+              }
+            });
+          },
+          error : function(){
+            console.log("Error loading Record: " + arguments);
+          }
+        });
+      },
+      editActionTaken: function (recordId) {
+        console.log("editActionTaken route. recordId: " + recordId);
+        $("#homePageView").remove();
+        $("#formRenderingView").remove();
+        $("#recordView").remove();
+        if (! $("#formRenderingView").length){
+          //$("#views").append("<div id=\"formRenderingView\"></div>");
+          var viewDiv = document.createElement("div");
+          viewDiv.setAttribute("id", "formRenderingView");
+          $("#views").append(viewDiv);
+        }
+        var record = new Record({_id: recordId, id: recordId});
+        record.fetch( {
+          success: function(model){
+            console.log("Fetched record: " + JSON.stringify(model));
+            FORMY.loadForm("actionTaken", null, {
+              success: function(form, resp){
+                var newModel = new Form();
+                var newPatientFormView = new FormView({model: form, el: $("#formRenderingView")});
+                newPatientFormView.currentRecord = record;
+                newPatientFormView.render();
               },
               error: function(err) {
                 console.log("Error loading incident: " + err);
@@ -529,6 +528,21 @@ $(function(){
             console.log("Error loading record: " + arguments);
           }
         });
+      },
+      config: function () {
+        console.log("config route.");
+        $("#homePageView").remove();
+        $("#formRenderingView").remove();
+        $("#recordView").remove();
+        $("#homePageView").remove();
+        if (! $("#configView").length){
+          var viewDiv = document.createElement("div");
+          viewDiv.setAttribute("id", "configView");
+          $("#views").append(viewDiv);
+        }
+        var page = new Page({content: "Configuration"});
+        (new ConfigView({model: page, el: $("#configView")})).render();
+
       },
       populate: function () {
         console.log("populate route ");
