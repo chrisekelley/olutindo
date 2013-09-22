@@ -39,23 +39,40 @@
 						</tr>
 					</thead>
 					<tbody></tbody>
-						<tr style="background-color: #6EA8E4;" id="noStripeMe">
-							<td colspan="2">
-                                <!--<button class="menu-blue" data-hoodie-action="signin" onclick="signIn();">Sign In</button>-->
-                                <button class="menu-blue" onclick="window.location.href = '#config'">Sign In</button>
-                                <!--<button id='form-config' class="menu-blue" style="width: 40px;">Conf</button>-->
-                                <!--<button class="menu-blue" data-hoodie-action="signup">Sign Up</button>-->
-                                <!--<button class="menu-blue" data-hoodie-action="signin">Login</button>-->
-							</td>
-							<td colspan="2">
-							<strong>Priority:</strong><img src="images/alert-low.png" title="Low Priority"> Low
-							<img src="images/alert-medium.png" title="Medium Priority"> Med. 
-							<img src="images/alert-high.png" title="High Priority"> High
-							<img src="images/resolved.png" title="Resolved"> Resolved
-							</td>
-							<td>{{#if startkey_docid}}<div id="nextLink" onmouseover="style.color='red';" onmouseout="style.color='#034AF3';">&gt;&gt;</div>{{/if}}</td>
-						</tr>
-				</table>
+                </table>
+                <table id="home-footer" width="100%">
+                    <tr style="background-color: #6EA8E4;" id="noStripeMe">
+                        <td>
+                            <button class="menu-blue" onclick="window.location.href = '#config'">Sign In</button>
+                        </td>
+                        <td>
+                            <strong>Status:</strong>
+                        </td>
+                        <td><img src="images/alert-low.png" title="Low Priority"> Low
+                            <img src="images/alert-medium.png" title="Medium Priority"> Med.<br/>
+                            <img src="images/alert-high.png" title="High Priority"> High
+                            <img src="images/resolved.png" title="Resolved"> Resolved
+                        </td>
+                        <!--<td>{{#if startkey_docid}}<div id="nextLink" onmouseover="style.color='red';" onmouseout="style.color='#034AF3';">&gt;&gt;</div>{{/if}}</td>-->
+                    </tr>
+                </table>
+						<!--<tr style="background-color: #6EA8E4;" id="noStripeMe">-->
+							<!--<td colspan="2">-->
+                                <!--&lt;!&ndash;<button class="menu-blue" data-hoodie-action="signin" onclick="signIn();">Sign In</button>&ndash;&gt;-->
+                                <!--<button class="menu-blue" onclick="window.location.href = '#config'">Sign In</button>-->
+                                <!--&lt;!&ndash;<button id='form-config' class="menu-blue" style="width: 40px;">Conf</button>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<button class="menu-blue" data-hoodie-action="signup">Sign Up</button>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<button class="menu-blue" data-hoodie-action="signin">Login</button>&ndash;&gt;-->
+							<!--</td>-->
+							<!--<td colspan="3">-->
+							<!--<strong>Priority:</strong><img src="images/alert-low.png" title="Low Priority"> Low-->
+							<!--<img src="images/alert-medium.png" title="Medium Priority"> Med. -->
+							<!--<img src="images/alert-high.png" title="High Priority"> High-->
+							<!--<img src="images/resolved.png" title="Resolved"> Resolved-->
+							<!--</td>-->
+							<!--&lt;!&ndash;<td>{{#if startkey_docid}}<div id="nextLink" onmouseover="style.color='red';" onmouseout="style.color='#034AF3';">&gt;&gt;</div>{{/if}}</td>&ndash;&gt;-->
+						<!--</tr>-->
+
 	       	</div>
             <!--<div id="login-bar">-->
                 <!--<table width="100%">-->

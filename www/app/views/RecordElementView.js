@@ -13,6 +13,11 @@ window.RecordElementView = Backbone.View.extend({
 		  this.colspan = 1;
 	  }
 	  $(this.el).attr('colspan',this.colspan);
+    if (this.model.get("inputType") == "alertCheckbox") {
+      if (this.model.get("value") != "") {
+        $(this.el).attr('class',"highlightValue");;
+      }
+    }
 	  var currentId = $(this.el).attr('id');
 	  //console.log("currentId: " + currentId);
 	  var renderedHtml = this.template(this.model.toJSON());

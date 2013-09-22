@@ -14,6 +14,10 @@ var RecordView = Backbone.View.extend({
 			this.template =  loadTemplate("record.vert.template.html");
 			//this.template =  loadTemplate("home.template.html");
 		}
+    var viewPortWidth = window.innerWidth
+    var viewPortHeight = window.innerHeight
+    console.log("viewPortWidth: " + viewPortWidth + " viewPortHeight:" + viewPortHeight)
+
 		//console.log("this.model in RecordView: "+ JSON.stringify(this.model.toJSON()));
 		//this.form = this.options.currentForm;
     this.form = this.currentForm;

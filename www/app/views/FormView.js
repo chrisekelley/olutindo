@@ -34,6 +34,10 @@ var FormView = Backbone.View.extend({
 		} else {
 			this.template =  loadTemplate("form.vert.template.html");
 		}
+//    var viewPortWidth = window.innerWidth
+//    var viewPortHeight = window.innerHeight
+//    console.log("viewPortWidth: " + viewPortWidth + " viewPortHeight:" + viewPortHeight)
+
     this.form = this.model;
 		this.parentId = this.parentId;
 		$(this.el).html(this.template(this.form.toJSON()));
@@ -79,6 +83,7 @@ var FormView = Backbone.View.extend({
   currentTableName: "",
   currentRow:0,	// reset whenever closeRow = true;
   formElements: null,
+  parentRecord:null,
   addOne: function(formElement){
     //console.log("add one:" + JSON.stringify(formElement));
     var inputType = formElement.get("inputType");
@@ -144,7 +149,7 @@ var FormView = Backbone.View.extend({
       }
     }
     var currentTableName = "#tblbeginTableIdentifier";
-    console.log("add one:" + JSON.stringify(formElement));
+    //console.log("add one:" + JSON.stringify(formElement));
     if (inputType == 'display-tbl-begin') {
       template = displayTableWidgetCompiledHtml;
       html = template(formElement.toJSON());
@@ -182,10 +187,10 @@ var FormView = Backbone.View.extend({
       this.currentRow = 0;	//reset currentRow.
       //console.log("CloseRow currentParentName: " + currentParentName);
     }
-    if (currentTableName != null && $(currentTableName)) {
-      var currentTableNameHtml = $(currentTableName).html();
-      console.log("currentTableNameHtml:" + currentTableNameHtml)
-    }
+//    if (currentTableName != null && $(currentTableName)) {
+//      var currentTableNameHtml = $(currentTableName).html();
+//      console.log("currentTableNameHtml:" + currentTableNameHtml)
+//    }
     //console.log("Element: " + identifier + " currentParentName: " + currentParentName);
   },
   events: {
@@ -259,6 +264,10 @@ var FormView = Backbone.View.extend({
           var actionTaken = new ActionTaken(formData);
           actionTaken.type="actionTaken";
           actionTaken.save();
+          var record = new Record(this.parentRecord.attributes);
+          console.log("Updating the record using backbone save");
+          record.set({lastModified:new Date()});
+          record.save();
           inspectModelAndGo(actionTaken);
         } else {
 				  console.log("Saving the record using FORMY.sessionRecord.records.create");

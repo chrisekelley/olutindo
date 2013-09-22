@@ -38,6 +38,7 @@ var HomeView = Backbone.View.extend({
 		"click #form-config " : "configLink",
 		"click #form-design " : "designLink",
 		"click #nextLink"	  : "nextLink",
+    "change #department"  : "search"
 		//"orientationEvent " : "orientation",
 	},
 	reseted: function() {
@@ -85,6 +86,7 @@ var HomeView = Backbone.View.extend({
 			FORMY.router.navigate('search/' + searchTerm, true);
 		}
 	},
+
 	//orientation: "horiz",
 	//reportEducationInstance:null,
 	render: function() {
@@ -95,6 +97,10 @@ var HomeView = Backbone.View.extend({
     console.log("HomeView render.");
     var limit = 16;
     this.template =  loadTemplate("home.vert.template.html");
+
+    var viewPortWidth = window.innerWidth
+    var viewPortHeight = window.innerHeight
+    console.log("viewPortWidth: " + viewPortWidth + " viewPortHeight:" + viewPortHeight)
 
 //    console.log("item count: " + FORMY.Incidents.length);
 //    var listLength = FORMY.Incidents.length;

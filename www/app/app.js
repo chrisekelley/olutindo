@@ -306,7 +306,16 @@ $(function(){
             var newModel = new Form();
             var newPatientFormView = new FormView({model: form, el: $("#formRenderingView")});
             newPatientFormView.parentId = "incident/" + incidentId;
-            newPatientFormView.render();
+
+            var record = new Record({_id: newPatientFormView.parentId, id: newPatientFormView.parentId});
+            record.fetch( {
+                  success: function(record){
+                    console.log("Fetched record: " + JSON.stringify(record));
+                    newPatientFormView.parentRecord = record;
+                    newPatientFormView.render();
+                  }
+                }
+            )
           },
           error: function() {
             console.log("Error loading incident: " + arguments);

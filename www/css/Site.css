@@ -21,6 +21,8 @@ body
     padding: 0;
     /* color: #696969; */
     background-color: #ffffff;
+    /*from bootstrap.css*/
+    line-height: 1.428571429;
 }
 
 a:link
@@ -87,7 +89,7 @@ h1 {
     margin-bottom: 5px;
 }
 h2 {
-    font-size: 10pt;
+    font-size: 14pt;
     font-weight: bold;
 }
 h3 {
@@ -248,7 +250,7 @@ input[type="text"]
 
 input[type="password"] 
 {
-    width: 200px;
+    /*width: 200px;*/
     border: 1px solid #CCC;
 }
 
@@ -849,7 +851,6 @@ if they are causing problems. If you need enhancedtable, use this one  */
 .formTable {
 	margin: 0px;
 	background-color: transparent;
-    width: 480px;
 }
 
 .formTable td {
@@ -1360,3 +1361,135 @@ button.closeWider {
     -webkit-appearance: none;
     float: right;
 }
+
+
+#home-footer
+{
+    /*font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;*/
+    font-size: 12px;
+    /*margin: 10px;*/
+    /*width: 480px;*/
+    text-align: left;
+    border-collapse: collapse;
+}
+
+#home-footer td
+{
+    /*padding: 6px;*/
+    color: #669;
+    font-size: 16px;
+
+    padding: 6px 2px;
+    /*border-bottom: 1px solid #2175BC;*/
+    border-bottom: 1px solid #BBB195;
+    vertical-align: middle;
+}
+
+/*Bootstrap CSS for login form*/
+.modal-header {
+    min-height: 16.428571429px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-header .close {
+    margin-top: -2px;
+}
+
+.modal-title {
+    margin: 0;
+    line-height: 1.428571429;
+}
+
+.modal-body {
+    position: relative;
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 19px 20px 20px;
+    margin-top: 15px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.modal-footer:before,
+.modal-footer:after {
+    display: table;
+    content: " ";
+}
+
+.modal-footer:after {
+    clear: both;
+}
+
+.modal-footer:before,
+.modal-footer:after {
+    display: table;
+    content: " ";
+}
+
+.modal-footer:after {
+    clear: both;
+}
+
+.modal-footer .btn + .btn {
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+
+.modal-footer .btn-group .btn + .btn {
+    margin-left: -1px;
+}
+
+.modal-footer .btn-block + .btn-block {
+    margin-left: 0;
+}
+
+input,
+button,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+/*end bootstrap section*/
+
+.highlightValue {
+    background-color: #e6db74;
+    color: #ff0000;
+}
+

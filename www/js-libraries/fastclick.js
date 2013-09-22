@@ -712,11 +712,12 @@ FastClick.notNeeded = function(layer) {
 	}
 
 	if ((/Chrome\/[0-9]+/).test(navigator.userAgent)) {
-
+    console.log("FastClick test for Android Chrome.")
 		// Chrome on Android with user-scalable="no" doesn't need FastClick (issue #89)
 		if (FastClick.prototype.deviceIsAndroid) {
 			metaViewport = document.querySelector('meta[name=viewport]');
 			if (metaViewport && metaViewport.content.indexOf('user-scalable=no') !== -1) {
+        console.log("FastClick test for Android Chrome: user-scalable=no - does not need FastClick. FastClick disabled.")
 				return true;
 			}
 

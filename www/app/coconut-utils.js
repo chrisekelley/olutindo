@@ -205,9 +205,9 @@ function getLoginPreferences() {
   } else {
     account.username = "testuser";
     account.password = "testuserPassword";
-    account.site = "gul";
-    alert("Welcome to Olutindo! Please sign in so that the app can receive records from the server.");
-    FORMY.router.navigate('config', true);
+    account.site = "aru";
+    //alert("Welcome to Olutindo! Please sign in so that the app can receive records from the server.");
+    //FORMY.router.navigate('config', true);
   }
   return account;
 }
