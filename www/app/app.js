@@ -13,9 +13,8 @@ $(function(){
     if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
       checkVersion();
     }
+
     FORMY.forms = new FormCollection();
-    // initialize Hoodie - this is for the account form only.
-//    var hoodie  = new Hoodie();
 
     FORMY.loadForm = function(name, parentId, options) {
       options || (options = {});
@@ -637,7 +636,7 @@ $(function(){
 
     FORMY.ReplicationStarted = null;
     StartReplication();
-
+    UrbanAirshipRegistration();
   }
 
 });

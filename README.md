@@ -11,10 +11,16 @@ It is the html5 part of [Olutindo-app](https://github.com/chrisekelley/olutindo-
 
 Set your master couch server in the StartReplication function in coconut-utils.js.
 
+        var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/" + couchdb + "/";
+
+The credentials are set when the user logs in.
+
 ## Get running
 
     npm install
     npm start
 
 Open your browser to http://localhost:8000.
+
+
 

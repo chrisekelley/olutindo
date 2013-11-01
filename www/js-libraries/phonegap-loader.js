@@ -6,6 +6,7 @@
   if (useragent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
     loadScript('cordova.js');
     loadScript('version.js');
+    loadScript('js/PushNotification.js');
   }
 
   function loadScript(url){

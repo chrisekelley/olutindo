@@ -12,4 +12,10 @@
     <preference name="webviewbounce" value="true" />
     <preference name="load-url-timeout" value="60000" />
     <content src="index.html" />
+    <preference name="com.urbanairship.production_app_key" value="aPkihJ2PT8mu6vIK-469XQ" />
+    <preference name="com.urbanairship.production_app_secret" value="54M1qcLxTG2EPhZFYlGYPA" />
+    <preference name="com.urbanairship.development_app_key" value="aPkihJ2PT8mu6vIK-469XQ" />
+    <preference name="com.urbanairship.development_app_secret" value="54M1qcLxTG2EPhZFYlGYPA" />
+    <preference name="com.urbanairship.in_production" value="false" />
+    <preference name="com.urbanairship.gcm_sender" value="236344170537" />
 </widget>

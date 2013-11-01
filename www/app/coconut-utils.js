@@ -174,6 +174,7 @@ function saveLoginPreferences(username, password, site, department) {
     });
     console.log("Successfully saved login preferences.");
     StartReplication();
+    UrbanAirshipRegistration();
   } else {
     console.log("Login prefs *not* saved. They currently saved only on smartphone version.")
   }
@@ -217,9 +218,10 @@ var StartReplication = function () {
   if (account.username != null) {
     var credentials = account.username + ":" + account.password;
     var couchdb =  "troubletickets_" +  account.site;
-    var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/" + couchdb + "/";
+    //var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/" + couchdb + "/";
     //var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/" + couchdb + "/";
     //var remoteCouch = "http://" + credentials + "@192.168.2.1:5984/" + couchdb + "/";
+    var remoteCouch = "http://" + credentials + "@192.168.1.60:5984/" + couchdb + "/";
     console.log("start replication with " + remoteCouch)
     FORMY.ReplicationStarted = true;
     //var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};
@@ -235,6 +237,41 @@ var StartReplication = function () {
     //localDB.replicate.from('http://relax.com/on-the-couch', {withCredentials:true, cookieAuth: {username:'admin', password:'pass'}}, function(){});
     Backbone.sync.defaults.db.replicate.from(remoteCouch, opts, ReplicationErrorLog);
   }
+}
+
+var UrbanAirshipRegistration = function () {
+
+  push = window.plugins.pushNotification;
+
+// Callback for when a device has registered with Urban Airship.
+  push.registerEvent('registration', function (error, id) {
+    if (error) {
+      console.log('There was an error registering for push notifications');
+    } else {
+      console.log("Registered with ID: " + id);
+    }
+  });
+  // Callback for when the app is running, and receives a push.
+  push.registerEvent('push', function (push) {
+    console.log("Got push: " + push.message)
+  });
+
+  var account = getLoginPreferences();
+  if (account.username != null) {
+    // Set an alias, this lets you tie a device to a user in your system
+    push.setAlias(account.username, function () {
+      push.getAlias(function (alias) {
+        console.log("The user formerly known as " + alias)
+      });
+    });
+  }
+  // Check if push is enabled
+  push.isPushEnabled(function (enabled) {
+    if (enabled) {
+      console.log("Push is enabled! Fire away!");
+    }
+  })
+
 }
 
 var ReplicationErrorLog = function(err, result) {
