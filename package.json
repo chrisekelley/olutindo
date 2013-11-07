@@ -3,9 +3,15 @@
   "version": "1.0.0",
   "type": "app",
   "dependencies": {
-     "simple-http-server":"0.1.8"
+    "express":"3.4.4",
+    "request":"2.27.0"
   },
   "scripts": {
-    "start": "nserver -d www"
+    "start": "node express/app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrisekelley/olutindo.git"
   }
 }
+

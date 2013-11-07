@@ -218,10 +218,15 @@ var StartReplication = function () {
   if (account.username != null) {
     var credentials = account.username + ":" + account.password;
     var couchdb =  "troubletickets_" +  account.site;
+    var subdomain =  "ug" +  account.site;
     //var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/" + couchdb + "/";
     //var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/" + couchdb + "/";
     //var remoteCouch = "http://" + credentials + "@192.168.2.1:5984/" + couchdb + "/";
-    var remoteCouch = "http://" + credentials + "@192.168.1.60:5984/" + couchdb + "/";
+    //var remoteCouch = "http://" + credentials + "@192.168.1.60:5984/" + couchdb + "/";
+    var remoteCouch = "http://localhost:3000/troubletickets/" + subdomain + "/" + credentials;
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+      remoteCouch = "https://" + credentials + "@" + subdomain + ".cloudant.com/troubletickets/";
+    }
     console.log("start replication with " + remoteCouch)
     FORMY.ReplicationStarted = true;
     //var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};
@@ -241,37 +246,38 @@ var StartReplication = function () {
 
 var UrbanAirshipRegistration = function () {
 
-  push = window.plugins.pushNotification;
+  if (typeof window.plugins != 'undefined') {
+    push = window.plugins.pushNotification;
 
-// Callback for when a device has registered with Urban Airship.
-  push.registerEvent('registration', function (error, id) {
-    if (error) {
-      console.log('There was an error registering for push notifications');
-    } else {
-      console.log("Registered with ID: " + id);
-    }
-  });
-  // Callback for when the app is running, and receives a push.
-  push.registerEvent('push', function (push) {
-    console.log("Got push: " + push.message)
-  });
-
-  var account = getLoginPreferences();
-  if (account.username != null) {
-    // Set an alias, this lets you tie a device to a user in your system
-    push.setAlias(account.username, function () {
-      push.getAlias(function (alias) {
-        console.log("The user formerly known as " + alias)
-      });
+    // Callback for when a device has registered with Urban Airship.
+    push.registerEvent('registration', function (error, id) {
+      if (error) {
+        console.log('There was an error registering for push notifications');
+      } else {
+        console.log("Registered with ID: " + id);
+      }
     });
-  }
-  // Check if push is enabled
-  push.isPushEnabled(function (enabled) {
-    if (enabled) {
-      console.log("Push is enabled! Fire away!");
-    }
-  })
+    // Callback for when the app is running, and receives a push.
+    push.registerEvent('push', function (push) {
+      console.log("Got push: " + push.message)
+    });
 
+    var account = getLoginPreferences();
+    if (account.username != null) {
+      // Set an alias, this lets you tie a device to a user in your system
+      push.setAlias(account.username, function () {
+        push.getAlias(function (alias) {
+          console.log("The user formerly known as " + alias)
+        });
+      });
+    }
+    // Check if push is enabled
+    push.isPushEnabled(function (enabled) {
+      if (enabled) {
+        console.log("Push is enabled! Fire away!");
+      }
+    })
+  }
 }
 
 var ReplicationErrorLog = function(err, result) {
