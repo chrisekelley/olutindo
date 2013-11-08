@@ -308,12 +308,12 @@ $(function(){
 
             var record = new Record({_id: newPatientFormView.parentId, id: newPatientFormView.parentId});
             record.fetch( {
-                  success: function(record){
-                    console.log("Fetched record: " + JSON.stringify(record));
-                    newPatientFormView.parentRecord = record;
-                    newPatientFormView.render();
-                  }
+                success: function(record){
+                  console.log("Fetched record: " + JSON.stringify(record));
+                  newPatientFormView.parentRecord = record;
+                  newPatientFormView.render();
                 }
+              }
             )
           },
           error: function() {

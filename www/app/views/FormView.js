@@ -264,10 +264,22 @@ var FormView = Backbone.View.extend({
           var actionTaken = new ActionTaken(formData);
           actionTaken.type="actionTaken";
           actionTaken.save();
+          // touch the parent incident record
           var record = new Record(this.parentRecord.attributes);
-          console.log("Updating the record using backbone save");
           record.set({lastModified:new Date()});
           record.save();
+          if (typeof actionTaken.get("resolved") != 'undefined') {
+            if (typeof window.sms != 'undefined') {
+              var number = record.get("phone")
+              var message = actionTaken.get("comment");
+              var intent = "INTENT"; //leave empty for sending sms using default intent, "INTENT" to copy to SMS app.
+              var success = function () { console.log("SMS Message sent successfully") };
+              var error = function (e) { alert('Message Failed:' + e);console.log("Error sending message: " + e); };
+              sms.send(number, message, intent, success, error);
+            }
+          }
+          console.log("Updating the record using backbone save");
+
           inspectModelAndGo(actionTaken);
         } else {
 				  console.log("Saving the record using FORMY.sessionRecord.records.create");
