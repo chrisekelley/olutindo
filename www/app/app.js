@@ -375,13 +375,12 @@ $(function(){
           viewDiv.setAttribute("id", "formRenderingView");
           $("#views").append(viewDiv);
         }
-        var record = new Record({_id: "incident/"+ recordId, id: "incident/"+ recordId});
+        var record = new Record({_id: "incident/"+ recordId});
         record.fetch( {
           success: function(model){
             console.log("Fetched record: " + JSON.stringify(model));
             FORMY.loadForm("incident", null, {
               success: function(form, resp){
-                var newModel = new Form();
                 var newPatientFormView = new FormView({model: form, el: $("#formRenderingView")});
                 newPatientFormView.currentRecord = record;
                 newPatientFormView.render();

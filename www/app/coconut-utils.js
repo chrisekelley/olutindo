@@ -207,7 +207,7 @@ var StartReplication = function () {
     //var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};
     var opts = {continuous: true,
       withCredentials:true,
-      cookieAuth: {username:account.username, password:account.password},
+      //cookieAuth: {username:account.username, password:account.password},
       auth: {username:account.username, password:account.password},
       complete: onComplete,
       timeout: 60000};

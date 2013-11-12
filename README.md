@@ -9,6 +9,8 @@ It is the html5 part of [Olutindo-app](https://github.com/chrisekelley/olutindo-
 
 ## Config
 
+Set your local database name in config.js.
+
 Set your master couch server in the StartReplication function in coconut-utils.js.
 
         var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/" + couchdb + "/";
