@@ -43,31 +43,6 @@ function loadCascadedSelects(){
 
 //window.onload = loadCascadedSelects;
 
-function findSyncpointLocalDb() {
-	var id = null;
-	var local_db_name = null;
-	
-	$.getJSON('/sp_admin/_design/control/_view/by_type?key=%22installation%22', function(data) { 
-		var record = null;
-		$.each(data, function(key, val) {
-			if (key == "rows") {
-				record = val;
-				id = record[0].id;
-			}
-		});
-		if (record != null) {
-			//console.log("record: " + JSON.stringify(record));
-			console.log("id: " + id);
-			$.getJSON('/sp_admin/' + id, function(data) {
-				//console.log("data: " + JSON.stringify(data));
-				local_db_name = data.local_db_name;
-				FORMY.SyncpointLocalDb = local_db_name;
-				console.log("local_db_name: " + FORMY.SyncpointLocalDb);
-			});
-		}
-	});
-}
-
 function checkVersion() {
   console.log("Checking for new version of app.");
   $.ajax({ type: "GET", url: "https://dl.dropboxusercontent.com/s/nxvrvdtpvmqomxd/version.xml?token_hash=AAHFO2PaE2L6pTZQoDYYU1PVAKS6qMK6__PZgU3LYzUgGg&dl=1", dataType: "xml",
@@ -226,7 +201,7 @@ var StartReplication = function () {
 //    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
 //      remoteCouch = "https://" + credentials + "@" + subdomain + ".cloudant.com/troubletickets/";
 //    }
-    
+
     console.log("start replication with " + remoteCouch)
     FORMY.ReplicationStarted = true;
     //var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};

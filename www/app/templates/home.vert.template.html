@@ -53,80 +53,10 @@
                             <img src="images/alert-high.png" title="High Priority"> High
                             <img src="images/resolved.png" title="Resolved"> Resolved
                         </td>
-                        <!--<td>{{#if startkey_docid}}<div id="nextLink" onmouseover="style.color='red';" onmouseout="style.color='#034AF3';">&gt;&gt;</div>{{/if}}</td>-->
+                        <td>{{#if endkey}}<div id="nextLink" onmouseover="style.color='red';" onmouseout="style.color='#034AF3';">&gt;&gt;</div>{{/if}}</td>
                     </tr>
                 </table>
-						<!--<tr style="background-color: #6EA8E4;" id="noStripeMe">-->
-							<!--<td colspan="2">-->
-                                <!--&lt;!&ndash;<button class="menu-blue" data-hoodie-action="signin" onclick="signIn();">Sign In</button>&ndash;&gt;-->
-                                <!--<button class="menu-blue" onclick="window.location.href = '#config'">Sign In</button>-->
-                                <!--&lt;!&ndash;<button id='form-config' class="menu-blue" style="width: 40px;">Conf</button>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<button class="menu-blue" data-hoodie-action="signup">Sign Up</button>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<button class="menu-blue" data-hoodie-action="signin">Login</button>&ndash;&gt;-->
-							<!--</td>-->
-							<!--<td colspan="3">-->
-							<!--<strong>Priority:</strong><img src="images/alert-low.png" title="Low Priority"> Low-->
-							<!--<img src="images/alert-medium.png" title="Medium Priority"> Med. -->
-							<!--<img src="images/alert-high.png" title="High Priority"> High-->
-							<!--<img src="images/resolved.png" title="Resolved"> Resolved-->
-							<!--</td>-->
-							<!--&lt;!&ndash;<td>{{#if startkey_docid}}<div id="nextLink" onmouseover="style.color='red';" onmouseout="style.color='#034AF3';">&gt;&gt;</div>{{/if}}</td>&ndash;&gt;-->
-						<!--</tr>-->
-
 	       	</div>
-            <!--<div id="login-bar">-->
-                <!--<table width="100%">-->
-                    <!--<td id="displayUsername">{{#if username}}Logged in as {{username}}{{/if}}</td>-->
-                    <!--<td class="hoodie-accountbar">-->
-                        <!--<div class="hoodie-account-signedout">-->
-                                <!--<span class="btn-group">-->
-                                  <!--<button class="btn btn-small btn-inverse" data-hoodie-action="signin">Sign In</button>-->
-                                  <!--&lt;!&ndash;<button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">&ndash;&gt;-->
-                                      <!--&lt;!&ndash;<span class="caret"></span>&ndash;&gt;-->
-                                  <!--&lt;!&ndash;</button>&ndash;&gt;-->
-                                  <!--&lt;!&ndash;<ul class="dropdown-menu pull-right">&ndash;&gt;-->
-                                      <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="signup">Register new account</a></li>&ndash;&gt;-->
-                                      <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="resetpassword">Reset Password</a></li>&ndash;&gt;-->
-                                      <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>&ndash;&gt;-->
-                                      <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="destroy">Clear local data</a></li>&ndash;&gt;-->
-                                      <!--&lt;!&ndash;<li><a href="#" data-hoodie-action="signout">Sign Out</a></li>&ndash;&gt;-->
-                                  <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-                                <!--</span>-->
-                        <!--</div>&lt;!&ndash; /.hoodie-account-signedout &ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<div class="hoodie-account-signedin">&ndash;&gt;-->
-                        <!--&lt;!&ndash;Hello,&ndash;&gt;-->
-                        <!--&lt;!&ndash;<span class="hoodie-username">&lt;!&ndash; usern name will be filled in here &ndash;&gt;</span>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<span class="btn-group">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<button class="btn btn-small btn-inverse" data-hoodie-action="signout">Sign Out</button>&ndash;&gt;-->
-                        <!--&lt;!&ndash;&lt;!&ndash;<button class="btn btn-small dropdown-toggle btn-inverse" data-toggle="dropdown">&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;&lt;!&ndash;<span class="caret"></span>&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;&lt;!&ndash;</button>&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;&lt;!&ndash;<ul class="dropdown-menu pull-right">&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;&lt;!&ndash;<li><a href="#" data-hoodie-action="changepassword">Change Password</a></li>&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;&lt;!&ndash;<li><a href="#" data-hoodie-action="changeusername">Change Username</a></li>&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;&lt;!&ndash;<li><a href="#" data-hoodie-action="destroy">Destroy Account</a></li>&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;&lt;!&ndash;</ul>&ndash;&gt;&ndash;&gt;-->
-                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&lt;!&ndash; /.hoodie-account-signedin &ndash;&gt;&ndash;&gt;-->
-
-                        <!--<div class="hoodie-account-error">-->
-                            <!--Hello,-->
-                            <!--<span class="hoodie-username">&lt;!&ndash; usern name will be filled in here &ndash;&gt;</span>.-->
-                                <!--<span class="btn-group">-->
-                                  <!--<button class="btn btn-small btn-danger" data-hoodie-action="signin">Authentication error: Sign in again</button>-->
-                                  <!--<button class="btn btn-small dropdown-toggle btn-danger" data-toggle="dropdown">-->
-                                      <!--<span class="caret"></span>-->
-                                  <!--</button>-->
-                                  <!--<ul class="dropdown-menu pull-right">-->
-                                      <!--<li><a href="#" data-hoodie-action="signout">Sign out</a></li>-->
-                                  <!--</ul>-->
-                                <!--</span>-->
-                        <!--</div>&lt;!&ndash; /.hoodie-account-error &ndash;&gt;-->
-                    <!--</td>&lt;!&ndash;/hoodieAccountBar &ndash;&gt;-->
-                <!--</table>-->
-
-            <!--</div>-->
       	</div>
 	</div>
 </div>

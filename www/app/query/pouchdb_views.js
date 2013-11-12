@@ -1,3 +1,9 @@
+var byIncidentSorted = function(doc) {
+  if (doc.formId === "incident") {
+    emit(doc.lastModified, doc);
+  }
+}
+
 var bySearchKeywords = function(doc) {
   if(doc.phone) {
     emit(doc.phone, doc);

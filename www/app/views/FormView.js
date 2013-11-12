@@ -216,9 +216,9 @@ var FormView = Backbone.View.extend({
 		  console.log("formData: " + JSON.stringify(formData));
 		  var _id = formData._id;
 		  if (_id == null) {
-//			  var unixTimestamp = Math.round(+new Date()/1000);
-//			  formData.created =  unixTimestamp;
-        formData.created = new Date();
+			  var unixTimestamp = Math.round(+new Date()/1000);
+			  formData.created =  unixTimestamp;
+        //formData.created = new Date();
 			  //console.log("formData.created: " + formData.created);
 			  formData.lastModified =  formData.created;
 			  if (formId === "incident") {
@@ -295,8 +295,8 @@ var FormView = Backbone.View.extend({
 				  //model.clear;
 			  }
 		  } else {
-			  //var unixTimestamp = Math.round(+new Date()/1000);
-			  formData.lastModified = new Date();
+			  var unixTimestamp = Math.round(+new Date()/1000);
+			  formData.lastModified = unixTimestamp;
 			  console.log("Updating the record using record.save");
 			  var record = new Record(formData);
 			  record.collection = "patient-records";

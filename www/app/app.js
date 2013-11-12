@@ -72,24 +72,23 @@ $(function(){
     var AppRouter = Backbone.Router.extend({
 
       routes: {
-        "/":                 							"home",    			// #home
-        "home/:startkey/:startkey_docid":				"home",    			// #home
-        "search/:query":        						"search",    		// #search
+        "/":                 							        "home",    			// #home
+        //"home/:startkey/:startkey_docid":				"home",    			// #home
+        "home/:endkey":				                    "home",    			// #home
+        "search/:query":        						      "search",    		// #search
         "search/:query/:department":        			"search",    		// #search
-        "incident":           							"incident",    		// #incident
-        "actionTaken/incident/:incidentId":           							"actionTaken",    		// #actionTaken
-        "arrestDocket/:query":  						"arrestDocket",    	// #arrestDocket
-        "problem/:query":       						"problem",    		// #arrestDocket
-        "incidentRecords/incident/:incidentId":					"incidentRecords",  // #incidentRecords
-        "edit/incident/:recordId":          						"edit",    			// #edit
-        "editActionTaken/:recordId":          						"editActionTaken",    			// #edit
-        "record/:recordId":        						"record",    		// #record
-        "renderForm/:formId/:parentId":					"renderForm",    	// #renderForm
-        "destroy/:recordId": 							"destroy",    		// #destroy
-        "design": 										"design",    		// #design
-        "populate": 									"populate",    		// #populate
-        "config": 										"config",    		// #config
-        "*actions": 									"home" 			// matches http://example.com/#anything-here - used to point to defaultRoute
+        "incident":           							      "incident",    		// #incident
+        "actionTaken/:incidentId":           			"actionTaken",    		// #actionTaken
+        "incidentRecords/:incidentId":					  "incidentRecords",  // #incidentRecords
+        "edit/:recordId":          						    "edit",    			// #edit
+        "editActionTaken/:recordId":          		"editActionTaken",    			// #edit
+        "record/:recordId":        						    "record",    		// #record
+        "renderForm/:formId/:parentId":					  "renderForm",    	// #renderForm
+        "destroy/:recordId": 							        "destroy",    		// #destroy
+        "design": 										            "design",    		// #design
+        "populate": 									            "populate",    		// #populate
+        "config": 										            "config",    		// #config
+        "*actions": 									            "home" 			// matches http://example.com/#anything-here - used to point to defaultRoute
       },
       // The following route is unused.
       defaultRoute: function( actions ){
@@ -100,8 +99,9 @@ $(function(){
         //page = new Page({});
         (new HomeView({model: page})).render();
       },
-      home: function (startkey, startkey_docid) {
-        console.log("home route. startkey: " + startkey);
+      //home: function (endkey, startkey_docid) {
+      home: function (endkey) {
+        console.log("home route. endkey: " + endkey);
         $("#recordView").remove();
         $("#formRenderingView").remove();
         $("#configView").remove();
@@ -111,100 +111,60 @@ $(function(){
           viewDiv.setAttribute("id", "homePageView");
           $("#views").append(viewDiv);
         }
-        //var limit = 16;
-        //var searchResults = new IncidentsList();
-        //searchResults.db["keys"] = null;
-        //var viewQuery = "byIncidentSorted?descending=true&limit=" + limit + "&startkey=" + "[" + startkey + "]" + "&startkey_docid=" + startkey_docid;
-//        if (startkey == null || startkey == "" || startkey == "home") {
-//          viewQuery = "byIncidentSorted?descending=true&limit=" + limit;
-//        }
-//        console.log("viewQuery: " + viewQuery);
-//        searchResults.db["view"] = [viewQuery];
-
-
-//          searchResults.fetch({fetch: 'query',
-//            options: {
-//              query: {
-//                fun: {
-//                  map: function(doc) {
-//                    //emit(doc.order, null);
-//                    if (doc.formId === "incident") {
-//                      emit([doc.lastModified], doc);
-//                    }
-//                  }
-//                }
-//              }
-//            },
-//            success : function(){
-//              console.log("item count: " + searchResults.length);
-//              var listLength = searchResults.length;
-//              //var querySize = 15
-//              if (listLength < limit) {
-//                limit = listLength;
-//                startkey = null;
-//              } else {
-//                var next_start_record = searchResults.at(limit-1);
-//                if (next_start_record) {
-//                  startkey_docid = next_start_record.id;
-//                  console.log("next_start_record: " + JSON.stringify(next_start_record));
-//                  console.log("startkey_docid: " + startkey_docid);
-//                  startkey = next_start_record.get("lastModified");
-//                  console.log("Removing next_start_record from searchResults.")
-//                  FORMY.Incidents = searchResults.remove(next_start_record);
-//                }
-//              }
-//              if (startkey == "" || startkey == null) {	//home (/)
-//                FORMY.Incidents = searchResults;
-//                startkey = 16;
-//                //console.log("searchResults: " + JSON.stringify(searchResults));
-//              }
-//              console.log("startkey: " + startkey);
-//              var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
-//              (new HomeView(
-//                  {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey}));
-//              //.render();
-////          console.log("starting stripeme.");
-////          $(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
-////          $(".stripeMe tr:even").addClass("alt");
-////          $("#noStripeMe").removeClass("alt");
-////          $("#noStripeMe").addClass("noStripeMeHeader");
-//              console.log("done with home.")
-//            },
-//            error : function(){
-//              console.log("Error loading PatientRecordList: " + JSON.stringify(arguments));
-//            }
-//          });
-
         var searchResults = new IncidentsList();
-        var limit = 16;
-        searchResults.db["keys"] = null;
+        var limit = 15;
+        //searchResults.db["keys"] = null;
 //        var viewQuery = "byIncidentSorted?descending=true&limit=" + limit + "&startkey=" + "[" + this.startkey + "]" + "&startkey_docid=" + this.startkey_docid;
 //        if (this.startkey == null || this.startkey == "" || this.startkey == "home") {
 //          viewQuery = "byIncidentSorted?descending=true&limit=" + limit;
 //        }
-        //searchResults.db["view"] = [viewQuery];
-        searchResults.fetch({fetch: 'query',
-          options: {
-            query: {
-              fun: {
-                map: function(doc) {
-                  //emit(doc.order, null);
-                  if (doc.formId === "incident") {
-                    emit([doc.lastModified], doc);
-                  }
-                }
-              },
-              descending:true
+        if (endkey == null || endkey == "" || endkey == "home") {
+          endkey = 0;
+        }
+        var opts = {
+          query: {
+            fun: {
+              map: byIncidentSorted
             }
-          },
-              success: function(collection, response, options) {
-                console.log("item count: " + collection.length);
-                //var searchResults = new IncidentsList(collection);
+            , descending:true
+            , endkey:parseInt(endkey)
+            , limit:limit
+          }
+        }
+
+        searchResults.fetch({fetch: 'query',
+            options: opts,
+            success: function(collection, response, options) {
+              console.log("item count: " + collection.length);
+              //var searchResults = new IncidentsList(collection);
+              //console.log("collection: " + JSON.stringify(collection))
+              FORMY.Incidents = searchResults;
+              var listLength = searchResults.length;
+              if (listLength < limit) {
+                limit = listLength;
+                endkey = null;
+              } else {
+                var next_start_record = searchResults.at(limit-1);
+                if (next_start_record) {
+                  endkey_docid = next_start_record.id;
+                  console.log("next_start_record: " + JSON.stringify(next_start_record));
+                  //console.log("startkey_docid: " + endkey_docid);
+                  endkey = next_start_record.get("lastModified");
+                  FORMY.Incidents = searchResults.remove(next_start_record);
+                }
+              }
+              if (endkey == "" || endkey == null) {	//home (/)
                 FORMY.Incidents = searchResults;
-                var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
-                var Home = new HomeView(
-                    {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey});
-              }}
+                endkey = 0;
+                //console.log("searchResults: " + JSON.stringify(searchResults));
+              }
+              console.log("endkey: " + endkey);
+              //var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, endkey:endkey});
+              var page = new Page({content: "Default List of Incidents:", endkey:endkey});
+              var Home = new HomeView(
+                //{model: page, el: $("#homePageView"), startkey_docid:startkey_docid, endkey:endkey});
+                {model: page, el: $("#homePageView"), endkey:endkey});
+            }}
         );
       },
       search: function (searchTerm, department) {
@@ -304,7 +264,7 @@ $(function(){
           success: function(form, resp){
             var newModel = new Form();
             var newPatientFormView = new FormView({model: form, el: $("#formRenderingView")});
-            newPatientFormView.parentId = "incident/" + incidentId;
+            newPatientFormView.parentId = incidentId;
 
             var record = new Record({_id: newPatientFormView.parentId, id: newPatientFormView.parentId});
             record.fetch( {
@@ -360,7 +320,7 @@ $(function(){
         }
         //Set the _id and then call fetch to use the backbone connector to retrieve it from couch
         FORMY.sessionRecord = new Incident();
-        FORMY.sessionRecord.id = "incident/" + incidentId;
+        FORMY.sessionRecord.id = incidentId;
         FORMY.sessionRecord.fetch( {
           success: function(model, response, options) {
             console.log("Just successfully fetched the incident.");
@@ -566,62 +526,86 @@ $(function(){
             $("#views").append(viewDiv);
           }
 
-          db = $.couch.db(Backbone.couch_connector.config.db_name);
+          //db = $.couch.db(Backbone.couch_connector.config.db_name);
           var testdoc = null;
           ct = 0;
           opts = { success : function(){ }, error : function(){ console.log("could not populate"); }};
           function randomFromTo(from, to){
             return Math.floor(Math.random() * (to - from + 1) + from);
           };
-          var countTestDocs = 30;
+          var countTestDocs = 20;
 
-          while (ct < (countTestDocs+1)) {
-            ct++;
-            var subcounty=randomFromTo(1,8).toString();
-            var village=randomFromTo(1,180).toString();
-            var priority=randomFromTo(1,3).toString();
-            var department=randomFromTo(1,6).toString();
-            var resolved=randomFromTo(0,1).toString();
-            var month=randomFromTo(1,10);
-            var day=randomFromTo(1,31);
-            switch (month) {
-              case 10:
-                day=randomFromTo(1,11);
-                break;
-              case 9:
-                day=randomFromTo(1,30);
-                break;
-              case 4:
-                day=randomFromTo(1,30);
-                break;
-              case 2:
-                day=randomFromTo(1,27);
-                break;
-              case 6:
-                day=randomFromTo(1,30);
-                break;
-              case 11:
-                day=randomFromTo(1,30);
-                break;
-              default:
-                day=randomFromTo(1,31);
-                break;
-            }
-            var unixTimestamp = Math.round(+new Date()/1000);
-            var created  =  unixTimestamp;
-            var lastModified =  created;
+//          while (ct < (countTestDocs+1)) {
+//            ct++;
+//            console.log("ct: " + ct + " at " + new Date());
+//
+//          }
 
-            //var id =  "test" + ct;
-            var id =  "test" + ct + "_" + created;
-            testdoc = { _id : id, "flowId": "300","formId": "incident","phone": "0772555"+ ct,"description": "This is a test",
-              "subcounty": subcounty,"village": village,"priority": priority,"department": department,"assignedId": ct.toString(),
-              "resolved":resolved, "created": created,"lastModified": lastModified,"collection": "incident"};
-            console.log("testdoc: " + JSON.stringify(testdoc));
-            db.saveDoc(testdoc, opts);
-          }
+          doSetTimeout(ct)
           FORMY.router.navigate('home', true);
         } else {
           alert("Data population cancelled.");
+        }
+
+        function doSetTimeout(ct) {
+          var interval = setInterval(function() {
+            ct++;
+            generateTestIncident(ct);
+            if(ct >= (countTestDocs+1)) clearInterval(interval);
+          }, 2000);
+        }
+        function generateTestIncident(ct) {
+
+          //var subcounty=randomFromTo(1,8).toString();
+          var subcounty = 3;
+          //var village=randomFromTo(1,180).toString();
+          var village = 122;
+          var priority = randomFromTo(1, 3).toString();
+          var department = randomFromTo(1, 6).toString();
+          var resolved = randomFromTo(0, 1).toString();
+          var month = randomFromTo(1, 10);
+          var day = randomFromTo(1, 31);
+          switch (month) {
+            case 10:
+              day = randomFromTo(1, 11);
+              break;
+            case 9:
+              day = randomFromTo(1, 30);
+              break;
+            case 4:
+              day = randomFromTo(1, 30);
+              break;
+            case 2:
+              day = randomFromTo(1, 27);
+              break;
+            case 6:
+              day = randomFromTo(1, 30);
+              break;
+            case 11:
+              day = randomFromTo(1, 30);
+              break;
+            default:
+              day = randomFromTo(1, 31);
+              break;
+          }
+          var unixTimestamp = Math.round(+new Date() / 1000);
+          var created = unixTimestamp;
+          var lastModified = created;
+
+          //var id =  "test" + ct;
+          var id = "test" + ct + "_" + created;
+          testdoc = { _id: id, "flowId": "300", "formId": "incident", "phone": "0772555" + ct, "description": "This is a test",
+            "subcounty": subcounty, "village": village, "priority": priority, "department": department, "assignedId": ct.toString(),
+            "resolved": resolved, "created": created, "lastModified": lastModified, "createdBy": "test", "type": "incident",
+            "dep_administration": "1"};
+
+          console.log("testdoc: " + JSON.stringify(testdoc));
+          //db.saveDoc(testdoc, opts);
+          var incident = new Incident(testdoc);
+          incident.save();
+          console.log("saved.")
+          //return {subcounty: subcounty, village: village, priority: priority, department: department, resolved: resolved, month: month, unixTimestamp: unixTimestamp, created: created, lastModified: lastModified, id: id, incident: incident};
+          return ct;
         }
       }
     });

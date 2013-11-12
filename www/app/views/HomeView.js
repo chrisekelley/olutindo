@@ -20,12 +20,13 @@ var HomeView = Backbone.View.extend({
 	username: null,
 	startkey: null,
 	startkey_docid: null,
+	endkey: null,
 	endkey_docid: null,
 	addOne : function(record){
     if ((record.attributes.type != null) && (record.attributes.type === "incident")) {
       var view = new SearchListItemView({model: record});
       //this.rendered = this.view.render().el;
-      console.log("add one in HomeView:" + JSON.stringify(record));
+      //console.log("add one in HomeView:" + JSON.stringify(record));
       this.$("#incidents").append(view.render().el);
     } else {
       console.log("Skipping this record - not an incident.")
@@ -51,10 +52,11 @@ var HomeView = Backbone.View.extend({
 		$(this.el).remove();
 	},
 	nextLink: function() {
-		console.log("this.model.toJSON(): " + this.model.get("startkey"));
-		if (this.model.get("startkey") != null) {
-			FORMY.router.navigate('home/' + this.model.get("startkey") + '/' + this.model.get("startkey_docid"), true);
-			//FORMY.router.navigate('home/' + this.model.get("startkey"), true);
+		console.log("endkey: " + this.model.get("endkey"));
+		if (this.model.get("endkey") != null) {
+			//FORMY.router.navigate('home/' + this.model.get("startkey") + '/' + this.model.get("startkey_docid"), true);
+      FORMY.router.navigate('home/' + this.model.get("endkey"), true);
+      //FORMY.router.navigate('home/' + this.model.get("startkey"), true);
 		} else {
 			console.log("nextLink");
 		}
@@ -101,31 +103,6 @@ var HomeView = Backbone.View.extend({
     var viewPortWidth = window.innerWidth
     var viewPortHeight = window.innerHeight
     console.log("viewPortWidth: " + viewPortWidth + " viewPortHeight:" + viewPortHeight)
-
-//    console.log("item count: " + FORMY.Incidents.length);
-//    var listLength = FORMY.Incidents.length;
-//    //var querySize = 15
-//    if (listLength < limit) {
-//      limit = listLength;
-//      this.startkey = null;
-//    } else {
-//      var next_start_record = FORMY.Incidents.at(limit-1);
-//      if (next_start_record) {
-//        this.startkey_docid = next_start_record.id;
-//        console.log("next_start_record: " + JSON.stringify(next_start_record));
-//        console.log("this.startkey_docid: " + this.startkey_docid);
-//        this.startkey = next_start_record.get("lastModified");
-//        console.log("Removing next_start_record from FORMY.Incidents.")
-//        FORMY.Incidents = FORMY.Incidents.remove(next_start_record);
-//      }
-//    }
-//    if (this.startkey == "" || this.startkey == null) {	//home (/)
-//      //FORMY.Incidents = searchResults;
-//      this.startkey = 16;
-//      //console.log("FORMY.Incidents: " + JSON.stringify(FORMY.Incidents));
-//    }
-//    console.log("this.startkey: " + this.startkey);
-
 		var homeViewHtml = this.template(this.model.toJSON());
 		//$(this.el).html(homeViewHtml);
 		$("#homePageView").html(homeViewHtml);
