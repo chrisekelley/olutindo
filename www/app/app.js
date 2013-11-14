@@ -262,11 +262,9 @@ $(function(){
         }
         FORMY.loadForm("actionTaken", null, {
           success: function(form, resp){
-            var newModel = new Form();
             var newPatientFormView = new FormView({model: form, el: $("#formRenderingView")});
             newPatientFormView.parentId = incidentId;
-
-            var record = new Record({_id: newPatientFormView.parentId, id: newPatientFormView.parentId});
+            var record = new Incident({_id: newPatientFormView.parentId});
             record.fetch( {
                 success: function(record){
                   console.log("Fetched record: " + JSON.stringify(record));
@@ -375,7 +373,7 @@ $(function(){
           viewDiv.setAttribute("id", "formRenderingView");
           $("#views").append(viewDiv);
         }
-        var record = new Record({_id: "incident/"+ recordId});
+        var record = new Record({_id: recordId});
         record.fetch( {
           success: function(model){
             console.log("Fetched record: " + JSON.stringify(model));
@@ -409,16 +407,23 @@ $(function(){
           viewDiv.setAttribute("id", "formRenderingView");
           $("#views").append(viewDiv);
         }
-        var record = new Record({_id: recordId, id: recordId});
-        record.fetch( {
+        var actionTaken = new Record({_id: recordId, id: recordId});
+        actionTaken.fetch( {
           success: function(model){
             console.log("Fetched record: " + JSON.stringify(model));
             FORMY.loadForm("actionTaken", null, {
               success: function(form, resp){
-                var newModel = new Form();
-                var newPatientFormView = new FormView({model: form, el: $("#formRenderingView")});
-                newPatientFormView.currentRecord = record;
-                newPatientFormView.render();
+                var incident = new Incident({_id: actionTaken.get("parentId")});
+                incident.fetch( {
+                    success: function(model){
+                      console.log("Fetched incident: " + JSON.stringify(incident));
+                      var newPatientFormView = new FormView({model: form, el: $("#formRenderingView")});
+                      newPatientFormView.currentRecord = actionTaken;
+                      newPatientFormView.parentRecord = incident;
+                      newPatientFormView.render();
+                    }
+                  }
+                )
               },
               error: function(err) {
                 console.log("Error loading incident: " + err);
@@ -618,8 +623,9 @@ $(function(){
     //FORMY.Incidents = new IncidentsList();
 
     FORMY.ReplicationStarted = null;
-    StartReplication();
-    UrbanAirshipRegistration();
+    var account = getLoginPreferences();
+    StartReplication(account);
+    UrbanAirshipRegistration(account);
   }
 
 });

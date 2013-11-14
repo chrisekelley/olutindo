@@ -88,7 +88,7 @@ var RecordView = Backbone.View.extend({
     }
     //console.log("currentRow: " + this.currentRow + " identifier: " + identifier);
     if (this.value != null) {
-      //console.log("value for " + identifier + ": " + this.value);
+      console.log("value for " + identifier + ": " + this.value);
       formElement.set({"value": this.value});
     }
     if (this.orientation === "vert") {

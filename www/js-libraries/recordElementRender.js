@@ -18,6 +18,7 @@ var loadWidgetTemplates = function(){
 loadWidgetTemplates();
 
 recordValueCompiledHtml = Handlebars.compile($("#recordValue").html());
+recordMDYTimeDateValueCompiledHtml = Handlebars.compile($("#recordMDYTimeDateValue").html());
 recordDropdownValueCompiledHtml = Handlebars.compile($("#recordDropdownValue").html());
 doNotRenderCompiledHtml = Handlebars.compile($("#doNotRender").html());
 recordCheckboxValueCompiledHtml = Handlebars.compile($("#recordCheckboxValue").html());
@@ -99,6 +100,8 @@ Handlebars.registerHelper("renderValue", function(context) {
 		template = displayActionTakenLinkCompiledHtml;
 	} else if (inputType == 'hidden') {
 		template = doNotRenderCompiledHtml;
+  } else if (inputType == 'hiddenButDisplay') {
+		template = recordMDYTimeDateValueCompiledHtml;
 	} else if (inputType == 'button') {
 		template = doNotRenderCompiledHtml;
 	} else {

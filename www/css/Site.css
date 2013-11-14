@@ -1307,7 +1307,7 @@ label{
     padding-left: 5px;
 }
 
-#rowpriority {
+#rowdateResolved {
     background-color: lightgrey;
 }
 
@@ -1493,3 +1493,33 @@ h6,
     color: #ff0000;
 }
 
+/*CSS3 Checkboxes*/
+
+input[type=checkbox].css-checkbox {
+    display:none;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+    padding-left:45px;
+    height:40px;
+    display:inline-block;
+    line-height:40px;
+    background-repeat:no-repeat;
+    background-position: 0 0;
+    font-size:40px;
+    vertical-align:middle;
+    cursor:pointer;
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-position: 0 -40px;
+}
+label.css-label {
+    background-image:url(../images/csscheckbox_3068f9f6e5a2c9984db3b3937f950439.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

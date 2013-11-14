@@ -165,6 +165,7 @@ function getLoginPreferences() {
       console.log("The username is not stored in preferences; displayed sign in notice. Error Message: " + JSON.stringify(error));
       //$form = $.modalForm({fields: [ 'username', 'password', 'site', 'department' ], submit: 'Sign in'})
       FORMY.router.navigate('config', true);
+      return null;
     });
     window.applicationPreferences.get("password", function(value) {
       account.password = value;
@@ -188,9 +189,8 @@ function getLoginPreferences() {
   return account;
 }
 
-var StartReplication = function () {
-  var account = getLoginPreferences();
-  if (account.username != null) {
+var StartReplication = function (account) {
+  if (account != null && account.username != null) {
     var credentials = account.username + ":" + account.password;
     var couchdb =  "troubletickets_" +  account.site;
     var subdomain =  "ug" +  account.site;
@@ -219,7 +219,7 @@ var StartReplication = function () {
   }
 }
 
-var UrbanAirshipRegistration = function () {
+var UrbanAirshipRegistration = function (account) {
 
   if (typeof window.plugins != 'undefined') {
     push = window.plugins.pushNotification;
@@ -237,8 +237,7 @@ var UrbanAirshipRegistration = function () {
       console.log("Got push: " + push.message)
     });
 
-    var account = getLoginPreferences();
-    if (account.username != null) {
+    if (account != null && account.username != null) {
       // Set an alias, this lets you tie a device to a user in your system
       push.setAlias(account.username, function () {
         push.getAlias(function (alias) {

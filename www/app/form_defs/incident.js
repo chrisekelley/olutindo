@@ -3431,91 +3431,25 @@ var incidentForm = {
 
       ]
     },
-//    {
-//      "label": "Department",
-//      "value": "",
-//      "options": [
-//        {
-//          "name": "optional",
-//          "value": "true"
-//        }
-//      ],
-//      "datatype": "int",
-//      "visible": "true",
-//      "closeRow": "true",
-//      "colspan": "2",
-//      "size": "0",
-//      "rows": "0",
-//      "cols": "0",
-//      "identifier": "department",
-//      "inputType": "selectFDA",
-//      "enumerations": [
-//        {
-//          "name": "Item",
-//          "tagName": "item",
-//          "label": "Administration",
-//          "labelItextID": "Administration",
-//          "defaultValue": "1"
-//        },
-//        {
-//          "name": "Item",
-//          "tagName": "item",
-//          "label": "Finance and Planning",
-//          "labelItextID": "Finance and Planning",
-//          "defaultValue": "2"
-//        },
-//        {
-//          "name": "Item",
-//          "tagName": "item",
-//          "label": "Education",
-//          "labelItextID": "Education",
-//          "defaultValue": "3"
-//        },
-//        {
-//          "name": "Item",
-//          "tagName": "item",
-//          "label": "Health",
-//          "labelItextID": "Health",
-//          "defaultValue": "4"
-//        },
-//        {
-//          "name": "Item",
-//          "tagName": "item",
-//          "label": "Works",
-//          "labelItextID": "Works",
-//          "defaultValue": "5"
-//        },
-//        {
-//          "name": "Item",
-//          "tagName": "item",
-//          "label": "Council",
-//          "labelItextID": "Council",
-//          "defaultValue": "6"
-//        },
-//        {
-//          "name": "Item",
-//          "tagName": "item",
-//          "label": "Production",
-//          "labelItextID": "Production",
-//          "defaultValue": "7"
-//        },
-//        {
-//          "name": "Item",
-//          "tagName": "item",
-//          "label": "Community development",
-//          "labelItextID": "Community development",
-//          "defaultValue": "8"
-//        },
-//        {
-//          "name": "Item",
-//          "tagName": "item",
-//          "label": "Natural resources",
-//          "labelItextID": "Natural resources",
-//          "defaultValue": "9"
-//        }
-//      ]
-//    },
-
+    {
+      "label": "Date Resolved",
+      "value": "",
+      "options": [
+        {
+          "name": "optional",
+          "value": "true"
+        }
+      ],
+      "datatype": "string",
+      "visible": "true",
+      "closeRow": "true",
+      "colspan": "2",
+      "size": "10",
+      "rows": "0",
+      "cols": "0",
+      "identifier": "dateResolved",
+      "inputType": "hiddenButDisplay"
+    },
     {
       "label": "Department",
       "value": "",

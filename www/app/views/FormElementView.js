@@ -55,7 +55,11 @@ window.FormElementView = Backbone.View.extend({
 		  this.colspan = 1;
 	  }
 	  $(this.el).attr('colspan',this.colspan);
-    $(this.el).attr('valign',"top");
+    this.valign = this.model.get("valign");
+    if (this.valign == null) {
+      this.valign = "top";
+    }
+    $(this.el).attr('valign',this.valign);
 	  var currentId = $(this.el).attr('id');
 	  //console.log("currentId: " + currentId);
 	  var renderedHtml = this.template(this.model.toJSON());
@@ -65,7 +69,7 @@ window.FormElementView = Backbone.View.extend({
   },
   showErrorMessages: function (error){
     this.$(".error-message").html(error.join(". ")).show();
-  },
+  }
 //  remove: function() {
 //	  $(this.el).remove();
 //  },

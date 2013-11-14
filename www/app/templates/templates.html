@@ -12,7 +12,7 @@
 </script>
 <script id="search-template" type="text/x-handlebars-template">
 {{#if phone}}
-    <td>{{#renderPriority priority resolved}}{{/renderPriority}}</td><td onclick="window.location='#incidentRecords/{{_id}}'"><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}">{{phone}}&nbsp;&nbsp;</a></td><td>{{#renderVillage village}}{{/renderVillage}}</td>
+    <td>{{#renderPriority priority dateResolved}}{{/renderPriority}}</td><td onclick="window.location='#incidentRecords/{{_id}}'"><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}">{{phone}}&nbsp;&nbsp;</a></td><td>{{#renderVillage village}}{{/renderVillage}}</td>
     <td>{{#if dep_administration}}Admin<br/>{{/if}}
         {{#if dep_community_development}}Comm. Dev.<br/>{{/if}}
         {{#if dev_council}}Council<br/>{{/if}}
@@ -24,7 +24,7 @@
         {{#if dev_works}}Works<br/>{{/if}}</td>
     <td>{{#dateFormatDate lastModified}}{{/dateFormatDate}}</td>
 	{{else}}
-    <td>{{#renderPriority priority resolved}}{{/renderPriority}}</td><td><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}"> --- </a></td><td>{{#renderVillage village}}{{/renderVillage}}</td>
+    <td>{{#renderPriority priority dateResolved}}{{/renderPriority}}</td><td><a href="#incidentRecords/{{_id}}" title="ID: {{assignedId}}"> --- </a></td><td>{{#renderVillage village}}{{/renderVillage}}</td>
     <td>{{#if dep_administration}}Admin<br/>{{/if}}
         {{#if dep_community_development}}Comm. Dev.<br/>{{/if}}
         {{#if dev_council}}Council<br/>{{/if}}
@@ -48,6 +48,9 @@
 </script>
 <script id="recordValue" type="text/x-handlebars-template">
     {{value}}
+</script>
+<script id="recordMDYTimeDateValue" type="text/x-handlebars-template">
+    {{#dateFormatdMY value}}{{/dateFormatdMY}}
 </script>
 <script id="recordDropdownValue" type="text/x-handlebars-template">
 	{{#dropdownValue enumerations value}}
@@ -80,17 +83,19 @@
 </script>
 <script id="checkboxWidget" type="text/x-handlebars-template">
 	{{#if value}}
-  	<input id='{{identifier}}' {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1' checked='checked'></input>
+  	<input id='{{identifier}}' class="css-checkbox" {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1' checked='checked'></input>
   	{{else}}
-  	  	<input id='{{identifier}}' {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1'></input>
-		{{/if}}
+  	  	<input id='{{identifier}}' class="css-checkbox" {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1'></input>
+	{{/if}}
+    <label for="{{identifier}}" class="css-label"></label>
 </script>
 <script id="checkboxAlertWidget" type="text/x-handlebars-template">
     {{#if value}}
-	<input id='{{identifier}}' {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1' checked='checked'></input>
+	<input id='{{identifier}}' class="css-checkbox" {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1' checked='checked'></input>
     {{else}}
-    <input id='{{identifier}}' {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1'></input>
+    <input id='{{identifier}}' class="css-checkbox" {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='checkbox' value='1'></input>
     {{/if}}
+    <label for="{{identifier}}" class="css-label"></label>
 </script>
 <script id="textareaWidget" type="text/x-handlebars-template">
   	<br/><textarea id='{{identifier}}' {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' rows='{{rows}}' cols='{{cols}}'>{{value}}</textarea>

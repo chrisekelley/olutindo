@@ -44,36 +44,6 @@ var onComplete = function(err, result) {
 //var opts = {continuous: true, complete: onComplete};
 //var opts = {continuous: true};
 
-
-//var url = model.get('url'),
-//    pushResps = this.pushResps,
-//    pullResps = this.pullResps,
-//    renderStats = _.bind(this.renderStats, this);
-//
-//Pouch.replicate(dbname, url, {
-//  continuous: true,
-//  onChange: function(resp) {
-//    pushResps[url] = resp;
-//    renderStats();
-//  }
-//});
-//Pouch.replicate(url, dbname, {
-//  continuous: true,
-//  onChange: function(resp) {
-//    pullResps[url] = resp;
-//    renderStats();
-//  }
-//});
-
-//FORMY.SyncpointLocalDb = null;
-// findSyncpointLocalDb();
-//	Backbone.couch_connector.config.ddoc_name = "coconut";
-//if (FORMY.SyncpointLocalDb == null) {
-//	Backbone.couch_connector.config.db_name = "coconut";
-//} else {
-//	console.log("FORMY.SyncpointLocalDb: " + FORMY.SyncpointLocalDb);
-//	Backbone.couch_connector.config.db_name = FORMY.SyncpointLocalDb;
-//}
 //// If set to true, the connector will listen to the changes feed
 //// and will provide your models with real time remote updates.
 //// But in this case we enable the changes feed for each Collection on our own.

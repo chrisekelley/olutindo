@@ -264,10 +264,8 @@ var FormView = Backbone.View.extend({
           var actionTaken = new ActionTaken(formData);
           actionTaken.type="actionTaken";
           actionTaken.save();
-          // touch the parent incident record
+          // open the parent incident record
           var record = new Record(this.parentRecord.attributes);
-          record.set({lastModified:new Date()});
-          record.save();
           if (typeof actionTaken.get("resolved") != 'undefined') {
             if (typeof window.sms != 'undefined') {
               var number = record.get("phone")
@@ -277,7 +275,10 @@ var FormView = Backbone.View.extend({
               var error = function (e) { alert('Message Failed:' + e);console.log("Error sending message: " + e); };
               sms.send(number, message, intent, success, error);
             }
+            record.set({dateResolved:unixTimestamp});
           }
+          record.set({lastModified:unixTimestamp});
+          record.save();
           console.log("Updating the record using backbone save");
 
           inspectModelAndGo(actionTaken);
@@ -298,9 +299,15 @@ var FormView = Backbone.View.extend({
 			  var unixTimestamp = Math.round(+new Date()/1000);
 			  formData.lastModified = unixTimestamp;
 			  console.log("Updating the record using record.save");
-			  var record = new Record(formData);
-			  record.collection = "patient-records";
-			  record.urlRoot = "patient-records";
+        var record = new Record(formData);
+        if (formId === "actionTaken") {
+          if (typeof record.get("resolved") != 'undefined') {
+            // open the parent incident record
+            var incident = new Record(this.parentRecord.attributes);
+            incident.set({dateResolved:unixTimestamp});
+            incident.save();
+          }
+        }
 //			  if (formData.assignedId != null) {
 //				  var assignedId = parseInt(formData.assignedId);
 //				  console.log("formData.assignedId: " + formData.assignedId + " assignedId: " + assignedId);
