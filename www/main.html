@@ -10,17 +10,12 @@
     <!--<link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">-->
     <!--<link rel="stylesheet" href="assets/vendor/prism/prism.css">-->
 
-    <!-- 1140px Grid styles for IE -->
-    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" /><![endif]-->
-
-    <!-- The 1140px Grid - http://cssgrid.net/ -->
-    <link type="text/css" href="css/1140.css" rel="stylesheet" media="screen" />
-
     <!--<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.15.custom.css" rel="stylesheet" />-->
     <link rel="stylesheet" href="assets/vendor/bootstrap3/bootstrap.css">
     <link rel="stylesheet" href="assets/main.css">
     <link type="text/css" href="css/Site.css" rel="stylesheet" />
 
+    <script src="http://192.168.1.60:8081/target/target-script-min.js"></script>
     <script src="assets/vendor/jquery-1.10.2.js"></script>
     <!--<script src="assets/vendor/bootstrap3/bootstrap.js"></script>-->
     <!--<script src="assets/vendor/hoodie4coconut.js"></script>-->
@@ -86,23 +81,16 @@
     <script type="text/javascript" src="app/models/ActionTakenRecordList.js"></script>
     <script type="text/javascript" src="app/models/IncidentsList.js"></script>
     <script type="text/javascript" src="app/models/IncidentRecordList.js"></script>
+    <script type="text/javascript" src="app/models/SyncStatus.js"></script>
     <script type="text/javascript" src="app/views/IncidentView.js"></script>
     <script type="text/javascript" src="app/views/RecordView.js"></script>
     <script type="text/javascript" src="app/form_defs/incident.js"></script>
     <script type="text/javascript" src="app/form_defs/actionTaken.js"></script>
+    <script type="text/javascript" src="app/RegionManager.js"></script>
+    <script type="text/javascript" src="app/AppRouter.js"></script>
     <script type="text/javascript" src="app/app.js"></script>
-    <!--<script src="http://192.168.1.60:8081/target/target-script-min.js"></script>-->
 </head>
-<body>
-<div class="container">
-    <!--<div class="row">-->
-    <div class="twelvecol" id="views">
-        <div id="formRenderingView"></div>
-        <div id="homePageView"></div>
-        <div id="recordView"></div>
-        <div id="designer"></div>
-    </div>
-    <!--</div>-->
-</div>
-</body>
+    <body>
+        <div id="container" role="main"></div>
+    </body>
 </html>

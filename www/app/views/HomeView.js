@@ -1,6 +1,5 @@
 var HomeView = Backbone.View.extend({
-	//el: $("#homePageView"),
-	template: loadTemplate("home.template.html"),
+	el: '#container',
   initialize: function() {
     console.log("HomeView initialize");
 
@@ -12,10 +11,12 @@ var HomeView = Backbone.View.extend({
 //    FORMY.Incidents.bind('change', this.search, this);
 //    FORMY.Incidents.bind('render', this.render, this);
 
+    this.alertMessage = this.$('alertMessage');
+
     this.listenTo(FORMY.Incidents, 'add', this.addOne);
     this.listenTo(FORMY.Incidents, 'reset', this.addAll);
     this.listenTo(FORMY.Incidents, 'all', this.render);
-
+    this.listenTo(FORMY.SyncStatus, 'all', this.render);
   },
 	username: null,
 	startkey: null,
@@ -31,13 +32,14 @@ var HomeView = Backbone.View.extend({
     } else {
       console.log("Skipping this record - not an incident.")
     }
-
 	},
+  changeSyncStatus: function(message) {
+    this.alertMessage.html(message);
+  },
 	events: {
 		"click #form-search " : "search",
 		"click #form-client " : "incidentLink",
 		"click #form-config " : "configLink",
-		"click #form-design " : "designLink",
 		"click #nextLink"	  : "nextLink",
     "change #department"  : "search"
 		//"orientationEvent " : "orientation",
@@ -65,11 +67,8 @@ var HomeView = Backbone.View.extend({
 		FORMY.router.navigate('incident', true);
 	},
 	configLink: function() {
-		//window.location.href = '/mobilefuton/_design/mobilefuton/index.html';
+    console.log("clicked configLink.")
 		FORMY.router.navigate('config', true);
-	},
-	designLink: function() {
-		FORMY.router.navigate('design', true);
 	},
 	search: function(e) {
 		e.preventDefault();
@@ -103,17 +102,25 @@ var HomeView = Backbone.View.extend({
     var viewPortWidth = window.innerWidth
     var viewPortHeight = window.innerHeight
     console.log("viewPortWidth: " + viewPortWidth + " viewPortHeight:" + viewPortHeight)
-		var homeViewHtml = this.template(this.model.toJSON());
+		this.html = this.template(this.model.toJSON());
 		//$(this.el).html(homeViewHtml);
-		$("#homePageView").html(homeViewHtml);
+		//$("body").html(homeViewHtml);
 		//if(FORMY.Incidents.length > 0){
 		FORMY.Incidents.each(this.addOne);
 		console.log("Looped through the Incidents")
 //		$(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
 //		$(".stripeMe tr:even").addClass("alt");
 //    console.log("Applied .stripeME to tr's.")
+    this.alertMessage.show();
+    console.log("FORMY.SyncStatus.html: " + FORMY.SyncStatus.html)
+    //this.alertMessage.html(FORMY.SyncStatus.html);
+    $("#alertMessage").html(FORMY.SyncStatus.html);
 		return this;
-	}
+	},
+  onClose: function(){
+    console.log("Closing the model.")
+    this.model.unbind("change", this.render);
+  }
 });
 
 var SearchListItemView = Backbone.View.extend({

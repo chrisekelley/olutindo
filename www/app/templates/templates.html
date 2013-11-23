@@ -64,8 +64,7 @@
 	{{#checkboxValue value}}
 	{{/checkboxValue}}
 </script>
-<script id="recordCheckboxAlert" type="text/x-handlebars-template">{{#if value}}&nbsp;<span style="font-color:red"><strong>X</strong></span>{{/if}}
-</script>
+<script id="recordCheckboxAlert" type="text/x-handlebars-template"></script>
 <script id="recordYesnoValue" type="text/x-handlebars-template">
 	{{#yesNoValue value}}
 	{{/yesNoValue}}
@@ -147,5 +146,5 @@
     <input id='{{identifier}}' {{#options}}data-{{name}}='{{value}}' {{/options}} name='{{identifier}}' type='hidden' value='{{value}}'></input>
 </script>
 <script id="buttonWidget" type="text/x-handlebars-template">
-    <button id='{{identifier}}' type='button' style="width:{{width}}; height:{{height}}; font-size: 18pt;">{{label}}</button>
+    <button id='{{identifier}}' class='wideButton' type='button'>{{label}}</button>
 </script>

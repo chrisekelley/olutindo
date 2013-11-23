@@ -6,7 +6,6 @@
   if (useragent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
     loadScript('cordova.js');
     loadScript('version.js');
-    loadScript('sms.js');
     loadScript('js/PushNotification.js');
   }
 
@@ -14,6 +13,7 @@
     // synchronous load by @Sean Kinsey
     // http://stackoverflow.com/a/2880147/813951
     var xhrObj =  new XMLHttpRequest();
+    console.log("Fetching url: " + url);
     xhrObj.open('GET', url, false);
     xhrObj.send('');
     var se = document.createElement('script');

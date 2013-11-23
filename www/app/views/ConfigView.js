@@ -1,15 +1,11 @@
 var ConfigView = Backbone.View.extend({
-	//el: $("#homePageView"),
 	template: loadTemplate("config.template.html"),
 
 	initialize: function() {
 		return this;
-	}, 
+	},
 	events: {
-		"click #submitSignin " : "signinSubmit",
-		"click #form-config " : "configLink",
-		"click #form-design " : "designLink",
-		//"orientationEvent " : "orientation",
+		"click #submitSignin " : "signinSubmit"
 	},
 	reseted: function() {
 		console.log("reseted.");
@@ -23,18 +19,11 @@ var ConfigView = Backbone.View.extend({
 		FORMY.router.navigate('home', true);
     return false;
 	},
-	configLink: function() {
-		window.location.href = '/mobilefuton/_design/mobilefuton/index.html';
-	},
-	designLink: function() {
-		FORMY.router.navigate('design', true);
-	},
 	orientation: "horiz",
 	render: function() {
-
-		var viewHtml = this.template(this.model.toJSON());
+		this.html = this.template(this.model.toJSON());
 		console.log("rendering ConfigView");
-		$("#configView").html(viewHtml);
+		//$("body").html(viewHtml);
 		return this;
-	},
+	}
 });

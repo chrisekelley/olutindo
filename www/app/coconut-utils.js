@@ -148,8 +148,13 @@ function saveLoginPreferences(username, password, site, department) {
       console.log("Error! " + JSON.stringify(error));
     });
     console.log("Successfully saved login preferences.");
-    StartReplication();
-    UrbanAirshipRegistration();
+    var account = new Object();
+    account.username = username;
+    account.password = password;
+    account.site = site;
+    account.department = department;
+    StartReplication(account);
+    UrbanAirshipRegistration(account);
   } else {
     console.log("Login prefs *not* saved. They currently saved only on smartphone version.")
   }
@@ -161,10 +166,10 @@ function getLoginPreferences() {
     window.applicationPreferences.get("username", function(value) {
       account.username = value;
     }, function(error) {
-      alert("Welcome to Olutindo! Please sign in so that the app can receive records from the server.");
+      alert("Welcome to Olutindo! Please login so that the app can receive records from the server.");
       console.log("The username is not stored in preferences; displayed sign in notice. Error Message: " + JSON.stringify(error));
       //$form = $.modalForm({fields: [ 'username', 'password', 'site', 'department' ], submit: 'Sign in'})
-      FORMY.router.navigate('config', true);
+      //FORMY.router.navigate('config', {trigger: true});
       return null;
     });
     window.applicationPreferences.get("password", function(value) {
@@ -213,9 +218,26 @@ var StartReplication = function (account) {
       timeout: 60000};
     //var opts = {continuous: true, withCredentials:true};
     //var opts = {continuous: true};
+    //$("#alertMessage").html('<img src="../images/network_drive_connected_40.png"/>');
+    FORMY.SyncStatus.html = '<img src="images/network_drive_connected_40.png"/>';
     Backbone.sync.defaults.db.replicate.to(remoteCouch, opts, ReplicationErrorLog);
     //localDB.replicate.from('http://relax.com/on-the-couch', {withCredentials:true, cookieAuth: {username:'admin', password:'pass'}}, function(){});
     Backbone.sync.defaults.db.replicate.from(remoteCouch, opts, ReplicationErrorLog);
+  }
+}
+
+var ReplicationErrorLog = function(err, result) {
+  if (result !=null && result.ok) {
+    console.log("Replication is fine. ")
+    //$("#alertMessage").html('<img src="../images/network_drive_connected_40.png"/>');
+    FORMY.SyncStatus.html = '<img src="images/network_drive_connected_40.png"/>';
+  } else {
+    console.log("Replication error: " + JSON.stringify(err));
+    //$("#alertMessage").html('<img src="../images/network_drive_offline_40.png"/>');
+    FORMY.SyncStatus.html = '<img src="images/network_drive_offline_40.png"/>';
+    if ((typeof err != 'undefined') && (err.status === 401)) {
+      alert("Error: Name or password is incorrect. Unable to connect to the server.");
+    }
   }
 }
 
@@ -254,16 +276,6 @@ var UrbanAirshipRegistration = function (account) {
   }
 }
 
-var ReplicationErrorLog = function(err, result) {
-  if (result !=null && result.ok) {
-    console.log("Replication is fine. ")
-  } else {
-    console.log("Replication error: " + JSON.stringify(err));
-    if ((typeof err != 'undefined') && (err.status === 401)) {
-      alert("Error: Name or password is incorrect. Unable to connect to the server.");
-    }
-  }
-}
 
 
 var onComplete = function(err, result) {
@@ -282,8 +294,6 @@ var signIn = function() {
 }
 
 var handleSignInSubmit = function() {
-  console.log("Is this thing working?")
-
   saveLoginPreferences($("#username").val(), $("#password").val(), $("#site-dropwdown").val(), $("#department-dropwdown").val());
   $("#SigninForm").hide();
 //  return function(event, inputs) {
@@ -328,7 +338,3 @@ var uuidGenerator = function(len) {
     return _results;
   })()).join('');
 };
-
-
-
-
